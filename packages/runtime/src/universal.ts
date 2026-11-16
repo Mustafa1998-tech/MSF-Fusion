@@ -6,7 +6,7 @@
  *   reactive bindings. Falls back to a fresh mount when the server markup
  *   does not match the view tree.
  */
-import { createRoot, onCleanup, type Dispose } from "./core.js";
+import { createEffect, createRoot, onCleanup, type Dispose } from "./core.js";
 import {
   addEventListener,
   insert,
@@ -25,8 +25,8 @@ import {
   type ViewMaybeAccessor,
   type ViewNode, type ViewText, type ViewComponentInstance } from "./view.js";
 
-export { h, fragment, text } from "./view.js";
-export type { ViewChild, ViewElement, ViewFragment, ViewMaybeAccessor, ViewNode, ViewText, ViewComponent, ComponentProps, ViewComponentInstance } from "./view.js";
+export { h, fragment, text, Show, For } from "./view.js";
+export type { ViewChild, ViewElement, ViewFragment, ViewMaybeAccessor, ViewNode, ViewText, ViewComponent, ComponentProps, ViewComponentInstance, MaybeAccessor } from "./view.js";
 
 function isAccessor(value: unknown): value is () => unknown {
   return typeof value === "function";
@@ -83,10 +83,40 @@ function mountChildren(parent: Element | DocumentFragment, children: ViewChild[]
   }
 }
 
-function appendChild(parent: Element | DocumentFragment, child: ViewChild): void {
-  if (child == null || child === false || child === true) return;
+/** Reactive children mount: evaluates accessor and mounts/inserts the result, replacing previous nodes. */
+function insertReactiveChildren(parent: Element | DocumentFragment, accessor: () => ViewChild | ViewChild[] | null | undefined): void {
+  const host = parent;
+  let current: Node[] = [];
+  let cleanup: Dispose | null = null;
+  const clear = () => {
+    for (let i = current.length - 1; i >= 0; i--) {
+      current[i]!.parentNode?.removeChild(current[i]!);
+    }
+    current = [];
+    if (cleanup) {
+      cleanup();
+      cleanup = null;
+    }
+  };
+  createEffect(() => {
+    clear();
+    const v = accessor();
+    if (v == null || v === false) return;
+    const children = Array.isArray(v) ? v : [v as ViewChild];
+    for (const child of children) {
+      const nodes = toDomNode(child as ViewNode);
+      for (const node of nodes) {
+        host.appendChild(node);
+        if (node.parentNode) current.push(node);
+      }
+    }
+  });
+  onCleanup(clear);
+}
+
+function appendChild(parent: Element | DocumentFragment, child: ViewChild): void {  if (child == null || child === false || child === true) return;
   if (isAccessor(child)) {
-    insert(parent, child as () => unknown);
+    insertReactiveChildren(parent, child as () => ViewChild);
     return;
   }
   if (Array.isArray(child)) {
@@ -127,12 +157,17 @@ function applyProps(el: Element, props: ViewElement["props"]): void {
 }
 
 export function mount(
-  view: () => ViewNode,
+  view: () => ViewNode | (() => ViewChild | null | undefined),
   container: Element,
 ): Dispose {
   return createRoot((dispose) => {
     container.textContent = "";
-    mountChildren(container, [view()]);
+    const v = view();
+    if (typeof v === "function") {
+      appendChild(container, v as () => ViewChild | null | undefined);
+    } else {
+      mountChildren(container, [v]);
+    }
     onCleanup(() => {
       container.textContent = "";
     });
@@ -229,22 +264,31 @@ function adoptChild(
  * is cleared and the view is mounted fresh instead.
  */
 export function hydrate(
-  view: () => ViewNode,
+  view: () => ViewNode | (() => ViewChild | null | undefined),
   container: Element,
 ): Dispose {
   return createRoot((dispose) => {
     const state: HydrationState = { mismatch: false };
     let v = view();
-    if (isComponent(v)) v = resolveComponent(v as ViewComponentInstance);
-    if (isElement(v) && container.firstElementChild) {
-      adoptElement(v, container.firstElementChild, state);
-    } else {
+    if (typeof v === "function") {
+      // Accessor-rooted view: hydrate not supported in this form, fall back to mount
       state.mismatch = true;
+    } else {
+      if (isComponent(v)) v = resolveComponent(v as ViewComponentInstance) as ViewNode;
+      if (isElement(v) && container.firstElementChild) {
+        adoptElement(v, container.firstElementChild, state);
+      } else {
+        state.mismatch = true;
+      }
     }
 
     if (state.mismatch) {
       container.textContent = "";
-      mountChildren(container, [v]);
+      if (typeof v === "function") {
+        appendChild(container, v as () => ViewChild | null | undefined);
+      } else {
+        mountChildren(container, [v as ViewNode]);
+      }
     }
 
     onCleanup(() => {

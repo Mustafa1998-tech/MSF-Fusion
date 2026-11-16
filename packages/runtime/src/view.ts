@@ -9,9 +9,9 @@
  * the SSR renderer and unit-tested in Node.
  */
 
-/** A component is called with a single props object (including `children`) and returns a view. */
-export type ViewComponent = (props: ComponentProps) => ViewNode;
-export type ComponentProps = Record<string, unknown> & { children?: ViewChild[] };
+/** A component is called with a single props object (including `children`) and returns a view or an accessor producing views. */
+export type ViewComponent = (props: ComponentProps) => ViewNode | (() => ViewChild | null | undefined);
+export type ComponentProps = Record<string, unknown> & { children?: ViewChild[] | undefined };
 
 export type ViewNode =
   | ViewElement
@@ -50,6 +50,7 @@ export interface ViewComponentInstance {
 
 export type ViewChild = ViewNode | ViewChild[] | (() => unknown);
 export type ViewMaybeAccessor<T> = T | (() => T);
+export type MaybeAccessor<T> = T | (() => T);
 
 export function h(
   tag: string | ViewComponent,
@@ -94,10 +95,54 @@ export function isFragment(node: ViewNode): node is ViewFragment {
 }
 
 /** Evaluate a component node to its view tree. */
-export function resolveComponent(node: ViewComponentInstance): ViewNode {
+export function resolveComponent(node: ViewComponentInstance): ViewNode | (() => ViewChild | null | undefined) {
+  const propsFromObject = (node.props ?? {}) as Record<string, unknown>;
+  const slot = node.children ?? [];
   const props: ComponentProps = {
-    ...(node.props ?? {}),
-    children: node.children ?? [],
+    ...(propsFromObject as unknown as ComponentProps),
+    children:
+      slot.length > 0
+        ? (slot as ViewChild[])
+        : (propsFromObject as Record<string, unknown>).children as ViewChild[] | undefined,
   };
-  return node.tag(props);
+  return node.tag(props) as ViewNode | (() => ViewChild | null | undefined);
+}
+
+export function isAccessor(value: unknown): value is () => unknown {
+  return typeof value === "function";
+}
+
+export function readAccessor<T>(value: MaybeAccessor<T>): T {
+  return isAccessor(value) ? (value as () => T)() : (value as T);
+}
+
+/** Conditional rendering helper. Returns an accessor-child that toggles between children and fallback. */
+export function Show(props: ComponentProps): () => ViewChild | null {
+  const when = (props as Record<string, unknown>).when as MaybeAccessor<unknown>;
+  const fallback = (props as Record<string, unknown>).fallback as MaybeAccessor<ViewChild | ViewChild[]> | undefined;
+  const children = props.children;
+  return () => {
+    const visible = readAccessor(when);
+    if (visible) {
+      return Array.isArray(children) ? (children as ViewChild[]) : null;
+    }
+    if (fallback == null) return null;
+    const fb = readAccessor(fallback as MaybeAccessor<ViewChild | ViewChild[]>);
+    return Array.isArray(fb) ? (fb as ViewChild[]) : (fb as ViewChild);
+  };
+}
+
+/** List rendering helper (non-keyed, rebuilt on each evaluation). */
+export function For<T>(props: ComponentProps): () => ViewChild[] {
+  const each = (props as Record<string, unknown>).each as MaybeAccessor<readonly T[] | T[] | undefined | null>;
+  const children = props.children as ((item: T, index: () => number) => ViewChild) | undefined;
+  return () => {
+    const items = (readAccessor(each) ?? []) as readonly T[];
+    const out: ViewChild[] = [];
+    if (!children) return out;
+    for (let i = 0; i < items.length; i++) {
+      out.push(children(items[i] as T, () => i));
+    }
+    return out;
+  };
 }

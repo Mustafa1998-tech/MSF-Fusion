@@ -1,8 +1,32 @@
 # Syntax & components
 
-> **Status:** Authoring is **plain TypeScript/JavaScript** against the preview runtime. Function components via the isomorphic view layer are supported. A compiler-backed JSX pipeline exists only as a **subset** (`jsx-dom-v1` / `jsx-universal-v1`) — not a complete TSX subset, no control-flow lowering yet. The examples marked **Proposed** are not implemented.
+> **Status:** Authoring is **plain TypeScript/JavaScript** against the preview runtime. **Function components** and **`Show`/`For` control-flow components** are supported by the isomorphic view layer. A compiler-backed JSX pipeline exists only as a **subset** (`jsx-dom-v1` / `jsx-universal-v1`) — not a complete TSX subset.
 
 ## Current authoring (implemented preview)
+
+### Control-flow components (`Show` / `For`)
+
+```ts
+import { createSignal } from "@msf/runtime";
+import { h, Show, For } from "@msf/runtime/server"; // or @msf/runtime/universal
+import { renderToString } from "@msf/runtime/server";
+import { mount } from "@msf/runtime/universal";
+
+function Conditional() {
+  const [on, setOn] = createSignal(true);
+  return h("section", null,
+    h(Show, { when: () => on(), children: [h("p", null, "shown")] }),
+    h("button", { onClick: () => setOn((v) => !v) }, "toggle"),
+  );
+}
+
+renderToString(() => Conditional());
+mount(() => Conditional(), container);
+```
+
+`For` renders a list from an accessor; `Show` toggles a branch; both rebuild reactively (items aren't keyed-identity stable by default — use `@msf/runtime/dom`'s `list(..., keyFn)` for keyed identity).
+
+### Function components (isomorphic view layer)
 
 ### Function components (isomorphic view layer)
 

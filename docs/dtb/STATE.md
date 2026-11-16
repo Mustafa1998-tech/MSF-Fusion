@@ -3,8 +3,8 @@
 - Product / repository: **MSF Fusion** (https://github.com/Mustafa1998-tech/MSF-Fusion) — compiler-assisted, fine-grained reactive, TypeScript-first full-stack framework
 - Active branch: `master`
 - Authorized scope: M1/M2 preview work inside the repository — **developer preview only, no npm publish, no license change, no production mutation**
-- Last verified iteration: **DTB-006 depth guard + list multi-root + component/compiler/micro evidence** (this session)
-- Current item / status: DTB-001..006 VERIFIED (001/002/004/005/006 done); next ready: DTB-003 (control-flow) or DTB-007 (CLI check) or DTB-008 (API docs)
+- Last verified iteration: **DTB-003 partial (Show/For)** + DTB-007/008 (this session)
+- Current item / status: DTB-001..008 shipped (003 partial — compiler lowering still unsupported); next: DTB-009 still approval-gated (license/npm), or stability hardening before any release
 - Relevant files: `packages/compiler/src/index.ts`, `packages/compiler/test/{compile,universal,universal-exec,universal-component}.test.ts`
 - Baseline checks and results (2026-11-16, after DTB-002):
   - `pnpm run typecheck` (workspace): **pass**

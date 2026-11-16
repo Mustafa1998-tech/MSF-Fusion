@@ -18,8 +18,8 @@ import {
   type ViewNode,
 } from "./view.js";
 
-export { h, fragment, text } from "./view.js";
-export type { ViewComponent, ComponentProps, ViewComponentInstance, ViewElement, ViewFragment, ViewNode, ViewText, ViewMaybeAccessor, ViewChild } from "./view.js";
+export { h, fragment, text, Show, For } from "./view.js";
+export type { ViewComponent, ComponentProps, ViewComponentInstance, ViewElement, ViewFragment, ViewNode, ViewText, ViewMaybeAccessor, ViewChild, MaybeAccessor } from "./view.js";
 
 const VOID_ELEMENTS = new Set([
   "area",
@@ -47,8 +47,12 @@ export function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
+function readValue(value: unknown): unknown {
+  return typeof value === "function" ? (value as () => unknown)() : value;
+}
+
 function read<T>(value: ViewMaybeAccessor<T>): T {
-  return typeof value === "function" ? (value as () => T)() : value;
+  return readValue(value) as T;
 }
 
 function renderAttr(name: string, raw: unknown): string {
@@ -62,16 +66,24 @@ function eventAttrOk(name: string): boolean {
   return !/^on/i.test(name);
 }
 
-export function renderNode(node: ViewNode | (() => ViewNode)): string {
-  if (typeof node === "function") return renderNode(read(node) as ViewNode);
+export function renderNode(node: unknown): string {
+  if (typeof node === "function") return renderNode(readValue(node));
   if (node == null || node === false || node === true) return "";
+  if (Array.isArray(node)) return renderChildren(node as ViewChild[]);
   if (typeof node === "string" || typeof node === "number") {
     return escapeHtml(String(node));
   }
-  if (isComponent(node)) return renderNode(resolveComponent(node));
-  if (isText(node)) return escapeHtml(read(node.value) == null ? "" : String(read(node.value)));
-  if (isFragment(node)) return renderChildren(node.children ?? []);
-  if (isElement(node)) {
+  if (isComponent(node as ViewNode)) return renderNode(resolveComponent(node as ViewNode as Parameters<typeof resolveComponent>[0]));
+  if (isText(node as ViewNode)) {
+    const textNode = node as import("./view.js").ViewText;
+    const v = read(textNode.value);
+    return escapeHtml(v == null ? "" : String(v));
+  }
+  if (isFragment(node as ViewNode)) {
+    const frag = node as import("./view.js").ViewFragment;
+    return renderChildren(frag.children ?? []);
+  }
+  if (isElement(node as ViewNode)) {
     const element = node as ViewElement;
     let attrs = "";
     if (element.props) {
@@ -93,13 +105,12 @@ function renderChildren(children: ViewChild[]): string {
   let out = "";
   for (const child of children) {
     if (Array.isArray(child)) out += renderChildren(child);
-    else out += renderNode(child as ViewNode | (() => ViewNode));
+    else out += renderNode(child);
   }
   return out;
 }
 
-export function renderToString(view: () => ViewNode): string {
-  // Run without tracking reactive reads; SSR snapshot is a point-in-time render.
+export function renderToString(view: () => unknown): string {
   return untrack(() => renderNode(view()));
 }
 
@@ -107,4 +118,3 @@ export function renderToString(view: () => ViewNode): string {
 export type ServerNode = ViewNode;
 /** @deprecated use `@msf/runtime/universal` for isomorphic rendering */
 export type ServerElement = ViewElement;
-
