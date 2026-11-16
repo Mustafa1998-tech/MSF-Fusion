@@ -7,18 +7,21 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 ## [Unreleased]
 
 ### Added
-- **Runtime developer preview (M1 progress):** `@msf/runtime` with fine-grained reactive kernel (`createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, ownership/disposal), DOM helpers (`render`, `insert`, `setText`, `setAttribute`, `addEventListener`, `list` with keyed reconciliation), and SSR string renderer (`h`, `renderToString`, HTML escaping). Includes runtime tests (kernel/DOM/server).
-- **Package scaffolds:** `@msf/contracts`, `@msf/compiler` (scaffold, not implemented), and `@msf/dev` (scaffold, not implemented).
-- **Examples:** `examples/counter-basic` (runnable SSR snapshot) and `examples/counter-browser` (Vite interactive demo).
-- **Documentation updates:** refreshed README, developer guide updated for runnable preview APIs, engineering status and architecture/code review docs.
-- Professional repository presentation: LICENSE (pending final approval), CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policy, issue/PR templates.
+- **Runtime developer preview (M1 progress):** `@msf/runtime` with fine-grained reactive kernel (`createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, ownership/disposal), DOM helpers, and SSR string renderer (`h`, `renderToString`, HTML escaping), with tests.
+- **Compiler subset (real, M1):** `@msf/compiler` `jsx-dom-v1` transform for intrinsic JSX/TSX subset to DOM runtime calls with diagnostics and tests.
+- **Dev tooling preview:** `@msf/dev` compile APIs/CLI (`compileFile`, `compilePath`, `status`) and tests.
+- **Benchmark integration (partial):** `msf-runtime` micro-benchmark candidate in `@msf/bench-runner` (smoke-verified), alongside existing competitor baselines.
+- **Examples:** `examples/counter-basic` (SSR snapshot) and `examples/counter-browser` (Vite interactive demo).
+- **Documentation:** refreshed README/guide, engineering status and architecture/code review, ADR/engineering updates, and package READMEs.
+- Repository presentation and governance: LICENSE (pending final approval), CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policy, issue/PR templates.
 
 ### Changed
-- Project status moved from M0-only to **M1 in progress** with documented preview scope and limitations.
+- Project status moved from M0-only to **M1 in progress** with runnable preview slices and documented limitations.
+- Runtime dependency tracking hardened to dedupe repeated reads within a single computation run.
 
 ### Notes
-- Compiler/IR/codegen, JSX subset, hydration/isomorphic rendering, CLI/dev server, publishable `dist` builds, and MSF benchmark fixtures are still pending.
-- No MSF Fusion performance superiority claims are made; baseline results remain environment-specific.
+- Full IR/sourcemaps, broader compiler/JSX/component support, hydration/isomorphic rendering, dev server/HMR, publishable `dist` builds, and comprehensive MSF benchmark coverage are still pending (M1 hardening / M2+).
+- No MSF Fusion performance superiority claims are made; benchmark evidence must follow documented methodology.
 
 ## [0.0.0-m0] - 2026-11-16
 

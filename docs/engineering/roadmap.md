@@ -9,19 +9,22 @@
 - **Exit:** approved direction to proceed with M1
 
 ## M1 — Reactive kernel + minimal compiler slice 🚧 In progress
-**Completed so far**
-- Package scaffolding: `@msf/contracts`, `@msf/runtime`, `@msf/compiler` (scaffold), `@msf/dev` (scaffold)
-- Reactive kernel (real): `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, ownership/disposal
+**Completed so far (tested)**
+- Package scaffolding: `@msf/contracts`, `@msf/runtime`, `@msf/compiler`, `@msf/dev`
+- Reactive kernel: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, ownership/disposal; dependency-tracking fix (in-run dedupe) and tests
 - DOM helpers preview: `render`, `insert`, reactive text/attrs/props/events, `list` with keyed reconciliation
 - SSR string renderer preview: `h`, `renderToString`, HTML escaping
-- Runtime tests (kernel/DOM/server) and runnable examples (`counter-basic`, `counter-browser`)
+- Compiler subset v1 (real): `jsx-dom-v1` intrinsic JSX/TSX transform to DOM runtime calls with diagnostics
+- Dev tooling preview: compile APIs/CLI (`compileFile`, `compilePath`, `status`)
+- MSF runtime micro-benchmark candidate integrated in runner (smoke-verified)
+- Runtime/compiler/dev tests and runnable examples (`counter-basic`, `counter-browser`)
 
 **Remaining**
-- Compiler subset: JSX/authoring subset, reactive IR, lowering/codegen, diagnostics, sourcemaps (WP4)
-- Unified component/isomorphic model and stronger DOM control-flow primitives
-- MSF benchmark fixtures + measurements in runner for supported scenarios (WP5)
-- Publishable package builds (`dist`/types/exports) and dev tooling/CLI baseline
-- Documentation/API stabilization for preview
+- Broader compiler/IR, sourcemaps, semantic diagnostics, component/control-flow support
+- Unified component/isomorphic model and hydration
+- MSF fixtures + methodology-compliant measurements for SSR/bundle/DOM
+- Publishable package builds (`dist`/types/exports), dev server/HMR, fuller CLI
+- Additional hardening (edge cases, leaks, security boundaries)
 
 ## M2 — Component model, SSR, hydration baseline 📋 Planned
 - Props/children/context/refs/events, robust control flow primitives

@@ -25,7 +25,7 @@ pnpm --filter @msf/example-counter-browser dev
 - `@msf/runtime/dom`: `render`, `mount`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list`, `For`
 - `@msf/runtime/server`: `h`, `renderNode`, `renderToString`, `escapeHtml`
 
-**Current limitations:** no compiler/JSX subset, no hydration/isomorphic component model, no CLI/dev server/HMR, no router, no publishable `dist` packages yet.
+**Current limitations:** compiler subset is limited (`jsx-dom-v1`, no sourcemaps/IR pipeline/components/control-flow), no hydration/isomorphic component model, dev tooling is compile-only (no dev server/HMR), no router, no publishable `dist` packages yet.
 
 ## Current preview usage
 

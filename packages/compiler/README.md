@@ -1,13 +1,18 @@
-# `@msf/compiler` (scaffold)
+# `@msf/compiler` (developer preview)
 
-Planned compiler package for MSF Fusion.
+Compiler package for MSF Fusion.
 
-> **Status:** scaffold only (not implemented). `compile()` currently returns `MSF_COMPILER_NOT_IMPLEMENTED`.
+> **Status:** Milestone 1 preview. A real **`jsx-dom-v1` subset compiler** is implemented and tested; full IR/semantic analysis/sourcemaps and broader JSX/component support are pending.
 
-## Planned responsibilities (per ADR-004)
-- Parse/transform pipeline (Oxc) and TypeScript semantic adapter boundary
-- Framework-owned Reactive IR
-- Lowering/codegen to runtime targets with diagnostics and source maps
-- Supported JSX/authoring subset for Milestone 1
+## Current capabilities
+- `compile({ filename, source })` transforms supported `.tsx/.jsx` intrinsic JSX into `@msf/runtime/dom` helper calls
+- Supported subset (v1): intrinsic elements, nested children, text/`{expr}` children, static and dynamic attributes, basic `onEvent` handlers
+- Diagnostics for unsupported cases (e.g. component tags, spread/ref in subset)
+- Non-JSX files passed through
 
-See `docs/adr/ADR-004-compiler-toolchain.md`, `docs/engineering/implementation-plan.md`, and `spikes/compiler-toolchain/`.
+## Not implemented yet
+- Framework-owned Reactive IR and lowering pipeline
+- TypeScript semantic adapter integration (per ADR-004)
+- Sourcemaps, component compilation, control flow, fragments edge cases, full JSX/TS coverage
+
+See `docs/adr/ADR-004-compiler-toolchain.md` and `docs/engineering/implementation-plan.md`.

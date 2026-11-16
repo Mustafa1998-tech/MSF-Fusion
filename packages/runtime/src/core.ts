@@ -31,6 +31,8 @@ interface ReactiveNode {
   state: number;
   disposed: boolean;
   running: boolean;
+  // transient tracking cursor during execution
+  sourceIndex: number;
   // memo/signal-as-source fields
   value: unknown;
   observers: ReactiveNode[] | null;
@@ -65,6 +67,7 @@ function createNode(
     state: STATE_CLEAN,
     disposed: false,
     running: false,
+    sourceIndex: 0,
     value: flags.value,
     observers: flags.isMemo ? [] : null,
     observerSlots: flags.isMemo ? [] : null,
@@ -91,35 +94,38 @@ function runCleanups(node: ReactiveNode): void {
   node.cleanups = null;
 }
 
+function removeObserver(source: ReactiveNode, slot: number): void {
+  const observers = source.observers;
+  const observerSlots = source.observerSlots;
+  if (!observers || !observerSlots) return;
+  const last = observers.length - 1;
+  if (slot < last) {
+    const lastObserver = observers[last]!;
+    const lastObserverSlot = observerSlots[last]!;
+    observers[slot] = lastObserver;
+    observerSlots[slot] = lastObserverSlot;
+    if (lastObserver.sourceSlots) {
+      lastObserver.sourceSlots[lastObserverSlot] = slot;
+    }
+  }
+  observers.pop();
+  observerSlots.pop();
+}
+
 function cleanupSources(node: ReactiveNode, fromIndex = 0): void {
   const sources = node.sources;
-  const sourceSlots = node.sourceSlots;
-  if (!sources || !sourceSlots) return;
+  if (!sources) return;
   for (let i = fromIndex; i < sources.length; i++) {
     const source = sources[i]!;
-    const slot = sourceSlots[i]!;
-    const observers = source.observers;
-    const observerSlots = source.observerSlots;
-    if (!observers || !observerSlots) continue;
-    const last = observers.length - 1;
-    if (slot < last) {
-      const lastObserver = observers[last]!;
-    const lastObserverSlot = observerSlots[last]!;
-      observers[slot] = lastObserver;
-      observerSlots[slot] = lastObserverSlot;
-      if (lastObserver.sourceSlots) {
-        lastObserver.sourceSlots[lastObserverSlot] = slot;
-      }
-    }
-    observers.pop();
-    observerSlots.pop();
+    const slot = node.sourceSlots![i]!;
+    removeObserver(source, slot);
   }
   if (fromIndex === 0) {
     node.sources = null;
     node.sourceSlots = null;
   } else {
     sources.length = fromIndex;
-    sourceSlots.length = fromIndex;
+    node.sourceSlots!.length = fromIndex;
   }
 }
 
@@ -148,23 +154,46 @@ function disposeNode(node: ReactiveNode): void {
 
 function readSignal(node: ReactiveNode): void {
   if (!Listener || Listener.disposed) return;
-  // track
+  const i = Listener.sourceIndex;
   const sources = Listener.sources;
-  const len = sources ? sources.length : 0;
-  // de-dupe consecutive read in same run
-  if (sources && len > 0 && sources[len - 1] === node) return;
-  const sIndex = node.observers ? node.observers.length : 0;
+  if (sources && i < sources.length && sources[i] === node) {
+    Listener.sourceIndex++;
+    return;
+  }
+  // dedupe within current run
+  if (sources) {
+    for (let j = 0; j < i; j++) {
+      if (sources[j] === node) return;
+    }
+  }
+
   if (!node.observers) node.observers = [];
   if (!node.observerSlots) node.observerSlots = [];
-  node.observers.push(Listener);
-  node.observerSlots.push(len);
-  if (!Listener.sources || !Listener.sourceSlots) {
-    Listener.sources = [node];
-    Listener.sourceSlots = [sIndex];
+
+  if (sources && i < sources.length) {
+    // replace old source at current cursor
+    const old = sources[i]!;
+    const oldSlot = Listener.sourceSlots![i]!;
+    removeObserver(old, oldSlot);
+
+    const sIndex = node.observers.length;
+    sources[i] = node;
+    Listener.sourceSlots![i] = sIndex;
+    node.observers.push(Listener);
+    node.observerSlots.push(i);
   } else {
-    Listener.sources.push(node);
-    Listener.sourceSlots.push(sIndex);
+    const sIndex = node.observers.length;
+    if (!Listener.sources || !Listener.sourceSlots) {
+      Listener.sources = [node];
+      Listener.sourceSlots = [sIndex];
+    } else {
+      Listener.sources.push(node);
+      Listener.sourceSlots.push(sIndex);
+    }
+    node.observers.push(Listener);
+    node.observerSlots.push(i);
   }
+  Listener.sourceIndex++;
 }
 
 function writeSignal(node: ReactiveNode, value: unknown): void {
@@ -178,8 +207,6 @@ function writeSignal(node: ReactiveNode, value: unknown): void {
     if (obs.disposed) continue;
     if (obs.state === STATE_CLEAN) {
       if (obs.isEffect) scheduleEffect(obs);
-      // mark downstream of memos as CHECK so they can be pulled if needed;
-      // but to be safe/correct for effects depending on memos, mark DIRTY? actually mark DIRTY for direct observers.
       obs.state = STATE_DIRTY;
       markDownstream(obs);
     } else if (obs.state === STATE_CHECK) {
@@ -200,7 +227,6 @@ function markDownstream(node: ReactiveNode): void {
       if (obs.isEffect) scheduleEffect(obs);
       markDownstream(obs);
     }
-    // if already CHECK or DIRTY, no need to propagate further in that form
   }
 }
 
@@ -232,7 +258,6 @@ function updateIfNecessary(node: ReactiveNode): void {
   if (node.state === STATE_CLEAN) return;
 
   if (node.state === STATE_CHECK) {
-    // verify upstream memos
     const sources = node.sources;
     if (sources) {
       for (let i = 0; i < sources.length; i++) {
@@ -255,27 +280,26 @@ function updateIfNecessary(node: ReactiveNode): void {
 function execute(node: ReactiveNode): void {
   if (node.disposed || !node.fn || node.running) return;
 
-  // dispose owned children and cleanups, then reset sources
   if (node.owned) {
     for (let i = node.owned.length - 1; i >= 0; i--) disposeNode(node.owned[i]!);
     node.owned = null;
   }
   runCleanups(node);
-  cleanupSources(node);
 
   const prevOwner = Owner;
   const prevListener = Listener;
   Owner = node;
   Listener = node;
+  node.sourceIndex = 0;
   node.running = true;
   try {
     const nextValue = node.fn();
+    // trim stale sources not read in this run
+    cleanupSources(node, node.sourceIndex);
     if (node.isMemo) {
       const prevValue = node.value;
       node.value = nextValue;
       if (!node.equals(prevValue, nextValue) && node.observers && node.observers.length > 0) {
-        // Memo value actually changed: promote downstream CHECK to DIRTY? they were marked CHECK on upstream write;
-        // but to ensure dependents update, mark observers dirty.
         for (let i = 0; i < node.observers.length; i++) {
           const obs = node.observers[i]!;
           if (obs.state === STATE_CHECK) obs.state = STATE_DIRTY;
@@ -287,6 +311,8 @@ function execute(node: ReactiveNode): void {
       }
     }
   } catch (err) {
+    // still trim sources to keep graph consistent after partial run
+    cleanupSources(node, node.sourceIndex);
     handleError(node, err);
   } finally {
     node.running = false;
@@ -354,8 +380,7 @@ export function createMemo<T>(fn: () => T, options?: MemoOptions<T>): Accessor<T
     isMemo: true,
     equals: (options?.equals as Equals<unknown> | undefined) ?? defaultEquals,
   });
-  node.state = STATE_DIRTY; // compute lazily on first read
-  // first compute happens on demand; but we must be in owner context - it's fine.
+  node.state = STATE_DIRTY;
 
   return () => {
     if (node.disposed) return node.value as T;
@@ -372,7 +397,6 @@ export function createEffect(fn: () => void | (() => void)): Dispose {
     if (typeof cleanup === "function") onCleanup(cleanup);
     return undefined;
   };
-  // initial run
   execute(node);
   return () => disposeNode(node);
 }

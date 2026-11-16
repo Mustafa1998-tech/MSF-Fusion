@@ -10,9 +10,13 @@
       "default": "./src/index.ts"
     }
   },
+  "bin": {
+    "msf-dev": "./src/cli.ts"
+  },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "dev:status": "node src/cli.ts status"
   },
   "dependencies": {
     "@msf/compiler": "workspace:*",

@@ -6,7 +6,7 @@
 
 **A compiler-assisted, fine-grained reactive, TypeScript-first full-stack framework — designed for correctness, performance, and security.**
 
-[![Status](https://img.shields.io/badge/status-M1%20Developer%20Preview%20(in%20progress)-0f766e)](#project-status)
+[![Status](https://img.shields.io/badge/status-M1%20Developer%20Preview%20(compiler%20%26%20dev%20slices)-0f766e)](#project-status)
 [![TypeScript](https://img.shields.io/badge/TypeScript-7.0.2-3178c6)](https://www.typescriptlang.org/)
 [![Node](https://img.shields.io/badge/Node.js-LTS%20%2F%20v26%20tested-339933)](https://nodejs.org/)
 [![pnpm](https://img.shields.io/badge/pnpm-12.21.0-f69220)](https://pnpm.io/)
@@ -37,6 +37,8 @@ The project follows an evidence-driven process: architecture decisions, security
 ## What is in this repository today
 
 - **Runtime preview (`packages/runtime`):** real fine-grained reactive kernel (`createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, ownership/disposal), DOM helpers (`@msf/runtime/dom`), and SSR string renderer (`@msf/runtime/server`) with tests.
+- **Compiler subset (`packages/compiler`):** real `jsx-dom-v1` transform for an intrinsic JSX/TSX subset to DOM runtime calls with diagnostics and tests.
+- **Dev tooling preview (`packages/dev`):** compile APIs/CLI (`compilePath`, `status`) for the supported subset.
 - **Examples:** `examples/counter-basic` (SSR snapshot) and `examples/counter-browser` (Vite interactive demo).
 - **Architecture & decisions:** system/container views, compile-to-runtime pipeline, and ADR-001–ADR-005 with trade-offs and Mermaid diagrams.
 - **Benchmark laboratory:** reproducible runner with pinned dependencies, environment capture, raw JSON samples, median/P95/CV/MAD reporting, and equivalent fixtures.
@@ -44,7 +46,7 @@ The project follows an evidence-driven process: architecture decisions, security
 - **Compiler toolchain spike:** TypeScript 7 unstable semantic API + Oxc transform feasibility, with recorded evidence.
 - **Engineering governance:** threat model, security/performance requirements, risks, quality gates, MVP scope, roadmap, and a detailed approval-gated implementation plan.
 
-**In progress / not yet implemented:** compiler/IR/codegen + JSX subset, hydration and isomorphic component model, dev server/CLI/HMR, router, publishable `dist` packages, MSF benchmark fixtures, and production hardening. **No MSF Fusion superiority/performance claims.**
+**In progress / not yet implemented:** broader IR/sourcemaps and full JSX/component compiler coverage, hydration and isomorphic component model, dev server/HMR, router/full-stack boundaries, publishable `dist` packages, comprehensive MSF benchmark fixtures/runs, and production hardening (M2+). **No MSF Fusion superiority/performance claims.**
 
 ## Design principles
 

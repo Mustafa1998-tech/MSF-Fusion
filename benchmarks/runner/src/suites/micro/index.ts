@@ -1,6 +1,7 @@
 import { performance } from "node:perf_hooks";
 import { summarize, type Summary } from "../../stats.ts";
 import { preactSignalsCandidate } from "./preact-signals.ts";
+import { msfRuntimeCandidate } from "./msf.ts";
 import {
   MICRO_SCENARIOS,
   type MicroCandidate,
@@ -43,6 +44,7 @@ export interface MicroSuiteResult {
 }
 
 const candidates: readonly MicroCandidate[] = [
+  msfRuntimeCandidate,
   preactSignalsCandidate,
   solidCandidate,
   vueReactivityCandidate,
@@ -136,11 +138,12 @@ export async function runMicroSuite(
     notes: [
       "Graph construction is performed outside the timed region; warm-up runs are discarded.",
       "Each sample uses a fresh graph and disposes it afterwards where the primitive exposes disposal.",
+      "MSF runtime measurements use the in-repo developer-preview kernel (`@msf/runtime`) for supported primitives; they are informational and not superiority claims.",
       "Solid runs through its client runtime exported by the package (solid-js/dist/solid.js) so computed invalidation is live. Solid effect scenarios are skipped because effects require a render flush.",
       "Vue effects are synchronous in the standalone @vue/reactivity package; Vue's default scheduler batching is not part of this matrix.",
       "Angular is excluded from microbenchmarks: its signal API is not designed as a standalone package and effects require an injector/DI context.",
       "React has no comparable standalone signal primitive; React component rendering is measured in the DOM suite instead.",
-      "No MSF Fusion numbers are present in this baseline.",
+      "Compare results only with documented methodology; this run may include MSF preview alongside competitor baselines depending on command.",
     ],
   };
 }

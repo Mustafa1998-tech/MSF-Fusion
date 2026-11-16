@@ -1,12 +1,17 @@
-# `@msf/dev` (scaffold)
+# `@msf/dev` (developer preview)
 
-Planned developer tooling package for MSF Fusion.
+Developer tooling package for MSF Fusion.
 
-> **Status:** scaffold only (not implemented). Exposes a placeholder dev status.
+> **Status:** Milestone 1 preview. Provides compile APIs/CLI for the current compiler subset; dev server/HMR and full build workflows are pending.
 
-## Planned responsibilities
-- CLI commands (`dev`, `build`, `check`, `preview`, etc. — provisional)
-- Dev server and HMR integration
-- Compiler/runtime integration and diagnostics surfacing
+## Current capabilities
+- `compileFile(inputFile, outDir?)`, `compilePath(inputPath, outDir?)`
+- `getDevStatus()`
+- CLI: `node packages/dev/src/cli.ts status|compile <input> [--out <dir>]`
+
+## Not implemented yet
+- Dev server, HMR, watch mode
+- Project scaffolding/templates
+- Integrated build/check/preview pipeline and rich diagnostics UX
 
 See `docs/engineering/implementation-plan.md` and `docs/engineering/status.md`.

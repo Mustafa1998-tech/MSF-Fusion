@@ -153,7 +153,7 @@ async function main(): Promise<void> {
     suites: {},
     status: "running",
     notes: [
-      "Milestone 0 baseline only. MSF Fusion is not implemented, so this run contains no MSF Fusion measurements.",
+      "Baseline benchmark run. When MSF runtime preview fixtures are included, treat them as informational developer-preview measurements (not superiority claims).",
       "All result values are machine- and time-specific. Raw samples are preserved in the JSON file.",
     ],
   };

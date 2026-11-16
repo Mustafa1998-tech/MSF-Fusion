@@ -269,4 +269,23 @@ describe("correctness edge cases", () => {
     setX(2);
     expect(seen).toEqual([2, 3]);
   });
+
+  it("dedupes same signal read multiple non-consecutive times in one run", () => {
+    const [a, setA] = createSignal(1);
+    const [b, setB] = createSignal(10);
+    let runs = 0;
+    createRoot(() => {
+      createEffect(() => {
+        a();
+        b();
+        a();
+        runs++;
+      });
+    });
+    expect(runs).toBe(1);
+    setA(2);
+    expect(runs).toBe(2);
+    setB(20);
+    expect(runs).toBe(3);
+  });
 });
