@@ -9,7 +9,6 @@
 import { createEffect, createRoot, onCleanup, type Dispose } from "./core.js";
 import {
   addEventListener,
-  insert,
   setAttribute,
   setText,
 } from "./dom.js";
@@ -208,12 +207,13 @@ function adoptChild(
 ): number {
   if (child == null || child === false || child === true) return domIndex;
   if (isAccessor(child)) {
+    // Inline text accessors: adopt the matching text node; otherwise mount the reactive subtree
     const domNode = domChildren[domIndex];
     if (domNode && domNode.nodeType === Node.TEXT_NODE) {
       setText(domNode as Text, child as () => unknown);
       return domIndex + 1;
     }
-    insert(parent, child as () => unknown, domNode ?? null);
+    insertReactiveChildren(parent, child as () => ViewChild);
     return domIndex;
   }
   if (Array.isArray(child)) {

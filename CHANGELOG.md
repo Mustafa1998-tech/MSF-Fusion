@@ -16,7 +16,8 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 - **Compiler universal target:** `@msf/compiler` `jsx-universal-v1` emits isomorphic view descriptors (`h("...")` from `@msf/runtime/universal`) for the same JSX/TSX subset — the same compiled component can be SSR-rendered, mounted, or hydrated. Includes golden-output and executable-eval tests.
 - **Dev tooling preview:** `@msf/dev` compile APIs/CLI (`compileFile`, `compilePath`, `status`) and tests.
 - **Benchmark integration (partial):** `msf-runtime` micro-benchmark candidate in `@msf/bench-runner` (smoke-verified), alongside existing competitor baselines.
-- **Examples:** `examples/counter-basic` (SSR snapshot), `examples/counter-browser` (Vite interactive demo), `examples/fullstack` (SSR + hydration pilot).
+- **Examples:** `examples/counter-basic` (SSR snapshot), `examples/counter-browser` (Vite interactive demo), `examples/fullstack` (SSR + hydration pilot), `examples/dashboard` (Ops Board — SSR + fine-grained signal filtering).
+- **Benchmarks (informational):** MSF runtime preview measurements committed for micro (`2026-11-16_09-03-34-486Z-li9o`), SSR (`2026-11-16_09-37-02-734Z-arcv`), and DOM (`2026-11-16_09-50-15-877Z-jjuo`) suites; Windows `pnpm` shim detection fixed.
 - **Documentation:** refreshed README/guide, engineering status and architecture/code review, ADR/engineering updates, and package READMEs.
 - Repository presentation and governance: MIT LICENSE, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policy, issue/PR templates.
 

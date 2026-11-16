@@ -1,0 +1,24 @@
+{
+  "name": "@msf/example-dashboard",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Full-stack dashboard example using MSF runtime preview (SSR + hydration).",
+  "scripts": {
+    "build": "vite build",
+    "prerender": "node --experimental-strip-types scripts/prerender.ts",
+    "build:static": "pnpm build && pnpm prerender",
+    "start": "NODE_ENV=production node --experimental-strip-types src/server.ts",
+    "dev": "node --experimental-strip-types src/server.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@msf/runtime": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "typescript": "7.0.2",
+    "vite": "8.3.8",
+    "vitest": "5.1.0"
+  }
+}

@@ -40,7 +40,7 @@ The project follows an evidence-driven process: architecture decisions, security
 - **Compiler subset (`@msf/compiler`):** `jsx-dom-v1` (intrinsic JSX → DOM calls) and **`jsx-universal-v1`** (JSX → isomorphic view descriptors for SSR/mount/hydrate). Golden-output tests and diagnostics.
 - **Dev tooling preview (`@msf/dev`):** `compileFile`/`compilePath`/`getDevStatus` + CLI for the supported subset.
 - **Package consumption verified:** `dist` ESM+d.ts builds for `@msf/contracts|runtime|compiler|dev`; `pnpm verify:package` packs and smoke-tests them in a temp consumer (install, runtime smoke, TS typecheck); evidence at `benchmarks/evidence/package-verification.json`.
-- **Examples:** `examples/counter-basic` (SSR snapshot), `examples/counter-browser` (Vite), **`examples/fullstack`** — dev SSR via Vite middleware + production prerender + hydration, verified in a real Chromium browser.
+- **Examples:** `examples/counter-basic` (SSR snapshot), `examples/counter-browser` (Vite), **`examples/fullstack`** (dev SSR via Vite middleware + production prerender + hydration), and **`examples/dashboard`** (Ops Board — SSR + signal-driven filtering).
 - **Benchmark lab + MSF micro evidence:** competitor baseline preserved; MSF runtime measured in micro suite with 12 samples; raw JSON + report committed (`2026-11-16_09-03-34-486Z-li9o`).
 - **Architecture/governance:** ADR-001–ADR-005, security/threat model/requirements, quality gates, roadmap, DTB ledger (`docs/dtb/STATE.md`, `BACKLOG.md`, `CHANGELOG.md`), and review docs.
 
@@ -66,7 +66,8 @@ The project follows an evidence-driven process: architecture decisions, security
 ├─ examples/
 │  ├─ counter-basic/             # Runnable SSR snapshot example
 │  ├─ counter-browser/           # Runnable Vite browser example
-│  └─ fullstack/                 # SSR + hydration pilot (dev SSR / prod prerender)
+│  ├─ fullstack/                 # SSR + hydration pilot (dev SSR / prod prerender)
+│  └─ dashboard/                # Full-stack Ops Board (SSR + filters)
 ├─ docs/                         # Architecture, ADRs, guide, security, performance, engineering, DTB ledger
 ├─ benchmarks/                   # Runner, results/reports, evidence, methodology, scenarios
 ├─ spikes/                       # Milestone 0 feasibility probes
@@ -99,6 +100,9 @@ pnpm --filter @msf/example-counter-browser dev
 
 # Full-stack SSR + hydration pilot
 pnpm --filter @msf/example-fullstack dev
+
+# Ops Board — realistic SSR + fine-grained filters
+pnpm --filter @msf/example-dashboard dev
 
 # Benchmarks (run sequentially for comparable results)
 pnpm bench:micro && pnpm bench:ssr && pnpm bench:bundle && pnpm bench:dom && pnpm bench:report

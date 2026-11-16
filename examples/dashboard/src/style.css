@@ -1,0 +1,47 @@
+body {
+  --bg: #0b1020;
+  --panel: #121a30;
+  --line: #24304d;
+  --text: #e8edf7;
+  --muted: #9fb0d0;
+  --accent: #38bdf8;
+  --open: #fbbf24;
+  --progress: #38bdf8;
+  --done: #34d399;
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: radial-gradient(1200px 600px at 20% -10%, #1e2a4a 0%, var(--bg) 60%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.dashboard { max-width: 1100px; margin: 0 auto; padding: 28px 20px 64px; }
+
+.topbar { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; padding: 12px 0 20px; border-bottom: 1px solid var(--line); }
+.topbar h1 { margin: 0 0 6px; font-size: 28px; letter-spacing: -0.02em; }
+.hint { color: var(--muted); font-size: 13px; margin: 0; }
+
+.stat { font-size: 14px; color: var(--muted); border: 1px solid var(--line); background: var(--panel); padding: 10px 14px; border-radius: 10px; }
+.stat strong { color: var(--text); }
+
+.panel { margin-top: 22px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.filter { cursor: pointer; border: 1px solid var(--line); background: transparent; color: var(--text); border-radius: 999px; padding: 6px 12px; font-size: 13px; transition: border-color .15s, background .15s; }
+.filter:hover { border-color: var(--accent); }
+.filter.active { background: #1a2b4a; border-color: var(--accent); color: var(--accent); }
+
+.table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table th, .table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.table th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+.table td.muted { color: var(--muted); }
+
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; border: 1px solid transparent; }
+.badge-open { background: rgba(251, 191, 36, .15); color: var(--open); border-color: rgba(251, 191, 36, .35); }
+.badge-in-progress { background: rgba(56, 189, 248, .15); color: var(--progress); border-color: rgba(56, 189, 248, .35); }
+.badge-done { background: rgba(52, 211, 153, .15); color: var(--done); border-color: rgba(52, 211, 153, .35); }
+
+@media (max-width: 720px) {
+  .table { font-size: 13px; }
+  .topbar { flex-direction: column; align-items: flex-start; }
+}

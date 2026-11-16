@@ -25,6 +25,9 @@ pnpm --filter @msf/example-counter-browser dev
 # Full-stack SSR + hydration pilot
 pnpm --filter @msf/example-fullstack dev
 
+# Ops Board (SSR snapshot + client-side filters)
+pnpm --filter @msf/example-dashboard dev
+
 # Consumer-installable package verification
 pnpm verify:package
 ```
