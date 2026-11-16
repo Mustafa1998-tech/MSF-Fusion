@@ -1,10 +1,10 @@
 # Runtime benchmarks
 
-**Milestone 0 status:** covered by reactivity microbenchmarks and SSR render throughput.
+**Status:** competitor baseline coverage via reactivity microbenchmarks and SSR render throughput. MSF runtime preview exists but is **not yet benchmarked/integrated** in equivalent fixtures.
 
 - Micro: `benchmarks/runner/src/suites/micro/` and `benchmarks/scenarios/micro.md`
 - SSR: `benchmarks/runner/src/suites/ssr/` and `benchmarks/scenarios/ssr.md`
 
-Future runtime categories (scheduler fairness, async boundaries, streaming) require an MSF Fusion runtime implementation and equivalent competitor harnesses; not claimed yet.
+Future runtime categories (scheduler fairness, async boundaries, streaming, MSF comparisons) require MSF benchmark integration and equivalent harnesses; no MSF claims yet.
 
-ملخص: تغطي هذه الفئة حالياً اختبارات التفاعلية المجردة وSSR فقط.
+ملخص: تغطي حالياً خط أساس المنافسين (تفاعلية وSSR)؛ معاينة MSF متاحة لكنها غير مدمجة في قياسات قابلة للمقارنة بعد.

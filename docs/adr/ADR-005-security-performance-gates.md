@@ -1,7 +1,8 @@
 # ADR-005: Security and performance as architectural gates
 
-- **Status:** Proposed
+- **Status:** Accepted direction (ongoing)
 - **Date:** 2026-11-16
+- **Updated:** 2026-11-16 (applied during M1 implementation/review)
 
 ## Context
 The framework targets production use. Security regressions and accidental performance cliffs are architectural risks, not post-hoc polish.
@@ -19,6 +20,9 @@ Treat the following as **merge/release gates** for future milestones (not all au
 ## Consequences
 - Slower early feature velocity but higher trustworthiness.
 - Requires investment in test/bench infrastructure before broad feature expansion.
+
+## Implementation note (M1)
+Recurring gates are being applied to runtime preview work (tests, architecture boundaries, documented limitations, no superiority claims). Additional evidence (compiler correctness, MSF benchmarks, hardening/leak/security tests) is required as scope expands.
 
 ## ملخص بالعربية
 يعتمد المشروع بوابات إلزامية للصحة والسلامة النوعية والذاكرة والأمان والأداء والمعمارية والتوثيق لكل المراحل القادمة.

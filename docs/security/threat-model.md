@@ -1,4 +1,6 @@
-# Threat model — Milestone 0 (initial)
+# Threat model (initial)
+
+> Initial model defined in M0 and updated as M1 preview implementation progresses. Runtime/compiler security controls are not complete; see current status notes below.
 
 ## Assets
 - User data and session credentials
@@ -41,8 +43,10 @@ flowchart LR
 | DoS / resource exhaustion | Render, compile, actions | Time/memory limits, streaming backpressure, rate limiting hooks |
 | ReDoS / algorithmic complexity | Validators/parsers/user patterns | Safe regex practices, input limits, fuzzing for parsers |
 
-## Out of scope (Milestone 0 implementation)
-- Production WAF/infra hardening, deployment-specific IAM, and runtime monitoring are consumer/deployment responsibilities (framework must provide hooks and safe defaults).
+## Current status / out of scope
+- **Implemented in preview:** limited SSR string escaping in `@msf/runtime/server` for supported node/attribute rendering.
+- **Not yet implemented:** compiler-enforced boundaries, hydration serialization contracts, action/CSRF protections, SSRF-safe fetch helpers, input/size limits, and executable security benchmark suite.
+- Production WAF/infra hardening, deployment-specific IAM, and runtime monitoring remain consumer/deployment responsibilities (framework must provide hooks and safe defaults).
 
 ## ملخص بالعربية
 نموذج تهديد أولي يحدد الأصول وحدود الثقة (عميل/خادم/أسرار) والتهديدات الرئيسية مثل XSS وتسريب الأسرار وCSRF/SSRF وهجمات سلسلة التوريد مع تخفيفات مخططة.

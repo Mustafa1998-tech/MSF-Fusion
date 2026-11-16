@@ -33,8 +33,11 @@
 - CSP compatibility (avoid requiring `unsafe-inline`/`unsafe-eval` for core runtime).
 - Safe handling of navigation/redirects and user-controlled URLs.
 
-## Milestone 0 status
-Requirements documented only; no executable security benchmark suite yet (see `benchmarks/security/README.md`).
+## Current status
+- Requirements documented and treated as design gates.
+- **M1 preview:** `@msf/runtime/server` escapes text/attribute values by default for its supported string-rendering model; this is not a complete security boundary.
+- No executable security benchmark suite yet (see `benchmarks/security/README.md`).
+- Compiler-enforced boundaries, serialization allowlists, auth/CSRF/SSRF controls, and broader runtime hardening are pending implementation.
 
 ## ملخص بالعربية
 تحدد هذه الوثيقة متطلبات الأمان الافتراضية (هروب تلقائي، حدود خادم/عميل، تسلسل آمن، حماية CSRF/SSRF، وسلسلة توريد) كقيود تصميمية قبل التنفيذ.

@@ -1,42 +1,47 @@
 # FAQ
 
 ## Is MSF Fusion ready to use?
-**Not yet for application development.** Milestone 0 delivers architecture, ADRs, a reproducible benchmark lab, and a compiler toolchain spike. The framework runtime/compiler/server packages are planned for implementation after explicit approval (see [implementation plan](../engineering/implementation-plan.md)).
+**As a developer preview, partially.** You can use the in-repo runtime APIs (`@msf/runtime` core, DOM helpers, SSR string renderer) and run the included examples/tests. It is **not** yet a complete, stable, or production-ready framework (no compiler/JSX subset, no hydration, no CLI/dev server, no published packages).
+
+## What works right now?
+- Reactive kernel: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, owner helpers
+- DOM helpers: `@msf/runtime/dom` (`render`, `insert`, `setText`, `setAttribute`, `list`, etc.)
+- SSR string rendering: `@msf/runtime/server` (`h`, `renderToString`, `escapeHtml`)
+- Examples: `examples/counter-basic`, `examples/counter-browser`
+- Tooling/evidence: benchmark runner, baseline results, compiler toolchain spike
 
 ## Can I install it from npm today?
-No. There are no published MSF Fusion framework packages yet. The `packages/`, `apps/`, and `examples/` directories are reserved for approved milestones.
+No. Packages are private and currently export source files for monorepo development. Publishable builds/exports require further work and explicit approval before release.
 
 ## What syntax does MSF Fusion use?
-The final authoring syntax (JSX subset, directives, or file format) will be decided and implemented in Milestone 1. The [syntax & components guide](syntax-and-components.md) shows **proposed, non-runnable** examples to communicate intent.
+Today: direct TypeScript/JavaScript calls to runtime APIs (and `h()` for SSR snapshots). A compiler-supported JSX/authoring subset is planned but **not implemented yet**.
 
 ## Is it based on React, Angular, Vue, Solid, or Svelte?
-No. MSF Fusion is a standalone design that owns its reactivity, compiler, and runtime. It may learn from industry ideas (and compares against competitors in benchmarks), but it must not depend on, wrap, or copy their runtimes/source.
+No. MSF Fusion is a standalone design that owns its reactivity, compiler, and runtime. It may compare against competitors in benchmarks, but it must not depend on, wrap, or copy their runtimes/source.
 
-## Will it support TypeScript?
-Yes, TypeScript-first is a core goal: typed APIs, typed component contracts, and compiler diagnostics are planned. (Today, the repository tooling is TypeScript-based.)
+## Does it support TypeScript?
+Yes for the current codebase and public runtime APIs (typed). Compiler diagnostics and full framework TypeScript authoring experience are planned.
 
 ## How fast is it?
-There are **no MSF Fusion performance numbers yet** because the framework is not implemented. The repository includes reproducible competitor baselines and methodology; any future MSF results must be measured and reported with the same rigor. See [benchmarks](../../benchmarks/methodology.md).
+There are **no MSF Fusion performance numbers yet**. Competitor baselines are measured and documented; any future MSF results must be measured with the same methodology and reported without unsupported superiority claims. See [benchmarks](../../benchmarks/methodology.md).
 
-## Does it support SSR, streaming, or resumability?
-Minimal SSR/client mount for a supported subset is planned in the MVP/M2 direction; streaming and resumability are deferred until correctness, security, and evidence justify them. See [full-stack guide](fullstack.md) and [roadmap](../engineering/roadmap.md).
+## Does it support SSR and hydration?
+SSR **string snapshot rendering** is available in preview (`@msf/runtime/server`). **Hydration, streaming, and resumability are not implemented yet.**
 
 ## What about React/Angular/Web Components/Python interop?
-Compatibility and bridges are **design goals** to be validated with real integration evidence in later milestones. No adapters or bridge implementations are shipped in M0.
+These are future, evidence-gated goals. No adapters or bridge implementations are shipped.
 
 ## Is it secure?
-Security is treated as an architectural requirement (safe defaults, boundaries, serialization, threat modeling), but executable framework security behavior depends on implementation. See [security requirements](../security/security-requirements.md) and [threat model](../security/threat-model.md).
+Security is an architectural requirement, but the framework is not production-hardened. Current SSR renderer escapes by default for text/attributes in its supported model; broader boundary enforcement depends on future compiler/runtime work. See [security requirements](../security/security-requirements.md) and [threat model](../security/threat-model.md).
 
 ## What license does it use?
-No final license has been selected. Until explicitly approved, the repository is **all rights reserved** per [LICENSE](../../LICENSE) and package metadata is `UNLICENSED`.
+No final license has been selected. Until explicitly approved, the repository is **all rights reserved** per [LICENSE](../../LICENSE).
 
-## How can I contribute?
-Read [CONTRIBUTING.md](../../CONTRIBUTING.md), [quality gates](../engineering/gates.md), and open an issue/proposal aligned with the current milestone. For vulnerabilities, follow [SECURITY.md](../../SECURITY.md).
-
-## Where are the benchmark results?
-- Latest report: [`benchmarks/reports/2026-11-16_06-39-52-525Z-5om9.md`](../../benchmarks/reports/2026-11-16_06-39-52-525Z-5om9.md)
-- Raw data: [`benchmarks/results/2026-11-16_06-39-52-525Z-5om9.json`](../../benchmarks/results/2026-11-16_06-39-52-525Z-5om9.json)
-- Methodology: [`benchmarks/methodology.md`](../../benchmarks/methodology.md)
+## Where can I see current status and evidence?
+- [Engineering status](../engineering/status.md)
+- [Architecture/code review](../reviews/architecture-code-review.md)
+- [Roadmap](../engineering/roadmap.md) and [Implementation plan](../engineering/implementation-plan.md)
+- [Benchmark report](../../benchmarks/reports/2026-11-16_06-39-52-525Z-5om9.md) and [methodology](../../benchmarks/methodology.md)
 
 ## ملخص بالعربية
-الإطار غير جاهز للاستخدام الإنتاجي أو التثبيت حالياً، ولا توجد أرقام أداء خاصة به. هذا المستودع يوفر التصميم والقياسات الأساسية والأدلة فقط، والتنفيذ مرهون بموافقة المراحل القادمة.
+المشروع متاح حالياً كـ **معاينة مطوّر** (نواة تفاعلية وDOM/SSR وأمثلة) داخل المستودع، لكنه غير مكتمل للإنتاج أو النشر. لا مترجم/JSX ولا ترطيب ولا CLI ولا قياسات أداء لـ MSF بعد. راجع حالة المشروع والخطة والأدلة المرتبطة.

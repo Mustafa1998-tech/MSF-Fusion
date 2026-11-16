@@ -1,10 +1,29 @@
-# Full-stack & SSR (Proposed)
+# Full-stack & SSR
 
-> **Proposed / not implemented.** Server runtime, SSR, streaming, hydration/resume, actions, and bundling boundaries are planned capabilities. APIs and guarantees will be defined in approved milestones.
+> **Status:** A **minimal SSR string renderer** is implemented in preview (`@msf/runtime/server`: `h`, `renderToString`, `escapeHtml`). Full-stack boundaries, hydration, streaming/resume, routing, data/actions, and compiler-enforced modules are **planned**.
 
-MSF Fusion is designed as a full-stack framework: client rendering, server rendering, data boundaries, and deployment adapters should share one coherent model.
+## Implemented now (preview)
 
-## Execution boundaries
+```ts
+import { createSignal } from "@msf/runtime";
+import { h, renderToString } from "@msf/runtime/server";
+
+const html = renderToString(() => {
+  const [count] = createSignal(0);
+  return h("main", null,
+    h("h1", null, "Hello MSF"),
+    h("p", null, "Count: ", count()),
+  );
+});
+```
+
+- Renders a restricted node shape (`ServerNode` / `h()` elements) to HTML.
+- Escapes text and attribute values by default; event handler props are not emitted.
+- Uses `untrack` to render a snapshot without reactive subscriptions.
+
+**Not implemented yet:** hydration, component model parity with DOM runtime, streaming, resumability, server/client/shared boundary enforcement, typed actions/queries, routing.
+
+## Planned model (target)
 
 ```mermaid
 flowchart LR
@@ -27,78 +46,7 @@ flowchart LR
   S3 -->|serialized HTML + state| C1
 ```
 
-**Planned rules:**
-- **Server-only:** can access secrets, databases, private APIs; never bundled to client.
-- **Client-only:** browser APIs and interactive-only code.
-- **Shared:** pure, serializable-safe logic usable on both sides.
-- The compiler/bundler will enforce boundaries and emit diagnostics on violations.
-
-## Server rendering (SSR)
-
-**Goal:** render supported components to HTML on the server with safe escaping by default.
-
-```ts
-// Proposed syntax — illustrative
-import { renderToString } from "msf/server";
-import { App } from "./App";
-
-const html = await renderToString(() => <App url={request.url} />);
-```
-
-**Planned:** deterministic output for the supported subset, explicit serialization of hydration data, and clear error boundaries. Streaming SSR and resumability are **deferred** until correctness/security baselines are established (see [roadmap](../engineering/roadmap.md)).
-
-## Hydration / client mount (planned)
-
-After SSR, the client attaches interactivity to server-rendered markup (or adopts a resumability strategy if chosen later). The MVP target is a **deterministic mount/hydration path** for the supported subset with parity tests.
-
-```ts
-// Proposed syntax — illustrative
-import { hydrate } from "msf/client";
-import { App } from "./App";
-
-hydrate(document.getElementById("app")!, () => <App />);
-```
-
-## Data loading (planned)
-
-Data dependencies should be explicit, typed, and boundary-aware (no hidden client waterfalls by default).
-
-```ts
-// Proposed syntax — illustrative
-import { serverQuery } from "msf/server";
-
-export const getUser = serverQuery(async (id: string) => {
-  // runs on server only
-  return db.user.find(id);
-});
-```
-
-Exact APIs (queries, loaders, caching, revalidation) will be designed to integrate with SSR, serialization, and security controls.
-
-## Mutations / actions (planned)
-
-```ts
-// Proposed syntax — illustrative
-import { action } from "msf/server";
-
-export const updateProfile = action(async (input: { name: string }) => {
-  // validate input, enforce auth/CSRF, mutate on server
-});
-```
-
-**Security intent:** origin/method checks, CSRF protection strategy, input validation, and typed request/response contracts at the boundary.
-
-## Serialization contract (planned)
-
-Only explicitly serializable data may cross from server to client (e.g. JSON-compatible values, typed records). Functions, class instances, secrets, and non-serializable handles will be rejected by default with diagnostics.
-
-## Routing (future)
-
-A file-based or config-based router is out of M1 MVP unless re-approved. When introduced, it will integrate with SSR, data loading, and code splitting.
-
-## Deployment (future)
-
-Target adapters (Node, edge runtimes, serverless) will be evaluated after core runtime/SSR semantics stabilize. No deployment claims are made in M0.
+Planned capabilities include: compiler-enforced boundaries, deterministic hydration for a supported subset, explicit serialization contracts, server actions/queries with validation and security controls, and later streaming/resume evaluation based on evidence.
 
 ## ملخص بالعربية
-التصميم كامل المكدس المقترح يفصل حدود الخادم/العميل/المشترك، ويدعم SSR وترطيباً حتمياً (لاحقاً) مع تحميل بيانات وأفعال خادم صريحة وعقود تسلسل آمنة. جميع واجهات البرمجة هنا **مقترحة وغير منفذة**، والبث والاستئناف مؤجلان.
+المتوفر حالياً: توليد HTML نصي (snapshot) مع هروب افتراضي عبر `@msf/runtime/server`. غير متوفر بعد: الترطيب، النموذج الموحد مع DOM، البث/الاستئناف، وتطبيق حدود الخادم/العميل بالمترجم—وهي أهداف مخططة.

@@ -17,10 +17,10 @@
 | Memory | No ownership/disposal leaks; bounded growth under repeated create/update/destroy |
 | GC pressure | Avoid pathological allocation patterns in hot paths; investigate with profiles when anomalies appear |
 
-## Milestone 0 evidence
-- Baseline competitor measurements: micro, SSR, bundle, DOM, coarse heap snapshots (see `benchmarks/`).
-- Toolchain feasibility (not perf benchmark): `benchmarks/evidence/compiler-toolchain.json`.
-- **No MSF Fusion performance numbers exist yet.**
+## Evidence status
+- **M0 baseline (complete):** competitor measurements for micro, SSR, bundle, DOM, and coarse heap snapshots (see `benchmarks/results/`, `benchmarks/reports/`, `benchmarks/methodology.md`).
+- Toolchain feasibility (not a perf benchmark): `benchmarks/evidence/compiler-toolchain.json`.
+- **M1 (in progress):** runtime preview exists but MSF Fusion framework fixtures/measurements are not yet integrated into the benchmark runner. **No MSF Fusion performance numbers or superiority claims exist yet.**
 
 ## Budgeting policy (to be set at Milestone 1 planning)
 - Define scenario-specific budgets relative to approved baselines and product goals.

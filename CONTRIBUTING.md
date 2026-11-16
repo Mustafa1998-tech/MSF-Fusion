@@ -1,23 +1,31 @@
 # Contributing to MSF Fusion
 
-Thank you for your interest in MSF Fusion. This project is currently in **Milestone 0** (architecture, baseline evidence, and tooling). Framework implementation is gated by explicit approval.
+Thank you for your interest in MSF Fusion. The repository has completed **Milestone 0** (architecture, baseline evidence, and tooling spikes) and is now in **Milestone 1 (developer preview, in progress)** with a real reactive runtime, DOM/SSR helpers, and examples.
 
 ## Current contribution posture
 
-- **Welcome now:** documentation fixes, benchmark methodology clarifications, reproducibility improvements, issue reports with evidence, and proposals that align with approved ADRs.
-- **Gated:** new framework runtime/compiler/server implementation, API design changes, dependency additions, and performance/security claims. These require alignment with the [implementation plan](docs/engineering/implementation-plan.md) and milestone approval.
-- **Not accepted:** code copied from other frameworks, runtime dependencies on React/Angular/Next.js, fabricated benchmarks, or claims without reproducible evidence.
+- **Welcome now:** documentation fixes, benchmark methodology/reproducibility improvements, runtime correctness tests, bug fixes aligned with ADRs, issue reports with evidence, and proposals that fit the approved roadmap.
+- **Coordinate first:** compiler/IR/JSX subset work, public API changes, package export/build changes, dependency additions, and performance/security claims. These should align with the [implementation plan](docs/engineering/implementation-plan.md), [roadmap](docs/engineering/roadmap.md), and [quality gates](docs/engineering/gates.md).
+- **Not accepted:** code copied from other frameworks, runtime dependencies on React/Angular/Next.js, fabricated benchmarks, unsupported superiority claims, or claims without reproducible evidence.
 
 ## Development setup
 
 ```bash
 pnpm install --frozen-lockfile
 pnpm run typecheck
+pnpm --filter @msf/runtime run test
 pnpm --filter @msf/bench-runner run test
 pnpm --filter @msf/spike-compiler-toolchain run test
 ```
 
-Benchmarks must be run sequentially and interpreted according to [benchmarks/methodology.md](benchmarks/methodology.md).
+Useful checks/examples:
+
+```bash
+node examples/counter-basic/src/ssr.ts
+pnpm --filter @msf/example-counter-browser build
+# Benchmarks must be run sequentially for comparable results:
+pnpm bench:micro && pnpm bench:ssr && pnpm bench:bundle && pnpm bench:dom && pnpm bench:report
+```
 
 ## Pull request guidelines
 

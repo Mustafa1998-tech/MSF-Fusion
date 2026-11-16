@@ -1,8 +1,9 @@
 # ADR-001: Compiler-assisted fine-grained reactivity
 
-- **Status:** Proposed (Milestone 0)
+- **Status:** Accepted direction (implementation in progress)
 - **Date:** 2026-11-16
-- **Deciders:** MSF Fusion architecture review (pending approval)
+- **Updated:** 2026-11-16 (M1 runtime preview implemented; compiler lowering pending)
+- **Deciders:** MSF Fusion architecture review (M0 approved)
 
 ## Context
 MSF Fusion must own its reactivity model and compete on correctness, predictability, and measured performance. Competitors use different models: React schedules VDOM reconciliation (with optional compiler optimizations), Solid uses fine-grained signals, Svelte compiles reactivity, Vue combines proxy reactivity with a VDOM/runtime scheduler, Angular uses signals/effects in a framework context, Qwik emphasizes resumability.
@@ -30,6 +31,9 @@ Adopt a **compiler-assisted, fine-grained reactive** model:
 ## Evidence inputs
 - Competitor baseline lab (micro/SSR/bundle/DOM) provides comparison points, not proof of MSF superiority.
 - Official models reviewed: Solid fine-grained reactivity, Svelte `$state`, Angular signals, React Compiler intent, Qwik resumability.
+
+## Implementation note (M1)
+A real fine-grained runtime kernel and initial DOM/SSR helpers are implemented in `@msf/runtime` (developer preview). Compiler-assisted lowering, reactive IR, and JSX subset codegen remain pending per this ADR and WP4.
 
 ## Mermaid — model comparison
 ```mermaid

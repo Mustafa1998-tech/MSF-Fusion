@@ -1,4 +1,4 @@
-# Architecture overview — Milestone 0
+# Architecture overview — MSF Fusion
 
 ## Vision
 MSF Fusion aims to be a **standalone** web framework that owns its reactivity, compiler, runtime, and server integration. It must not depend on or wrap React, Angular, Next.js, or copy their source. Compatibility is provided through adapters/bridges built on MSF Fusion primitives, not by embedding competitor runtimes.
@@ -10,11 +10,25 @@ MSF Fusion aims to be a **standalone** web framework that owns its reactivity, c
 4. **Full-stack by design:** client, SSR, hydration/streaming/resume strategy, data boundaries, and server handlers share one model and security posture.
 5. **Evidence over claims:** performance, compatibility, and security assertions require reproducible measurements/tests.
 
+## Current implementation status (M1 in progress)
+| Component | Target | Current state |
+|---|---|---|
+| Reactive kernel | signals/memos/effects, ownership/disposal, batching | **Implemented (preview):** `packages/runtime/src/core.ts` with tests |
+| DOM runtime | fine-grained bindings, control flow, keyed updates | **Partial (preview):** `packages/runtime/src/dom.ts` (insert/attrs/events, basic keyed `list`) |
+| SSR | render-to-string, hydration/streaming | **Partial (preview):** `packages/runtime/src/server.ts` (`h`, `renderToString`, escaping); no hydration/isomorphic components |
+| Compiler | parse/analyze/IR/codegen, JSX subset, sourcemaps | **Scaffold only:** `packages/compiler` (not implemented) |
+| Dev tooling | CLI, HMR, diagnostics | **Scaffold only:** `packages/dev` (not implemented) |
+| Contracts | shared IR/interfaces | **Scaffold:** `packages/contracts` |
+| Benchmarks (competitors) | reproducible baselines | **Implemented:** `benchmarks/runner` + final baseline evidence |
+| MSF benchmark integration | equivalent MSF fixtures/measurements | **Pending** |
+
+See [engineering status](../engineering/status.md) and [architecture/code review](../reviews/architecture-code-review.md) for details and risks.
+
 ## System context (C4 L1)
 
 ```mermaid
 C4Context
-  title MSF Fusion — System Context (planned)
+  title MSF Fusion — System Context (target)
   Person(dev, "Developer", "Builds apps with MSF Fusion")
   Person(user, "End User", "Uses deployed app")
   System(msf, "MSF Fusion", "Compiler, runtime, dev server, SSR/adapters")
@@ -30,11 +44,11 @@ C4Context
   Rel(user, browser, "Interacts")
 ```
 
-## Container view (C4 L2, planned)
+## Container view (C4 L2, target)
 
 ```mermaid
 C4Container
-  title MSF Fusion — Containers (planned)
+  title MSF Fusion — Containers (target)
   Person(dev, "Developer")
   Container(compiler, "Compiler", "TS/Node, Oxc+TS analysis", "Parses, analyzes, lowers reactive graph, emits client/server code")
   Container(runtime, "Client Runtime", "JS/TS", "Signals, effects, scheduler, DOM bindings, hydration/resume")
@@ -51,14 +65,14 @@ C4Container
   Rel(runtime, adapters, "Interop boundaries")
 ```
 
-## Compile-to-runtime pipeline (sequence)
+## Compile-to-runtime pipeline (sequence, target)
 
 ```mermaid
 sequenceDiagram
   autonumber
-  participant Src as Source (.ts/.msf)
+  participant Src as Source (.ts/.tsx subset)
   participant Parse as Parser (Oxc)
-  participant Check as Type Analysis (TS API)
+  participant Check as Type Analysis (TS adapter)
   participant Graph as Reactive Graph IR
   participant Lower as Lowering/Codegen
   participant Client as Client Bundle
@@ -72,7 +86,7 @@ sequenceDiagram
   Lower->>Server: render/serialize/endpoint code
 ```
 
-## Dependency direction (target)
+## Dependency direction (target and current rule)
 
 ```mermaid
 graph TD
@@ -99,8 +113,5 @@ graph TD
 - ADR-004: Compiler toolchain split (Oxc parse/transform + TypeScript semantic adapter)
 - ADR-005: Security/performance as non-negotiable constraints
 
-## Milestone 0 status
-Only docs, benchmark lab, and toolchain spike exist. All runtime/compiler components above are **planned** pending approval.
-
 ## ملخص بالعربية
-يحدد هذا المستند رؤية MSF Fusion ومعمارية الهدف (مترجم + وقت تشغيل تفاعلي دقيق + خادم/SSR + محولات) مع مخططات C4 وتسلسل وخط أنابيب، مع التأكيد أن التنفيذ الفعلي مؤجل لما بعد اعتماد المرحلة 0.
+يوثّق هذا المستند المعمارية المستهدفة لـ MSF Fusion والحالة الحالية: نواة تفاعلية وطبقة DOM/SSR أولية **منفذة كمعاينة**، بينما المترجم وIR/codegen وCLI/HMR والنموذج الموحد والترطيب ما زالت قيد التنفيذ وفق ADRs والخطة.

@@ -1,7 +1,8 @@
 # ADR-002: Runtime ownership, scheduling, and lifecycle
 
-- **Status:** Proposed
+- **Status:** Accepted direction (partially implemented)
 - **Date:** 2026-11-16
+- **Updated:** 2026-11-16 (M1 kernel preview: signals/memos/effects, ownership/disposal, batch/untrack)
 
 ## Context
 Fine-grained reactivity requires clear rules for ownership, disposal, batching, and effect ordering. Leaked subscriptions, non-deterministic updates, and scheduler surprises are common failure modes.
@@ -38,6 +39,9 @@ stateDiagram-v2
 ## Consequences
 - Enables benchmarkable primitives and leak checks.
 - Requires rigorous unit/property tests and long-run memory scenarios before claims.
+
+## Implementation note (M1)
+`@msf/runtime` implements core primitives with ownership/disposal and synchronous batched propagation in preview form. Dev diagnostics (cycle detection, read/write-after-dispose tracing), effect classification guarantees, and broader stress/leak evidence remain pending.
 
 ## ملخص بالعربية
 يعتمد وقت التشغيل على ملكية هرمية وتخلص حتمي وجدولة واضحة وتأثيرات مصنفة، مع أدوات تطوير لكشف التسريبات والحلقات.

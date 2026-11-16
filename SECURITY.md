@@ -1,13 +1,14 @@
 # Security Policy
 
-MSF Fusion treats security as an architectural requirement. Although the framework runtime is not yet implemented (Milestone 0), the repository contains security requirements, a threat model, and benchmark/tooling code that should be handled responsibly.
+MSF Fusion treats security as an architectural requirement. The repository contains security/design documentation, benchmark and spike tooling, and a **developer-preview runtime** (`@msf/runtime`) with initial DOM/SSR helpers. The framework is not production-hardened or released.
 
 ## Supported status
 
 | Component | Status | Security fixes |
 |---|---|---|
-| Framework runtime/compiler packages | Not implemented | N/A until released |
-| Benchmark lab & spikes | Milestone 0 tooling | Best-effort; issues reviewed case-by-case |
+| `@msf/runtime` (kernel/DOM/SSR preview) | Developer preview (M1 in progress) | Best-effort; issues reviewed case-by-case |
+| `@msf/compiler`, `@msf/dev`, `@msf/contracts` | Scaffold / early contracts | Best-effort; issues reviewed case-by-case |
+| Benchmark lab & spikes | Tooling | Best-effort; issues reviewed case-by-case |
 | Documentation/design | Active | Corrections welcome via private report or PR as appropriate |
 
 ## Reporting a vulnerability
@@ -23,7 +24,7 @@ MSF Fusion treats security as an architectural requirement. Although the framewo
 - Version/commit SHA and environment details
 - Minimal, reproducible steps (or a safe PoC)
 - Expected vs. actual behavior and security impact
-- Whether the issue affects design/docs, tooling, dependencies, or future runtime assumptions
+- Whether the issue affects design/docs, tooling, dependencies, runtime behavior, SSR escaping/serialization assumptions, or future boundaries
 
 ## Disclosure and response
 

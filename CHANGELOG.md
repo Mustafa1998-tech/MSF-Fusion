@@ -7,7 +7,18 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 ## [Unreleased]
 
 ### Added
-- Professional repository presentation: refreshed README, LICENSE (pending final approval), CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policy, issue/PR templates, and CI workflow for benchmark-lab/toolchain checks.
+- **Runtime developer preview (M1 progress):** `@msf/runtime` with fine-grained reactive kernel (`createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, ownership/disposal), DOM helpers (`render`, `insert`, `setText`, `setAttribute`, `addEventListener`, `list` with keyed reconciliation), and SSR string renderer (`h`, `renderToString`, HTML escaping). Includes runtime tests (kernel/DOM/server).
+- **Package scaffolds:** `@msf/contracts`, `@msf/compiler` (scaffold, not implemented), and `@msf/dev` (scaffold, not implemented).
+- **Examples:** `examples/counter-basic` (runnable SSR snapshot) and `examples/counter-browser` (Vite interactive demo).
+- **Documentation updates:** refreshed README, developer guide updated for runnable preview APIs, engineering status and architecture/code review docs.
+- Professional repository presentation: LICENSE (pending final approval), CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policy, issue/PR templates.
+
+### Changed
+- Project status moved from M0-only to **M1 in progress** with documented preview scope and limitations.
+
+### Notes
+- Compiler/IR/codegen, JSX subset, hydration/isomorphic rendering, CLI/dev server, publishable `dist` builds, and MSF benchmark fixtures are still pending.
+- No MSF Fusion performance superiority claims are made; baseline results remain environment-specific.
 
 ## [0.0.0-m0] - 2026-11-16
 
@@ -19,6 +30,6 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 - **Repository scaffolding:** pnpm workspace, strict TypeScript base config, editor/git settings, and documentation index.
 
 ### Notes
-- No MSF Fusion framework runtime/compiler/server implementation is included.
+- No MSF Fusion framework runtime/compiler/server implementation was included in the M0 snapshot.
 - No performance superiority claims are made; baseline results are environment-specific and documented with exclusions/limitations.
 - License is pending explicit approval (`UNLICENSED` metadata; all rights reserved per `LICENSE`).

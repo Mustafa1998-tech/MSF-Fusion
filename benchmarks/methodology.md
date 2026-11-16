@@ -1,6 +1,6 @@
-# Benchmark methodology — MSF Fusion Milestone 0
+# Benchmark methodology — MSF Fusion baselines
 
-> **Scope:** baseline competitor measurements only. MSF Fusion is not implemented and no MSF Fusion performance claim is made.
+> **Scope:** reproducible baseline competitor measurements (M0) and the measurement rules for future MSF comparisons. A developer-preview MSF runtime exists, but **MSF Fusion is not yet integrated into equivalent benchmark fixtures and no MSF Fusion performance claim is made.** Keep historical result files/reports intact as evidence.
 
 ## Purpose
 This laboratory establishes reproducible baselines for selected competitors so Milestone 1+ can compare MSF Fusion against measured evidence, not intuition. Results are inputs to architecture decisions; they are not a universal ranking.
@@ -69,4 +69,4 @@ node benchmarks/runner/src/cli.ts report
 Raw JSON and markdown reports are written under `benchmarks/results/` and `benchmarks/reports/`.
 
 ## ملخص بالعربية
-تحدد هذه الوثيقة منهجية قياس خط الأساس في المرحلة 0: إصدارات مثبتة، بناء إنتاجي، إحماء، عينات متكررة، حفظ النتائج الخام، ووسيط/P95/CV/MAD بدون درجة مركبة. النتائج خاصة ببيئة واحدة ولا تتضمن أي ادعاء لأداء MSF Fusion لأنه غير مُنفّذ بعد.
+تحدد هذه الوثيقة منهجية قياس خط الأساس والمقارنات المستقبلية: إصدارات مثبتة، بناء إنتاجي، إحماء، عينات متكررة، حفظ النتائج الخام، ووسيط/P95/CV/MAD بدون درجة مركبة. توجد حالياً نتائج أساس للمنافسين فقط؛ معاينة MSF runtime متاحة لكن لم تُدمج بعد في قياسات مكافئة ولا توجد ادعاءات أداء لـ MSF Fusion.

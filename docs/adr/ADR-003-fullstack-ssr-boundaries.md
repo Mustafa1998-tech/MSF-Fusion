@@ -1,7 +1,8 @@
 # ADR-003: Full-stack rendering and data boundaries
 
-- **Status:** Proposed
+- **Status:** Accepted direction (preview slice implemented)
 - **Date:** 2026-11-16
+- **Updated:** 2026-11-16 (SSR string snapshot preview added; hydration/boundaries pending)
 
 ## Context
 MSF Fusion is full-stack. It must define where code runs (server/client), how data crosses boundaries, how HTML is produced/hydrated or resumed, and how to prevent accidental secret leakage.
@@ -32,6 +33,9 @@ sequenceDiagram
 ## Trade-offs
 - Explicit boundaries reduce magic but require developer learning.
 - Streaming/resume deferred until correctness/security baselines exist.
+
+## Implementation note (M1)
+`@msf/runtime/server` provides `h`, `renderToString`, and HTML escaping for a restricted snapshot model. Isomorphic component rendering, hydration, streaming/resume, serialization contracts, and compiler-enforced boundaries are not implemented yet.
 
 ## ملخص بالعربية
 يحدد القرار حدود تنفيذ واضحة (خادم/عميل/مشترك)، تعاقد تسلسل آمن، ومسار SSR تدريجي مع تأجيل البث والاستئناف إلى ما بعد استقرار النواة.

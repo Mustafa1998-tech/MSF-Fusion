@@ -1,6 +1,6 @@
 # Compatibility benchmarks / evidence
 
-**Milestone 0 status:** design-only, no executable evidence.
+**Status:** design-only, no executable compatibility evidence yet.
 
 Planned evidence categories:
 - npm ESM/CJS consumption and bundler compatibility
@@ -8,6 +8,6 @@ Planned evidence categories:
 - Python bridge and/or WASM integration
 - TypeScript type compatibility across consumer configs
 
-Claims require real integration tests and published artifacts; none exist in Milestone 0.
+Claims require real integration tests and published artifacts. Runtime/compiler preview work is in progress, but no compatibility benchmark evidence is claimed.
 
-ملخص: التوافق مخطط له فقط ولا توجد أدلة تنفيذية أو ادعاءات في المرحلة 0.
+ملخص: التوافق مخطط له ولا توجد أدلة تنفيذية بعد؛ معاينة الإطار قيد التطوير دون ادعاءات توافق منشورة.

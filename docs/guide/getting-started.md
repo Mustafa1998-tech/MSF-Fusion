@@ -1,125 +1,97 @@
 # Getting started
 
-> **Proposed / not implemented.** This page describes the intended getting-started experience. Commands, package names, and APIs below are **design placeholders** and may change.
+> **Status:** Milestone 1 developer preview. Runtime core, DOM helpers, SSR string rendering, and examples are runnable in-repo. Compiler/JSX, hydration, CLI/dev server, and npm publishing are **not implemented yet**.
 
-## Today: developer preview (runnable subset)
-
-MSF Fusion is still in active development, but a **real runtime preview** is now available in this monorepo:
-- Reactive kernel: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`
-- DOM helpers: `@msf/runtime/dom` (`render`, `insert`, `setText`, `setAttribute`, `For`, ...)
-- SSR string renderer: `@msf/runtime/server` (`h`, `renderToString`, escaping by default)
+## Developer preview (runnable now)
 
 ```bash
 git clone https://github.com/Mustafa1998-tech/MSF-Fusion.git
 cd MSF-Fusion
 pnpm install --frozen-lockfile
 
-# Verify runtime and tooling
+# Verify
 pnpm run typecheck
 pnpm --filter @msf/runtime run test
 pnpm --filter @msf/bench-runner run test
 pnpm --filter @msf/spike-compiler-toolchain run test
 
-# Run the included SSR example
+# Examples
 node examples/counter-basic/src/ssr.ts
-
-# Run the interactive browser example (Vite)
 pnpm --filter @msf/example-counter-browser dev
 ```
 
-**Current limitations:** no compiler/JSX subset yet, no hydration, no dev server/CLI, no router, and packages are not published to npm. APIs may change.
+**Current implemented surface (preview, subject to change):**
+- `@msf/runtime`: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, `getOwner`, `runWithOwner`, `flushSync`
+- `@msf/runtime/dom`: `render`, `mount`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list`, `For`
+- `@msf/runtime/server`: `h`, `renderNode`, `renderToString`, `escapeHtml`
 
-**Recommended reading:**
-1. [Architecture overview](../architecture/overview.md)
-2. [ADR index](../adr/README.md)
-3. [Implementation plan](../engineering/implementation-plan.md)
-4. [Benchmark methodology](../../benchmarks/methodology.md)
+**Current limitations:** no compiler/JSX subset, no hydration/isomorphic component model, no CLI/dev server/HMR, no router, no publishable `dist` packages yet.
 
-## Future (planned): create an app
+## Current preview usage
 
-Once Milestone 1+ is approved and implemented, the intended workflow will look like:
+### SSR snapshot
 
-```bash
-# Proposed — not available yet
-pnpm create msf-app my-app
-cd my-app
-pnpm install
-pnpm dev
-```
-
-**Planned project shape (illustrative):**
-```text
-my-app/
-├─ msf.config.ts          # framework/build config (proposed)
-├─ tsconfig.json
-├─ src/
-│  ├─ entry-client.ts     # client mount (proposed)
-│  ├─ entry-server.ts     # SSR handler (proposed, later milestone)
-│  ├─ App.msf.tsx         # or .msf / .tsx subset — syntax TBD
-│  └─ components/
-└─ package.json
-```
-
-## Planned prerequisites
-- **Node.js:** supported LTS (exact matrix TBD at M1 approval)
-- **Package manager:** pnpm (recommended), npm/yarn compatibility to be validated
-- **TypeScript:** strict mode, framework-provided config preset
-- **Editor:** TypeScript language service + future MSF tooling/diagnostics
-
-## Your first app (current preview API)
-
-**SSR snapshot (runnable now):**
 ```ts
 import { createSignal } from "@msf/runtime";
 import { h, renderToString } from "@msf/runtime/server";
 
-function CounterCard() {
+const html = renderToString(() => {
   const [count] = createSignal(0);
   return h("section", { class: "counter" },
     h("h1", null, "Counter"),
     h("p", null, "Count: ", count()),
   );
-}
+});
 
-console.log(renderToString(() => CounterCard()));
+console.log(html);
 ```
 
-**Browser fine-grained DOM (runnable with bundler/ESM in browser):**
-```ts
-import { createSignal } from "@msf/runtime";
-import { render, insert, setAttribute } from "@msf/runtime/dom";
+### Browser fine-grained DOM
 
-const [count, setCount] = createSignal(0);
+```ts
+import { batch, createMemo, createSignal } from "@msf/runtime";
+import { insert, render, setAttribute } from "@msf/runtime/dom";
 
 render(() => {
+  const [count, setCount] = createSignal(0);
+  const doubled = createMemo(() => count() * 2);
+
   const root = document.createElement("section");
   const value = document.createElement("p");
-  insert(value, () => `Count: ${count()}`);
+  insert(value, () => `Count: ${count()} (double: ${doubled()})`);
   setAttribute(value, "data-count", () => String(count()));
 
   const btn = document.createElement("button");
   btn.textContent = "Increment";
-  btn.addEventListener("click", () => setCount((n) => n + 1));
+  btn.addEventListener("click", () => {
+    batch(() => setCount((n) => n + 1));
+  });
 
   root.append(value, btn);
   return root;
 }, document.getElementById("app")!);
 ```
 
-> **Note:** JSX/compiler syntax shown elsewhere in the guide remains **proposed** until the compiler subset lands. The APIs above are the currently implemented runtime primitives.
+> `packages/runtime` currently exports source `.ts` for monorepo/development use. A publishable `dist` build and stable package exports are planned.
 
-## Development workflow (planned)
-- `msf dev` — local dev server with HMR and compiler diagnostics
-- `msf build` — production client/server builds
-- `msf check` — type and framework boundary diagnostics
-- `msf preview` — preview production build
+## Planned (not available yet): project scaffolding and CLI
 
-(Exact CLI command names are provisional.)
+```bash
+# Proposed — not available yet
+pnpm create msf-app my-app
+cd my-app
+pnpm dev
+pnpm build
+```
 
-## Next steps
-- Learn the model: [Reactivity](reactivity.md)
-- Learn authoring: [Syntax & components](syntax-and-components.md)
-- Understand boundaries: [Full-stack & SSR](fullstack.md)
+Planned CLI (provisional): `msf dev`, `msf build`, `msf check`, `msf preview`.
+
+## Recommended reading
+1. [Engineering status](../engineering/status.md)
+2. [Architecture overview](../architecture/overview.md)
+3. [ADR index](../adr/README.md)
+4. [Implementation plan](../engineering/implementation-plan.md)
+5. [Benchmark methodology](../../benchmarks/methodology.md)
 
 ## ملخص بالعربية
-حالياً يمكنك استنساخ المستودع وتشغيل اختبارات/قياسات المرحلة 0 فقط. الأوامر والحزم وبنية المشروع في هذه الصفحة **مقترحة وغير متاحة بعد**، وستتحدد نهائياً عند تنفيذ المراحل المعتمدة.
+يمكنك اليوم تشغيل معاينة المطوّر داخل المستودع (نواة تفاعلية، DOM، SSR نصي، وأمثلة) والتحقق بالاختبارات. أوامر الإنشاء وCLI وحزم npm والبناء النهائي والترطيب والمترجم/JSX **مخططة وغير متاحة بعد**.

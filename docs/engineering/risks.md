@@ -1,17 +1,18 @@
-# Engineering risks — Milestone 0
+# Engineering risks — updated
 
-| ID | Risk | Impact | Likelihood | Mitigation | Gate/Owner |
-|---|---|---|---|---|---|
-| R1 | Compiler unsoundness (wrong lowering/optimization) | High | Medium | Reactive IR invariants, golden tests, differential tests vs runtime semantics | Correctness gate |
-| R2 | TypeScript unstable API churn (7.x) | High | Medium | Isolate behind semantic adapter, pin versions, spike coverage, fallback plan to CLI/diagnostics-only modes | ADR-004 review |
-| R3 | Memory leaks from ownership/disposal bugs | High | Medium | Ownership model tests, stress loops, heap snapshots, dev-mode tracing | Memory gate |
-| R4 | Benchmark misinterpretation / unfair comparisons | High | Medium | Document semantics, record exclusions, sequential runs, no composite scores | Methodology review |
-| R5 | Security boundary leaks (secrets/serialization/XSS) | Critical | Medium | Compiler boundaries, safe defaults, threat-model reviews, security tests | Security gate |
-| R6 | Source map/debuggability poor for compiled output | Medium | Medium | Preserve locations in IR, sourcemap tests, dev diagnostics | DX gate |
-| R7 | Scope creep (full-stack + compiler + adapters too early) | High | High | Strict milestone plan, MVP slice, defer streaming/resume/bridges until evidenced | Approval gate |
-| R8 | Windows-specific tooling issues (pnpm shims, paths, perf variance) | Medium | Medium | Cross-platform CI later, command-shim handling, document environment | CI plan |
-| R9 | Ecosystem compatibility claims without evidence | High | Medium | Integration test matrix, real adapter packages, no marketing claims | Compatibility gate |
-| R10 | DOM benchmark noise (frame floor, thermal variance) | Medium | High | Report sync+frame, multiple samples, document limitations, controlled reruns | Bench discipline |
+| ID | Risk | Impact | Likelihood | Current signal | Mitigation | Status |
+|---|---|---|---|---|---|---|
+| R1 | Compiler unsoundness (wrong lowering/optimization) | High | Medium | Compiler not implemented yet | Reactive IR invariants, golden tests, differential/runtime parity tests | Open (WP4) |
+| R2 | TypeScript unstable API churn (7.x) | High | Medium | Spike validated feasibility only | Isolate behind semantic adapter, pin versions, fallback strategies | Open |
+| R3 | Memory leaks / disposal bugs | High | Medium | Kernel disposal implemented; edge cases/stress limited | Ownership tests, stress loops, heap evidence, dev tracing | Partially mitigated |
+| R4 | Reactive correctness edge cases (tracking, memo propagation, duplicates) | High | Medium | Core passes 14 kernel tests; review found duplicate-read tracking gap | Add targeted tests, fix tracking cursor/dedupe, fuzz/property tests | **Active** |
+| R5 | Benchmark misinterpretation / unfair comparisons | High | Medium | M0 baseline documented with exclusions | Preserve methodology, sequential runs, no composite/superiority claims | Mitigated (ongoing) |
+| R6 | Security boundary leaks (secrets/serialization/XSS) | Critical | Medium | SSR escaping exists for string renderer; no full boundaries yet | Compiler/runtime boundary enforcement, serialization allowlist, tests, threat-model deltas | Open |
+| R7 | DOM/SSR divergence (non-isomorphic APIs) | High | Medium | DOM uses real nodes, SSR uses `h()` tree | Unify rendering model/component contract, parity tests | **Active** |
+| R8 | Source map/debuggability poor for compiled output | Medium | Medium | No compiler output yet | Preserve spans in IR, sourcemap tests, readable dev output | Open |
+| R9 | Scope creep / launch pressure | High | High | Broad request to "complete everything" | Milestone slicing, evidence gates, explicit approvals for publish/license | **Active** |
+| R10 | Packaging/consumption friction | Medium | Medium | Packages export source `.ts`, no `dist` builds | Add build pipeline, conditional exports, compatibility tests | Open |
+| R11 | DOM benchmark/environment noise | Medium | High | Observed variance in baseline runs | Report sync+frame, multi-sample, document limitations | Mitigated (ongoing) |
 
 ## ملخص بالعربية
-أهم المخاطر: صحة المترجم، تغيّر واجهات TypeScript، تسرب الذاكرة، عدالة القياسات، أمان الحدود، وتعقيد النطاق، مع تخفيفات وبوابات مراجعة لكل خطر.
+المخاطر النشطة حالياً تشمل حواف صحة التفاعلية، تباعد DOM/SSR، وضغط نطاق الإطلاق، إلى جانب مخاطر مفتوحة في المترجم والأمان والتغليف؛ وتم تخفيف جزء من مخاطر التتبع/القياس عبر اختبارات النواة ومنهجية M0.
