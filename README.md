@@ -10,7 +10,7 @@
 [![pnpm](https://img.shields.io/badge/pnpm-12.21.0-f69220)](https://pnpm.io/)
 [![License](https://img.shields.io/badge/license-pending%20approval-lightgrey)](LICENSE)
 
-[Architecture](docs/architecture/overview.md) · [ADRs](docs/adr/README.md) · [Benchmarks](benchmarks/methodology.md) · [Roadmap](docs/engineering/roadmap.md) · [Implementation Plan](docs/engineering/implementation-plan.md)
+[Developer Guide](docs/guide/README.md) · [Architecture](docs/architecture/overview.md) · [ADRs](docs/adr/README.md) · [Benchmarks](benchmarks/methodology.md) · [Roadmap](docs/engineering/roadmap.md) · [Implementation Plan](docs/engineering/implementation-plan.md)
 
 </div>
 
@@ -30,7 +30,7 @@ The project follows an evidence-driven process: architecture decisions, security
 | **M1 — Reactive kernel & compiler slice** | ⏳ Proposed | Awaiting explicit approval of M0 artifacts and implementation plan |
 | M2+ | 📋 Planned | SSR/hydration, full-stack boundaries, DX, compatibility, hardening |
 
-> **Important:** No production MSF Fusion runtime, compiler, or server package is implemented yet. This repository does **not** contain MSF Fusion performance numbers and makes **no superiority claims**.
+> **Important:** No production MSF Fusion runtime, compiler, or server package is implemented yet. The [developer guide](docs/guide/README.md) documents **proposed syntax and usage** (design preview). This repository does **not** contain MSF Fusion performance numbers and makes **no superiority claims**.
 
 ## What is in this repository today
 
@@ -98,6 +98,7 @@ See [benchmarks/methodology.md](benchmarks/methodology.md) for fairness rules, e
 
 | Area | Documents |
 |---|---|
+| **Developer guide (proposed syntax & usage)** | [Guide index](docs/guide/README.md) · [Getting started](docs/guide/getting-started.md) · [Reactivity](docs/guide/reactivity.md) · [Syntax & components](docs/guide/syntax-and-components.md) · [Full-stack & SSR](docs/guide/fullstack.md) · [FAQ](docs/guide/faq.md) |
 | Architecture | [Overview](docs/architecture/overview.md) · [ADR index](docs/adr/README.md) |
 | Decisions | [ADR-001 Reactivity](docs/adr/ADR-001-reactivity-model.md) · [ADR-002 Runtime & scheduling](docs/adr/ADR-002-runtime-and-scheduling.md) · [ADR-003 Full-stack boundaries](docs/adr/ADR-003-fullstack-ssr-boundaries.md) · [ADR-004 Compiler toolchain](docs/adr/ADR-004-compiler-toolchain.md) · [ADR-005 Security & performance gates](docs/adr/ADR-005-security-performance-gates.md) |
 | Security & Performance | [Security requirements](docs/security/security-requirements.md) · [Threat model](docs/security/threat-model.md) · [Performance requirements](docs/performance/performance-requirements.md) |
