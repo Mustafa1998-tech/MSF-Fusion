@@ -1,0 +1,38 @@
+name: Proposal / feature request
+description: Propose an improvement aligned with MSF Fusion's architecture and milestones.
+title: "[Proposal]: "
+labels: ["proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Proposals should align with approved ADRs, security/performance constraints, and milestone scope.
+        Implementation of framework runtime/compiler features is gated by explicit approval.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or motivation
+      description: What problem does this solve? Why now?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the design, alternatives considered, and trade-offs.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence / impact
+      description: Benchmarks, measurements, references, or risks (if applicable).
+    validations:
+      required: false
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and milestone fit
+      description: Which milestone/ADR does this relate to? What is explicitly out of scope?
+    validations:
+      required: false

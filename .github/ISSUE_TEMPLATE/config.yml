@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/Mustafa1998-tech/MSF-Fusion/security/advisories/new
+    about: Please report security vulnerabilities privately.
+  - name: Documentation
+    url: https://github.com/Mustafa1998-tech/MSF-Fusion/tree/master/docs
+    about: Architecture, ADRs, security/performance requirements, and engineering plans.
