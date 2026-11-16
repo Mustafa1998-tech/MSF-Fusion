@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="branding/logo/msf-fusion-logo.png" alt="MSF Fusion Framework" width="360" />
+
 # MSF Fusion
 
 **A compiler-assisted, fine-grained reactive, TypeScript-first full-stack framework — designed for correctness, performance, and security.**
