@@ -96,7 +96,13 @@ pnpm dev
 pnpm build
 ```
 
-Planned CLI (provisional): `msf dev`, `msf build`, `msf check`, `msf preview`.
+Planned CLI (provisional): `msf dev`, `msf build`, `msf check`, `msf preview`. The preview `@msf/dev` ships:
+
+```bash
+pnpm --filter @msf/dev run status           # feature status
+pnpm --filter @msf/dev run check <path>     # diagnose JSX files, exit 1 on unsupported patterns
+pnpm --filter @msf/dev run compile <path>   # emit outputs
+```
 
 ## Recommended reading
 1. [Engineering status](../engineering/status.md)

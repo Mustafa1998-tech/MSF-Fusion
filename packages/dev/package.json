@@ -19,7 +19,9 @@
     "prepack": "pnpm run build",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --passWithNoTests",
-    "dev:status": "node src/cli.ts status"
+    "dev:status": "node src/cli.ts status",
+    "check": "node dist/cli.js check",
+    "compile": "node dist/cli.js compile"
   },
   "dependencies": {
     "@msf/compiler": "workspace:*",
