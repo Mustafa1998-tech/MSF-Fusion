@@ -1,0 +1,19 @@
+{
+  "name": "@msf/example-counter-basic",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Basic MSF runtime example (developer preview).",
+  "scripts": {
+    "start": "node src/main.ts",
+    "ssr": "node src/ssr.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@msf/runtime": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "typescript": "7.0.2"
+  }
+}
