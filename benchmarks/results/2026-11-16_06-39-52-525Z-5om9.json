@@ -1,0 +1,4075 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-16_06-39-52-525Z-5om9",
+  "generatedAt": "2026-11-16T06:41:11.280Z",
+  "environment": {
+    "runStartedAt": "2026-11-16T06:39:52.615Z",
+    "node": "v26.12.1",
+    "pnpm": null,
+    "platform": "win32",
+    "release": "10.0.26100",
+    "osVersion": "Windows 11 Pro",
+    "arch": "x64",
+    "os": "Windows_NT 10.0.26100",
+    "cpuModel": "12th Gen Intel(R) Core(TM) i7-12700",
+    "cpuCores": 20,
+    "totalMemoryBytes": 16833290240,
+    "gitCommit": "04129be20546e3efde227b1710ddcfb581ae03ae",
+    "gitDirty": false,
+    "timezone": "Asia/Riyadh",
+    "powerScheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "browser": {
+      "name": "Chromium (Playwright)",
+      "version": "159.0.8154.6"
+    },
+    "packageVersions": {
+      "react": "19.3.1",
+      "react-dom": "19.3.1",
+      "solid-js": "1.9.19",
+      "svelte": "5.57.3",
+      "vue": "3.5.45",
+      "@preact/signals-core": "1.14.5",
+      "@vue/reactivity": "3.5.45",
+      "vite": "8.3.8",
+      "@vitejs/plugin-react": "6.3.0",
+      "vite-plugin-solid": "2.11.16",
+      "@sveltejs/vite-plugin-svelte": "7.3.1",
+      "@vitejs/plugin-vue": "6.0.11",
+      "playwright": "1.65.1",
+      "typescript": "7.0.2",
+      "vitest": "5.1.0"
+    },
+    "notes": [
+      "Package versions are resolved from the installed node_modules tree, not copied from package.json ranges.",
+      "gitDirty reports any tracked or untracked change at run start.",
+      "On Windows, command versions are captured through the .cmd shim when present."
+    ]
+  },
+  "suites": {
+    "micro": {
+      "kind": "micro",
+      "status": "completed",
+      "config": {
+        "samples": 12,
+        "warmup": 2
+      },
+      "totalDurationMs": 13301.3247,
+      "candidates": [
+        {
+          "id": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "notes": "Framework-independent signal package maintained by the Preact team. Public API only; effects run synchronously."
+        },
+        {
+          "id": "solid-signals",
+          "packageName": "solid-js",
+          "notes": "Solid's public reactive primitives, loaded from Solid's client runtime rather than its non-reactive server build. Effect scenarios are excluded because Solid schedules effects until a render flush; createComputed would be a different primitive."
+        },
+        {
+          "id": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "notes": "Vue's standalone reactivity package. Its public effects run synchronously in this package; no scheduler queue is configured."
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "create-read-100k",
+          "units": 100000,
+          "unitLabel": "signal create+read",
+          "description": "Create 100,000 independent signals and read each value once."
+        },
+        {
+          "id": "unobserved-write-1m",
+          "units": 1000000,
+          "unitLabel": "write",
+          "description": "Write one signal 1,000,000 times with no subscribers; measures setter overhead."
+        },
+        {
+          "id": "computed-chain-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + tail read",
+          "description": "A 64-link computed chain; update the root and read the tail 20,000 times."
+        },
+        {
+          "id": "diamond-fanout-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + sink read",
+          "description": "One source fans out to 64 computeds merged by a final computed; 20,000 updates."
+        },
+        {
+          "id": "dynamic-deps-50k",
+          "units": 50000,
+          "unitLabel": "conditional read",
+          "description": "Toggle a conditional dependency, read the derived value, and update both active and inactive sources."
+        },
+        {
+          "id": "effect-fanout-512x200",
+          "units": 102400,
+          "unitLabel": "effect execution",
+          "description": "512 synchronous effects observe one signal; the signal is written 200 times."
+        },
+        {
+          "id": "effect-mount-dispose-10k",
+          "units": 10000,
+          "unitLabel": "effect mount+dispose",
+          "description": "Create and dispose 10,000 effects, each observing its own signal."
+        }
+      ],
+      "results": [
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "create-read-100k",
+          "units": 100000,
+          "unitLabel": "signal create+read",
+          "samplesNsPerOp": [
+            63.166999999999696,
+            19.647999999999683,
+            25.898000000000252,
+            71.73999999999978,
+            18.373000000000275,
+            25.241999999999507,
+            49.15200000000027,
+            13.944999999999936,
+            20.55099999999925,
+            63.35399999999936,
+            14.333000000000313,
+            13.94900000000007
+          ],
+          "summary": {
+            "count": 12,
+            "min": 13.944999999999936,
+            "median": 22.896499999999378,
+            "p95": 67.12769999999955,
+            "max": 71.73999999999978,
+            "mean": 33.2793333333332,
+            "stdDev": 22.000970434519502,
+            "cvPct": 66.11000951897952,
+            "mad": 8.755499999999188
+          },
+          "opsPerSecond": 43674797.458127975,
+          "checksum": 4999950000
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "unobserved-write-1m",
+          "units": 1000000,
+          "unitLabel": "write",
+          "samplesNsPerOp": [
+            14.41089999999997,
+            14.324899999999957,
+            14.342800000000011,
+            14.45010000000002,
+            13.97320000000002,
+            14.350199999999973,
+            13.956999999999994,
+            13.612799999999993,
+            13.900100000000066,
+            13.72079999999994,
+            13.424399999999991,
+            12.414299999999912
+          ],
+          "summary": {
+            "count": 12,
+            "min": 12.414299999999912,
+            "median": 13.965100000000007,
+            "p95": 14.428539999999993,
+            "max": 14.45010000000002,
+            "mean": 13.906791666666654,
+            "stdDev": 0.5798958189479858,
+            "cvPct": 4.169874927643768,
+            "mad": 0.36874999999997726
+          },
+          "opsPerSecond": 71607077.64355426,
+          "checksum": 999999
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "computed-chain-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + tail read",
+          "samplesNsPerOp": [
+            1163.3849999999995,
+            1209.6750000000043,
+            1196.2150000000008,
+            1156.0249999999996,
+            1151.2650000000008,
+            1142.0799999999986,
+            1150.7049999999992,
+            1209.2849999999999,
+            1217.8650000000005,
+            1191.2750000000017,
+            1184.4050000000038,
+            1160.9900000000039
+          ],
+          "summary": {
+            "count": 12,
+            "min": 1142.0799999999986,
+            "median": 1173.8950000000018,
+            "p95": 1213.3605000000025,
+            "max": 1217.8650000000005,
+            "mean": 1177.7641666666675,
+            "stdDev": 26.72334039692149,
+            "cvPct": 2.2689890856973887,
+            "mad": 22.475000000000023
+          },
+          "opsPerSecond": 851864.9453315658,
+          "checksum": 201270000
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "diamond-fanout-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + sink read",
+          "samplesNsPerOp": [
+            1508.3099999999945,
+            1485.9500000000025,
+            1512.0600000000081,
+            1544.8200000000043,
+            1536.9500000000016,
+            1611.2649999999917,
+            1644.8849999999993,
+            1609.9150000000009,
+            1646.15,
+            1677.699999999993,
+            1582.204999999999,
+            1609.6649999999954
+          ],
+          "summary": {
+            "count": 12,
+            "min": 1485.9500000000025,
+            "median": 1595.9349999999972,
+            "p95": 1660.347499999997,
+            "max": 1677.699999999993,
+            "mean": 1580.822916666666,
+            "stdDev": 62.21076216665209,
+            "cvPct": 3.935340354113168,
+            "mad": 50.66499999999792
+          },
+          "opsPerSecond": 626591.935135204,
+          "checksum": 839679916
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "dynamic-deps-50k",
+          "units": 50000,
+          "unitLabel": "conditional read",
+          "samplesNsPerOp": [
+            76.66400000000067,
+            53.97399999999834,
+            55.108000000000175,
+            109.49999999999818,
+            60.565999999998894,
+            85.40599999999814,
+            65.19200000000183,
+            113.40599999999995,
+            75.65000000000055,
+            67.58200000000215,
+            103.49799999999959,
+            87.20200000000204
+          ],
+          "summary": {
+            "count": 12,
+            "min": 53.97399999999834,
+            "median": 76.15700000000061,
+            "p95": 111.25769999999898,
+            "max": 113.40599999999995,
+            "mean": 79.47900000000004,
+            "stdDev": 20.658220613331643,
+            "cvPct": 25.99204898568381,
+            "mad": 13.318000000001575
+          },
+          "opsPerSecond": 13130769.331775043,
+          "checksum": 249874997
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "effect-fanout-512x200",
+          "units": 102400,
+          "unitLabel": "effect execution",
+          "samplesNsPerOp": [
+            31.424804687498753,
+            26.276367187498817,
+            24.76171875000155,
+            24.71191406250073,
+            25.06835937500007,
+            26.864257812500014,
+            25.045898437499048,
+            24.914062500001055,
+            24.71582031249975,
+            24.998046874999957,
+            24.862304687500725,
+            24.699218749999474
+          ],
+          "summary": {
+            "count": 12,
+            "min": 24.699218749999474,
+            "median": 24.956054687500504,
+            "p95": 28.916503906249442,
+            "max": 31.424804687498753,
+            "mean": 25.695231119791657,
+            "stdDev": 1.9288870459696286,
+            "cvPct": 7.506790022542005,
+            "mad": 0.21728515624985434
+          },
+          "opsPerSecond": 40070436.3138321,
+          "checksum": 10291200
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "effect-mount-dispose-10k",
+          "units": 10000,
+          "unitLabel": "effect mount+dispose",
+          "samplesNsPerOp": [
+            107.68000000000484,
+            335.329999999999,
+            79.22000000000935,
+            73.30999999999221,
+            75.12000000001535,
+            74.0400000000136,
+            74.96000000001004,
+            74.97000000000753,
+            737.1900000000096,
+            73.1899999999996,
+            85.07999999999356,
+            82.20000000001164
+          ],
+          "summary": {
+            "count": 12,
+            "min": 73.1899999999996,
+            "median": 77.17000000001235,
+            "p95": 516.1670000000036,
+            "max": 737.1900000000096,
+            "mean": 156.0241666666722,
+            "stdDev": 197.42308649461637,
+            "cvPct": 126.53365867121613,
+            "mad": 3.9200000000164437
+          },
+          "opsPerSecond": 12958403.524683684,
+          "checksum": 49995000
+        },
+        {
+          "candidate": "solid-signals",
+          "packageName": "solid-js",
+          "scenario": "create-read-100k",
+          "units": 100000,
+          "unitLabel": "signal create+read",
+          "samplesNsPerOp": [
+            29.191000000000713,
+            78.89400000000023,
+            30.51300000000083,
+            53.44300000000203,
+            68.02000000000135,
+            24.069999999999254,
+            90.84400000000186,
+            104.99299999999948,
+            18.69699999999966,
+            18.380999999999403,
+            17.12199999999939,
+            17.479000000000724
+          ],
+          "summary": {
+            "count": 12,
+            "min": 17.12199999999939,
+            "median": 29.85200000000077,
+            "p95": 97.21105000000078,
+            "max": 104.99299999999948,
+            "mean": 45.97058333333374,
+            "stdDev": 32.01193773197871,
+            "cvPct": 69.6357005084304,
+            "mad": 12.551500000000715
+          },
+          "opsPerSecond": 33498593.05909065,
+          "checksum": 4999950000
+        },
+        {
+          "candidate": "solid-signals",
+          "packageName": "solid-js",
+          "scenario": "unobserved-write-1m",
+          "units": 1000000,
+          "unitLabel": "write",
+          "samplesNsPerOp": [
+            4.3228999999998905,
+            5.740299999999934,
+            4.313799999999901,
+            4.273899999999912,
+            4.258000000000038,
+            4.317600000000084,
+            4.2753999999999905,
+            4.272900000000163,
+            4.303799999999911,
+            4.277900000000045,
+            4.194899999999961,
+            4.183999999999969
+          ],
+          "summary": {
+            "count": 12,
+            "min": 4.183999999999969,
+            "median": 4.276650000000018,
+            "p95": 4.960729999999909,
+            "max": 5.740299999999934,
+            "mean": 4.39461666666665,
+            "stdDev": 0.4260655707822996,
+            "cvPct": 9.695170320861536,
+            "mad": 0.03214999999988821
+          },
+          "opsPerSecond": 233827879.29804772,
+          "checksum": 999999
+        },
+        {
+          "candidate": "solid-signals",
+          "packageName": "solid-js",
+          "scenario": "computed-chain-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + tail read",
+          "samplesNsPerOp": [
+            8957.494999999994,
+            9026.954999999998,
+            9332.37999999999,
+            9331.52,
+            12313.370000000008,
+            15375.039999999992,
+            15524.924999999985,
+            15616.930000000002,
+            16754.35,
+            14953.989999999976,
+            14995.175000000017,
+            14993.159999999989
+          ],
+          "summary": {
+            "count": 12,
+            "min": 8957.494999999994,
+            "median": 14973.574999999983,
+            "p95": 16128.769,
+            "max": 16754.35,
+            "mean": 13097.940833333329,
+            "stdDev": 3076.6493268975646,
+            "cvPct": 23.489565009086853,
+            "mad": 1212.0650000000178
+          },
+          "opsPerSecond": 66784.31837420263,
+          "checksum": 201270000
+        },
+        {
+          "candidate": "solid-signals",
+          "packageName": "solid-js",
+          "scenario": "diamond-fanout-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + sink read",
+          "samplesNsPerOp": [
+            18710.289999999986,
+            17073.689999999988,
+            16754.420000000027,
+            16360.269999999991,
+            16240.51999999997,
+            16823.240000000034,
+            16523.604999999952,
+            16364.530000000012,
+            16783.26500000003,
+            16898.109999999997,
+            16507.535000000007,
+            18313.74999999998
+          ],
+          "summary": {
+            "count": 12,
+            "min": 16240.51999999997,
+            "median": 16768.842500000028,
+            "p95": 18492.192999999985,
+            "max": 18710.289999999986,
+            "mean": 16946.102083333328,
+            "stdDev": 776.3475697967702,
+            "cvPct": 4.581275186346932,
+            "mad": 283.0774999999903
+          },
+          "opsPerSecond": 59634.40827832919,
+          "checksum": 839679916
+        },
+        {
+          "candidate": "solid-signals",
+          "packageName": "solid-js",
+          "scenario": "dynamic-deps-50k",
+          "units": 50000,
+          "unitLabel": "conditional read",
+          "samplesNsPerOp": [
+            743.4700000000156,
+            959.1660000000047,
+            704.9719999999797,
+            680.141999999978,
+            654.8339999999735,
+            746.6400000000067,
+            897.3080000000118,
+            762.5979999999983,
+            734.5560000000115,
+            688.683999999994,
+            706.2840000000142,
+            710.8420000000115
+          ],
+          "summary": {
+            "count": 12,
+            "min": 654.8339999999735,
+            "median": 722.6990000000114,
+            "p95": 925.1441000000086,
+            "max": 959.1660000000047,
+            "mean": 749.1246666666666,
+            "stdDev": 89.97996905305699,
+            "cvPct": 12.011347784533015,
+            "mad": 28.978000000006375
+          },
+          "opsPerSecond": 1383701.928465356,
+          "checksum": 249874997
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "create-read-100k",
+          "units": 100000,
+          "unitLabel": "signal create+read",
+          "samplesNsPerOp": [
+            129.67599999999948,
+            133.11999999999898,
+            132.54699999999502,
+            27.210000000013682,
+            120.56099999999788,
+            151.08799999999974,
+            376.40799999999217,
+            32.30199999999968,
+            137.2609999999986,
+            162.65699999999924,
+            106.77799999999479,
+            123.28199999999924
+          ],
+          "summary": {
+            "count": 12,
+            "min": 27.210000000013682,
+            "median": 131.11149999999725,
+            "p95": 258.8449499999959,
+            "max": 376.40799999999217,
+            "mean": 136.07416666666572,
+            "stdDev": 86.6752346865535,
+            "cvPct": 63.69705345973392,
+            "mad": 15.263500000000931
+          },
+          "opsPerSecond": 7627096.02132552,
+          "checksum": 4999950000
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "unobserved-write-1m",
+          "units": 1000000,
+          "unitLabel": "write",
+          "samplesNsPerOp": [
+            15.640000000001237,
+            17.085900000000038,
+            16.00959999999941,
+            16.682600000000093,
+            15.864299999999275,
+            15.490499999999885,
+            14.462599999998929,
+            14.84059999999954,
+            14.97440000000097,
+            15.74829999999929,
+            16.45759999999973,
+            15.983499999998457
+          ],
+          "summary": {
+            "count": 12,
+            "min": 14.462599999998929,
+            "median": 15.806299999999283,
+            "p95": 16.864085000000067,
+            "max": 17.085900000000038,
+            "mean": 15.769991666666405,
+            "stdDev": 0.765782894059013,
+            "cvPct": 4.855949896775632,
+            "mad": 0.483549999999922
+          },
+          "opsPerSecond": 63265912.95875982,
+          "checksum": 999999
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "computed-chain-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + tail read",
+          "samplesNsPerOp": [
+            3665.3800000000047,
+            3667.6499999999573,
+            4404.584999999952,
+            4225.210000000061,
+            3525.380000000041,
+            4286.975000000075,
+            3952.189999999973,
+            3441.389999999956,
+            3613.169999999991,
+            3678.0549999999494,
+            3415.275000000019,
+            3528.985000000011
+          ],
+          "summary": {
+            "count": 12,
+            "min": 3415.275000000019,
+            "median": 3666.5149999999812,
+            "p95": 4339.8995000000195,
+            "max": 4404.584999999952,
+            "mean": 3783.687083333333,
+            "stdDev": 345.6659592495449,
+            "cvPct": 9.135690971173597,
+            "mad": 183.1299999999826
+          },
+          "opsPerSecond": 272738.5541856518,
+          "checksum": 201270000
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "diamond-fanout-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + sink read",
+          "samplesNsPerOp": [
+            4783.860000000004,
+            4849.110000000019,
+            4878.049999999985,
+            4988.965000000007,
+            4714.109999999982,
+            4727.464999999938,
+            5218.49000000002,
+            5050.2300000000105,
+            5163.945000000058,
+            4985.244999999941,
+            4818.385000000035,
+            4728.834999999981
+          ],
+          "summary": {
+            "count": 12,
+            "min": 4714.109999999982,
+            "median": 4863.580000000002,
+            "p95": 5188.490250000041,
+            "max": 5218.49000000002,
+            "mean": 4908.890833333332,
+            "stdDev": 171.82094068634123,
+            "cvPct": 3.5001988538756725,
+            "mad": 130.06500000001324
+          },
+          "opsPerSecond": 205609.85940397807,
+          "checksum": 839679916
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "dynamic-deps-50k",
+          "units": 50000,
+          "unitLabel": "conditional read",
+          "samplesNsPerOp": [
+            156.39400000000023,
+            157.2979999999734,
+            156.2120000000141,
+            165.3139999999985,
+            152.66999999999825,
+            160.22799999998824,
+            159.8199999999997,
+            160.86999999999534,
+            174.3859999999768,
+            177.2899999999936,
+            147.33800000001793,
+            148.55799999997544
+          ],
+          "summary": {
+            "count": 12,
+            "min": 147.33800000001793,
+            "median": 158.55899999998655,
+            "p95": 175.69279999998435,
+            "max": 177.2899999999936,
+            "mean": 159.69816666666097,
+            "stdDev": 9.113003834011923,
+            "cvPct": 5.706392267503957,
+            "mad": 4.117999999980384
+          },
+          "opsPerSecond": 6306800.623112436,
+          "checksum": 249874997
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "effect-fanout-512x200",
+          "units": 102400,
+          "unitLabel": "effect execution",
+          "samplesNsPerOp": [
+            61.9804687500114,
+            62.063476562510544,
+            61.861328125001336,
+            67.84082031249028,
+            58.97558593749963,
+            77.01171874998636,
+            58.62304687500597,
+            59.773437500005855,
+            61.00292968749699,
+            58.654296874998124,
+            59.49023437500145,
+            59.95703125000418
+          ],
+          "summary": {
+            "count": 12,
+            "min": 58.62304687500597,
+            "median": 60.47998046875058,
+            "p95": 71.96772460936351,
+            "max": 77.01171874998636,
+            "mean": 62.269531250001,
+            "stdDev": 5.281079039692197,
+            "cvPct": 8.48100015156628,
+            "mad": 1.5024414062558833
+          },
+          "opsPerSecond": 16534396.873965431,
+          "checksum": 10291200
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "effect-mount-dispose-10k",
+          "units": 10000,
+          "unitLabel": "effect mount+dispose",
+          "samplesNsPerOp": [
+            152.58999999987282,
+            171.34000000005472,
+            223.1899999998859,
+            144.4999999999709,
+            135.15000000006694,
+            72.28999999988446,
+            72.04000000001543,
+            82.4399999999514,
+            74.30000000003929,
+            75.70999999988999,
+            74.58999999998923,
+            73.989999999867
+          ],
+          "summary": {
+            "count": 12,
+            "min": 72.04000000001543,
+            "median": 79.07499999992069,
+            "p95": 194.67249999997873,
+            "max": 223.1899999998859,
+            "mean": 112.67749999995733,
+            "stdDev": 51.1225495745268,
+            "cvPct": 45.37068143555382,
+            "mad": 6.909999999970751
+          },
+          "opsPerSecond": 12646221.941207752,
+          "checksum": 49995000
+        }
+      ],
+      "skipped": [
+        {
+          "candidate": "solid-signals",
+          "scenario": "effect-fanout-512x200",
+          "reason": "Solid effects are scheduled until a render flush; a browser render root is required for an equivalent measurement."
+        },
+        {
+          "candidate": "solid-signals",
+          "scenario": "effect-mount-dispose-10k",
+          "reason": "Solid effects are scheduled until a render flush; a browser render root is required for an equivalent measurement."
+        }
+      ],
+      "notes": [
+        "Graph construction is performed outside the timed region; warm-up runs are discarded.",
+        "Each sample uses a fresh graph and disposes it afterwards where the primitive exposes disposal.",
+        "Solid runs through its client runtime exported by the package (solid-js/dist/solid.js) so computed invalidation is live. Solid effect scenarios are skipped because effects require a render flush.",
+        "Vue effects are synchronous in the standalone @vue/reactivity package; Vue's default scheduler batching is not part of this matrix.",
+        "Angular is excluded from microbenchmarks: its signal API is not designed as a standalone package and effects require an injector/DI context.",
+        "React has no comparable standalone signal primitive; React component rendering is measured in the DOM suite instead.",
+        "No MSF Fusion numbers are present in this baseline."
+      ]
+    },
+    "ssr": {
+      "kind": "ssr",
+      "status": "completed",
+      "config": {
+        "samples": 12,
+        "warmup": 2,
+        "rendersPerSample": 10
+      },
+      "totalDurationMs": 2646.3509000000013,
+      "apps": [
+        {
+          "app": "react",
+          "label": "React",
+          "frameworkPackages": [
+            "react",
+            "react-dom"
+          ],
+          "notes": "React 19 client root and renderToString SSR. No React Compiler, no experimental APIs.",
+          "buildMs": 164.53009999999995,
+          "htmlBytes": 68815,
+          "validation": {
+            "rowCount": 1000,
+            "firstRow": true,
+            "lastRow": true
+          },
+          "samplesMsPerRender": [
+            1.627509999999893,
+            1.422359999999935,
+            1.0462999999999738,
+            1.009059999999954,
+            1.0853399999999964,
+            0.959860000000117,
+            1.0488199999999779,
+            0.7738499999999476,
+            0.9932000000000698,
+            0.9373599999998987,
+            1.007680000000073,
+            0.8868999999998778
+          ],
+          "summary": {
+            "count": 12,
+            "min": 0.7738499999999476,
+            "median": 1.0083700000000135,
+            "p95": 1.514677499999916,
+            "max": 1.627509999999893,
+            "mean": 1.0665199999999762,
+            "stdDev": 0.2336519498974913,
+            "cvPct": 21.907882636752856,
+            "mad": 0.0597600000000057
+          },
+          "rendersPerSecond": 991.6994753909642,
+          "warmupRenders": 2
+        },
+        {
+          "app": "solid",
+          "label": "Solid",
+          "frameworkPackages": [
+            "solid-js"
+          ],
+          "notes": "Solid store + For for keyed rows; Vite Solid plugin compiles JSX to fine-grained DOM operations.",
+          "buildMs": 729.5887000000002,
+          "htmlBytes": 68807,
+          "validation": {
+            "rowCount": 1000,
+            "firstRow": true,
+            "lastRow": true
+          },
+          "samplesMsPerRender": [
+            0.5054699999998775,
+            1.0328800000001137,
+            0.24333999999998923,
+            0.22523999999993977,
+            0.28333999999995285,
+            0.5460300000000643,
+            0.44924000000009984,
+            0.20001999999985856,
+            0.20052999999988969,
+            0.2019800000000032,
+            0.20877000000000406,
+            0.2844300000000658
+          ],
+          "summary": {
+            "count": 12,
+            "min": 0.20001999999985856,
+            "median": 0.26333999999997104,
+            "p95": 0.7651125000000862,
+            "max": 1.0328800000001137,
+            "mean": 0.36510583333332153,
+            "stdDev": 0.24465367501688096,
+            "cvPct": 67.00897457136095,
+            "mad": 0.06208500000002459
+          },
+          "rendersPerSecond": 3797.3722184252674,
+          "warmupRenders": 2
+        },
+        {
+          "app": "svelte",
+          "label": "Svelte",
+          "frameworkPackages": [
+            "svelte"
+          ],
+          "notes": "Svelte 5 runes, keyed each block, compiled by the official Vite plugin.",
+          "buildMs": 877.3050000000003,
+          "htmlBytes": 68842,
+          "validation": {
+            "rowCount": 1000,
+            "firstRow": true,
+            "lastRow": true
+          },
+          "samplesMsPerRender": [
+            0.41341000000011263,
+            0.8829900000000634,
+            0.25528999999987717,
+            0.2768799999999828,
+            0.4260000000000218,
+            0.2737199999999575,
+            0.44081999999998517,
+            0.23465999999989434,
+            0.22652999999991152,
+            0.23009999999994762,
+            0.2561299999999392,
+            0.27321000000010826
+          ],
+          "summary": {
+            "count": 12,
+            "min": 0.22652999999991152,
+            "median": 0.2734650000000329,
+            "p95": 0.6397965000000201,
+            "max": 0.8829900000000634,
+            "mean": 0.34914499999998344,
+            "stdDev": 0.18583528207434574,
+            "cvPct": 53.225817947945565,
+            "mad": 0.04108500000011189
+          },
+          "rendersPerSecond": 3656.775090047647,
+          "warmupRenders": 2
+        },
+        {
+          "app": "vue",
+          "label": "Vue",
+          "frameworkPackages": [
+            "vue"
+          ],
+          "notes": "Vue 3 Composition API, keyed v-for, official Vue Vite plugin.",
+          "buildMs": 253.112000000001,
+          "htmlBytes": 68821,
+          "validation": {
+            "rowCount": 1000,
+            "firstRow": true,
+            "lastRow": true
+          },
+          "samplesMsPerRender": [
+            2.020340000000033,
+            1.4451600000000326,
+            1.1170000000000073,
+            1.1065000000000509,
+            4.840650000000096,
+            1.953939999999966,
+            1.517779999999948,
+            1.5550000000001092,
+            6.40640999999996,
+            1.6541600000000471,
+            1.4987800000002607,
+            1.4598399999998946
+          ],
+          "summary": {
+            "count": 12,
+            "min": 1.1065000000000509,
+            "median": 1.5363900000000286,
+            "p95": 5.545242000000034,
+            "max": 6.40640999999996,
+            "mean": 2.214630000000034,
+            "stdDev": 1.6490913126104454,
+            "cvPct": 74.46351366189478,
+            "mad": 0.267659999999978
+          },
+          "rendersPerSecond": 650.8764050794274,
+          "warmupRenders": 2
+        }
+      ],
+      "notes": [
+        "Each application renders the same 1,000-row markup on every request; no data fetching or I/O is included.",
+        "SSR builds use Vite's SSR mode and each framework's official production renderer.",
+        "React uses react-dom/server renderToString; Solid uses renderToString; Svelte uses svelte/server; Vue uses vue/server-renderer.",
+        "Next.js, Angular SSR, and Qwik are not included because their server stacks add routing, bundling, and transport layers that are not functionally equivalent to a single render call.",
+        "Hydration and streaming SSR are not measured in Milestone 0.",
+        "SSR build time is recorded separately and is not part of the render latency samples."
+      ]
+    },
+    "bundle": {
+      "kind": "bundle",
+      "status": "completed",
+      "totalDurationMs": 3234.4833,
+      "config": {
+        "mode": "production",
+        "minifier": "Oxc, as configured by Vite 8.3.8 (build.minify: 'oxc')",
+        "measuredBuilds": 3,
+        "includes": [
+          "all JavaScript assets in dist (initial entry)",
+          "CSS assets in dist",
+          "index.html",
+          "gzip level 9 and Brotli quality 11"
+        ]
+      },
+      "apps": [
+        {
+          "app": "react",
+          "label": "React",
+          "frameworkPackages": [
+            "react",
+            "react-dom"
+          ],
+          "notes": "React 19 client root and renderToString SSR. No React Compiler, no experimental APIs.",
+          "buildTimesMs": [
+            149.21470000000045,
+            140.60000000000218,
+            148.0793999999987
+          ],
+          "buildSummary": {
+            "count": 3,
+            "min": 140.60000000000218,
+            "median": 148.0793999999987,
+            "p95": 149.10117000000028,
+            "max": 149.21470000000045,
+            "mean": 145.96470000000045,
+            "stdDev": 4.680516113633947,
+            "cvPct": 3.2066082509222653,
+            "mad": 1.1353000000017346
+          },
+          "assets": [
+            {
+              "path": "assets/index-CJ9FhOsI.js",
+              "rawBytes": 221963,
+              "gzipBytes": 68543,
+              "brotliBytes": 59066
+            },
+            {
+              "path": "assets/style-Cnq4WTXX.css",
+              "rawBytes": 188,
+              "gzipBytes": 164,
+              "brotliBytes": 110
+            },
+            {
+              "path": "index.html",
+              "rawBytes": 405,
+              "gzipBytes": 284,
+              "brotliBytes": 172
+            }
+          ],
+          "jsRawBytes": 221963,
+          "jsGzipBytes": 68543,
+          "jsBrotliBytes": 59066,
+          "cssRawBytes": 188,
+          "cssGzipBytes": 164,
+          "htmlRawBytes": 405,
+          "totalGzipBytes": 68991,
+          "totalBrotliBytes": 59348
+        },
+        {
+          "app": "solid",
+          "label": "Solid",
+          "frameworkPackages": [
+            "solid-js"
+          ],
+          "notes": "Solid store + For for keyed rows; Vite Solid plugin compiles JSX to fine-grained DOM operations.",
+          "buildTimesMs": [
+            128.96010000000024,
+            85.99539999999979,
+            129.97710000000006
+          ],
+          "buildSummary": {
+            "count": 3,
+            "min": 85.99539999999979,
+            "median": 128.96010000000024,
+            "p95": 129.87540000000007,
+            "max": 129.97710000000006,
+            "mean": 114.97753333333337,
+            "stdDev": 25.104414186818694,
+            "cvPct": 21.834190958017903,
+            "mad": 1.0169999999998254
+          },
+          "assets": [
+            {
+              "path": "assets/index-DKfZBMo2.js",
+              "rawBytes": 18887,
+              "gzipBytes": 7170,
+              "brotliBytes": 6519
+            },
+            {
+              "path": "assets/style-Cnq4WTXX.css",
+              "rawBytes": 188,
+              "gzipBytes": 164,
+              "brotliBytes": 110
+            },
+            {
+              "path": "index.html",
+              "rawBytes": 405,
+              "gzipBytes": 283,
+              "brotliBytes": 169
+            }
+          ],
+          "jsRawBytes": 18887,
+          "jsGzipBytes": 7170,
+          "jsBrotliBytes": 6519,
+          "cssRawBytes": 188,
+          "cssGzipBytes": 164,
+          "htmlRawBytes": 405,
+          "totalGzipBytes": 7617,
+          "totalBrotliBytes": 6798
+        },
+        {
+          "app": "svelte",
+          "label": "Svelte",
+          "frameworkPackages": [
+            "svelte"
+          ],
+          "notes": "Svelte 5 runes, keyed each block, compiled by the official Vite plugin.",
+          "buildTimesMs": [
+            113.07080000000133,
+            123.57159999999931,
+            127.62299999999959
+          ],
+          "buildSummary": {
+            "count": 3,
+            "min": 113.07080000000133,
+            "median": 123.57159999999931,
+            "p95": 127.21785999999956,
+            "max": 127.62299999999959,
+            "mean": 121.42180000000008,
+            "stdDev": 7.510516709254091,
+            "cvPct": 6.185476338889793,
+            "mad": 4.051400000000285
+          },
+          "assets": [
+            {
+              "path": "assets/index-B38D34Ye.js",
+              "rawBytes": 36341,
+              "gzipBytes": 14129,
+              "brotliBytes": 12830
+            },
+            {
+              "path": "assets/style-Cnq4WTXX.css",
+              "rawBytes": 188,
+              "gzipBytes": 164,
+              "brotliBytes": 110
+            },
+            {
+              "path": "index.html",
+              "rawBytes": 406,
+              "gzipBytes": 283,
+              "brotliBytes": 172
+            }
+          ],
+          "jsRawBytes": 36341,
+          "jsGzipBytes": 14129,
+          "jsBrotliBytes": 12830,
+          "cssRawBytes": 188,
+          "cssGzipBytes": 164,
+          "htmlRawBytes": 406,
+          "totalGzipBytes": 14576,
+          "totalBrotliBytes": 13112
+        },
+        {
+          "app": "vue",
+          "label": "Vue",
+          "frameworkPackages": [
+            "vue"
+          ],
+          "notes": "Vue 3 Composition API, keyed v-for, official Vue Vite plugin.",
+          "buildTimesMs": [
+            106.95720000000074,
+            107.73340000000098,
+            110.65599999999904
+          ],
+          "buildSummary": {
+            "count": 3,
+            "min": 106.95720000000074,
+            "median": 107.73340000000098,
+            "p95": 110.36373999999924,
+            "max": 110.65599999999904,
+            "mean": 108.44886666666692,
+            "stdDev": 1.9504357906194725,
+            "cvPct": 1.7984842539797263,
+            "mad": 0.7762000000002445
+          },
+          "assets": [
+            {
+              "path": "assets/index-C7hEIa76.js",
+              "rawBytes": 66152,
+              "gzipBytes": 25624,
+              "brotliBytes": 23336
+            },
+            {
+              "path": "assets/style-Cnq4WTXX.css",
+              "rawBytes": 188,
+              "gzipBytes": 164,
+              "brotliBytes": 110
+            },
+            {
+              "path": "index.html",
+              "rawBytes": 403,
+              "gzipBytes": 282,
+              "brotliBytes": 172
+            }
+          ],
+          "jsRawBytes": 66152,
+          "jsGzipBytes": 25624,
+          "jsBrotliBytes": 23336,
+          "cssRawBytes": 188,
+          "cssGzipBytes": 164,
+          "htmlRawBytes": 403,
+          "totalGzipBytes": 26070,
+          "totalBrotliBytes": 23618
+        }
+      ],
+      "notes": [
+        "The same functional application (empty table plus imperative benchmark API) is built for every framework.",
+        "One untimed warm-up build runs before three measured builds; each build starts from an empty dist directory.",
+        "Build time includes Vite's in-process config loading and transform pipeline, but not package installation or TypeScript checking.",
+        "React has no compiler plugin in this baseline (React Compiler intentionally disabled).",
+        "Bundle sizes include framework runtime and benchmark harness code; they are not hello-world sizes.",
+        "Angular and Next.js builds are not included in this baseline; see benchmarks/methodology.md for the reason."
+      ]
+    },
+    "dom": {
+      "kind": "dom",
+      "status": "completed",
+      "config": {
+        "samples": 12,
+        "warmup": 2,
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "headless": true,
+        "scenarios": [
+          "create-1000",
+          "create-10000",
+          "update-all-1000",
+          "update-one-1000",
+          "swap-1000",
+          "remove-one-1000",
+          "clear-1000",
+          "replace-1000"
+        ]
+      },
+      "totalDurationMs": 59356.505999999994,
+      "browser": {
+        "name": "Chromium (Playwright)",
+        "version": "159.0.8154.6",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.8154.6 Safari/537.36"
+      },
+      "apps": [
+        {
+          "app": "react",
+          "label": "React",
+          "frameworkPackages": [
+            "react",
+            "react-dom"
+          ],
+          "notes": "React 19 client root and renderToString SSR. No React Compiler, no experimental APIs.",
+          "buildMs": 131.77969999999914,
+          "startup": {
+            "domContentLoadedEventEnd": 41.5,
+            "loadEventEnd": 41.5,
+            "readyMarkMs": 53.799999952316284
+          },
+          "scenarios": [
+            {
+              "scenario": "create-1000",
+              "samples": [
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.299999952316284
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 31
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 31
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.700000047683716
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 32.799999952316284
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.10000002384186
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.59999990463257
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.40000009536743
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 29.899999976158142
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.699999928474426
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.100000023841858
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0.10000002384185791,
+                "p95": 0.24500000476837153,
+                "max": 0.2999999523162842,
+                "mean": 0.09999999403953552,
+                "stdDev": 0.09534624755840859,
+                "cvPct": 95.34625324148814,
+                "mad": 0.09999996423721313
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 29.899999976158142,
+                "median": 31.649999916553497,
+                "p95": 32.524999952316286,
+                "max": 32.799999952316284,
+                "mean": 31.549999992052715,
+                "stdDev": 0.752571340466811,
+                "cvPct": 2.3853291304481137,
+                "mad": 0.5
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0",
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "create-10000",
+              "samples": [
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 255.29999995231628
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 248.5
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 270.2999999523163
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 242.10000002384186
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 313.09999990463257
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 262.1999999284744
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 416.39999997615814
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 423.8000000715256
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 397.60000002384186
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 441.89999997615814
+                },
+                {
+                  "syncMs": 0.40000009536743164,
+                  "frameMs": 382.8000000715256
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 213.20000004768372
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0.20000004768371582,
+                "median": 0.3500000834465027,
+                "p95": 0.5,
+                "max": 0.5,
+                "mean": 0.38333333532015484,
+                "stdDev": 0.11146408807315981,
+                "cvPct": 29.077588042288703,
+                "mad": 0.10000002384185791
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 213.20000004768372,
+                "median": 291.6999999284744,
+                "p95": 431.9450000286102,
+                "max": 441.89999997615814,
+                "mean": 322.2666666607062,
+                "stdDev": 83.91688891164812,
+                "cvPct": 26.039580755026954,
+                "mad": 64.04999989271164
+              },
+              "verification": {
+                "rowCount": 10000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 9998,
+                "lastId": 9999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0",
+                "lastLabel": "row-9999-r0"
+              }
+            },
+            {
+              "scenario": "update-all-1000",
+              "samples": [
+                {
+                  "syncMs": 0,
+                  "frameMs": 28.299999952316284
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.600000023841858
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 30.800000071525574
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.800000071525574
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 27.699999928474426
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.899999976158142
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 30.59999990463257
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 21.899999976158142
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.399999976158142
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.799999952316284
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 29
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 30.899999976158142
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0,
+                "p95": 0.10000002384185791,
+                "max": 0.10000002384185791,
+                "mean": 0.03333333134651184,
+                "stdDev": 0.049236593457013096,
+                "cvPct": 147.70978917522882,
+                "mad": 0
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 21.899999976158142,
+                "median": 30.850000023841858,
+                "p95": 32.30500001907349,
+                "max": 32.800000071525574,
+                "mean": 29.891666650772095,
+                "stdDev": 2.949101058837874,
+                "cvPct": 9.865963960098222,
+                "mad": 0.9999999403953552
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0-u",
+                "row500Label": "row-500-r0-u",
+                "lastLabel": "row-999-r0-u"
+              }
+            },
+            {
+              "scenario": "update-one-1000",
+              "samples": [
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 29.699999928474426
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 17.100000023841858
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 33.200000047683716
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 33
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 37
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 36.800000071525574
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.5
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.700000047683716
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 33
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 27.699999928474426
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.5
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.90000009536743
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0,
+                "p95": 0.14499998092651362,
+                "max": 0.19999992847442627,
+                "mean": 0.04999999205271403,
+                "stdDev": 0.06741997017215519,
+                "cvPct": 134.83996177654512,
+                "mad": 0
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 17.100000023841858,
+                "median": 32.60000002384186,
+                "p95": 36.890000039339064,
+                "max": 37,
+                "mean": 31.341666678587597,
+                "stdDev": 5.161652025338028,
+                "cvPct": 16.46897747420826,
+                "mad": 0.8999999761581421
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0-one",
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "swap-1000",
+              "samples": [
+                {
+                  "syncMs": 0,
+                  "frameMs": 33.89999997615814
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.5
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 28.09999990463257
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 29
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 31.699999928474426
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 33.39999997615814
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 34.09999990463257
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 41.300000071525574
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 26.100000023841858
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 30.299999952316284
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 33.700000047683716
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0.09999996423721313,
+                "p95": 0.19999992847442627,
+                "max": 0.19999992847442627,
+                "mean": 0.07499998807907104,
+                "stdDev": 0.07537781457867791,
+                "cvPct": 100.50376874621438,
+                "mad": 0.09999996423721313
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 26.100000023841858,
+                "median": 31.599999964237213,
+                "p95": 37.339999979734415,
+                "max": 41.300000071525574,
+                "mean": 32.00833331545194,
+                "stdDev": 3.8448214082228467,
+                "cvPct": 12.011938798346518,
+                "mad": 2.200000047683716
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 998,
+                "penultimateId": 1,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0",
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "remove-one-1000",
+              "samples": [
+                {
+                  "syncMs": 0,
+                  "frameMs": 30.799999952316284
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.89999997615814
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.799999952316284
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.299999952316284
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 30.800000071525574
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.200000047683716
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.799999952316284
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.799999952316284
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 33
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 33.39999997615814
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.799999952316284
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0,
+                "p95": 0.10000002384185791,
+                "max": 0.10000002384185791,
+                "mean": 0.025000005960464478,
+                "stdDev": 0.0452267124695505,
+                "cvPct": 180.9068067466582,
+                "mad": 0
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 30.799999952316284,
+                "median": 32.5,
+                "p95": 33.17999998927117,
+                "max": 33.39999997615814,
+                "mean": 32.21666664878527,
+                "stdDev": 0.8830045026539819,
+                "cvPct": 2.7408313599919736,
+                "mad": 0.5
+              },
+              "verification": {
+                "rowCount": 999,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": null,
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "clear-1000",
+              "samples": [
+                {
+                  "syncMs": 0,
+                  "frameMs": 29.600000023841858
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 24.799999952316284
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 26.100000023841858
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 17.899999976158142
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 29.799999952316284
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 25.600000023841858
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 17.699999928474426
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 30.90000009536743
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 22.800000071525574
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 30.5
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 22.800000071525574
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 25.299999952316284
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0.04999995231628418,
+                "p95": 0.10000002384185791,
+                "max": 0.10000002384185791,
+                "mean": 0.050000001986821495,
+                "stdDev": 0.05222329886188703,
+                "cvPct": 104.4465935734393,
+                "mad": 0.04999995231628418
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 17.699999928474426,
+                "median": 25.44999998807907,
+                "p95": 30.680000042915346,
+                "max": 30.90000009536743,
+                "mean": 25.316666672627132,
+                "stdDev": 4.503904047230102,
+                "cvPct": 17.79027273009764,
+                "mad": 3.399999976158142
+              },
+              "verification": {
+                "rowCount": 0,
+                "firstId": null,
+                "secondId": null,
+                "penultimateId": null,
+                "lastId": null,
+                "firstLabel": null,
+                "row500Label": null,
+                "lastLabel": null
+              }
+            },
+            {
+              "scenario": "replace-1000",
+              "samples": [
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 29.200000047683716
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.600000023841858
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 38.60000002384186
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.10000002384186
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.899999976158142
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.5
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.899999976158142
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 31.399999976158142
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.699999928474426
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 32.699999928474426
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.899999976158142
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.899999976158142
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0.10000002384185791,
+                "p95": 0.10000002384185791,
+                "max": 0.10000002384185791,
+                "mean": 0.08333333333333333,
+                "stdDev": 0.0389249472081027,
+                "cvPct": 46.70993664972325,
+                "mad": 0
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 29.200000047683716,
+                "median": 31.899999976158142,
+                "p95": 35.354999971389766,
+                "max": 38.60000002384186,
+                "mean": 32.28333332141241,
+                "stdDev": 2.17081188774177,
+                "cvPct": 6.7242495256893005,
+                "mad": 0.25
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r1",
+                "row500Label": "row-500-r1",
+                "lastLabel": "row-999-r1"
+              }
+            }
+          ],
+          "memory": {
+            "baselineBytes": 2680208,
+            "afterCreate10000Bytes": 8984412,
+            "afterClearBytes": 3803748,
+            "garbageCollected": true
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "app": "solid",
+          "label": "Solid",
+          "frameworkPackages": [
+            "solid-js"
+          ],
+          "notes": "Solid store + For for keyed rows; Vite Solid plugin compiles JSX to fine-grained DOM operations.",
+          "buildMs": 98.65810000000056,
+          "startup": {
+            "domContentLoadedEventEnd": 15.799999952316284,
+            "loadEventEnd": 16.199999928474426,
+            "readyMarkMs": 15.799999952316284
+          },
+          "scenarios": [
+            {
+              "scenario": "create-1000",
+              "samples": [
+                {
+                  "syncMs": 4.299999952316284,
+                  "frameMs": 33
+                },
+                {
+                  "syncMs": 4.099999904632568,
+                  "frameMs": 33.59999990463257
+                },
+                {
+                  "syncMs": 4.199999928474426,
+                  "frameMs": 29.699999928474426
+                },
+                {
+                  "syncMs": 3.4000000953674316,
+                  "frameMs": 31
+                },
+                {
+                  "syncMs": 3.700000047683716,
+                  "frameMs": 36.200000047683716
+                },
+                {
+                  "syncMs": 3.1999999284744263,
+                  "frameMs": 31.699999928474426
+                },
+                {
+                  "syncMs": 3.4000000953674316,
+                  "frameMs": 32.700000047683716
+                },
+                {
+                  "syncMs": 4.100000023841858,
+                  "frameMs": 31.700000047683716
+                },
+                {
+                  "syncMs": 3.700000047683716,
+                  "frameMs": 32.5
+                },
+                {
+                  "syncMs": 5,
+                  "frameMs": 33.10000002384186
+                },
+                {
+                  "syncMs": 5,
+                  "frameMs": 31.399999976158142
+                },
+                {
+                  "syncMs": 3.299999952316284,
+                  "frameMs": 32
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 3.1999999284744263,
+                "median": 3.899999976158142,
+                "p95": 5,
+                "max": 5,
+                "mean": 3.9499999980131784,
+                "stdDev": 0.6142252933711859,
+                "cvPct": 15.550007434940172,
+                "mad": 0.44999992847442627
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 29.699999928474426,
+                "median": 32.25,
+                "p95": 34.76999996900558,
+                "max": 36.200000047683716,
+                "mean": 32.38333332538605,
+                "stdDev": 1.6016090581404074,
+                "cvPct": 4.945781961503231,
+                "mad": 0.800000011920929
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0",
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "create-10000",
+              "samples": [
+                {
+                  "syncMs": 37.39999997615814,
+                  "frameMs": 188.20000004768372
+                },
+                {
+                  "syncMs": 30.399999976158142,
+                  "frameMs": 156.30000007152557
+                },
+                {
+                  "syncMs": 33.89999997615814,
+                  "frameMs": 142.89999997615814
+                },
+                {
+                  "syncMs": 31.700000047683716,
+                  "frameMs": 153.5
+                },
+                {
+                  "syncMs": 33.60000002384186,
+                  "frameMs": 141.20000004768372
+                },
+                {
+                  "syncMs": 29.399999976158142,
+                  "frameMs": 155.5
+                },
+                {
+                  "syncMs": 33.90000009536743,
+                  "frameMs": 146.20000004768372
+                },
+                {
+                  "syncMs": 29.899999976158142,
+                  "frameMs": 149.29999995231628
+                },
+                {
+                  "syncMs": 33.60000002384186,
+                  "frameMs": 213.70000004768372
+                },
+                {
+                  "syncMs": 59.200000047683716,
+                  "frameMs": 282.2000000476837
+                },
+                {
+                  "syncMs": 77.29999995231628,
+                  "frameMs": 292.7000000476837
+                },
+                {
+                  "syncMs": 73.19999992847443,
+                  "frameMs": 292.39999997615814
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 29.399999976158142,
+                "median": 33.75,
+                "p95": 75.04499993920327,
+                "max": 77.29999995231628,
+                "mean": 41.958333333333336,
+                "stdDev": 17.463388090218658,
+                "cvPct": 41.620785915118944,
+                "mad": 3.5
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 141.20000004768372,
+                "median": 155.9000000357628,
+                "p95": 292.53500000834464,
+                "max": 292.7000000476837,
+                "mean": 192.8416666885217,
+                "stdDev": 61.66986089687904,
+                "cvPct": 31.979531164542536,
+                "mad": 13.850000023841858
+              },
+              "verification": {
+                "rowCount": 10000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 9998,
+                "lastId": 9999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0",
+                "lastLabel": "row-9999-r0"
+              }
+            },
+            {
+              "scenario": "update-all-1000",
+              "samples": [
+                {
+                  "syncMs": 1.0999999046325684,
+                  "frameMs": 29.199999928474426
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 29.100000023841858
+                },
+                {
+                  "syncMs": 1.399999976158142,
+                  "frameMs": 32
+                },
+                {
+                  "syncMs": 2.799999952316284,
+                  "frameMs": 15.100000023841858
+                },
+                {
+                  "syncMs": 2.899999976158142,
+                  "frameMs": 30.09999990463257
+                },
+                {
+                  "syncMs": 2,
+                  "frameMs": 26.199999928474426
+                },
+                {
+                  "syncMs": 1.3000000715255737,
+                  "frameMs": 32.10000002384186
+                },
+                {
+                  "syncMs": 2.200000047683716,
+                  "frameMs": 24.899999976158142
+                },
+                {
+                  "syncMs": 1.6999999284744263,
+                  "frameMs": 30.399999976158142
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 19.399999976158142
+                },
+                {
+                  "syncMs": 1.5,
+                  "frameMs": 32.200000047683716
+                },
+                {
+                  "syncMs": 2.399999976158142,
+                  "frameMs": 33.39999997615814
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 1,
+                "median": 1.5999999642372131,
+                "p95": 2.84499996304512,
+                "max": 2.899999976158142,
+                "mean": 1.7749999860922496,
+                "stdDev": 0.6770591453108757,
+                "cvPct": 38.144177499485785,
+                "mad": 0.550000011920929
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 15.100000023841858,
+                "median": 29.649999916553497,
+                "p95": 32.74000001549721,
+                "max": 33.39999997615814,
+                "mean": 27.841666648785274,
+                "stdDev": 5.603157928617737,
+                "cvPct": 20.125080869978024,
+                "mad": 2.5000001192092896
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0-u",
+                "row500Label": "row-500-r0-u",
+                "lastLabel": "row-999-r0-u"
+              }
+            },
+            {
+              "scenario": "update-one-1000",
+              "samples": [
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 28.100000023841858
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 21.899999976158142
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 18.899999976158142
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 28.799999952316284
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 33.699999928474426
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 28.299999952316284
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.300000071525574
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 29.100000023841858
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 29.59999990463257
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 37.60000002384186
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 26
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 24.200000047683716
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0.09999996423721313,
+                "p95": 0.20000004768371582,
+                "max": 0.20000004768371582,
+                "mean": 0.07500000794728597,
+                "stdDev": 0.07537785052162994,
+                "cvPct": 100.5037900457418,
+                "mad": 0.09999996423721313
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 18.899999976158142,
+                "median": 28.549999952316284,
+                "p95": 35.45499997138977,
+                "max": 37.60000002384186,
+                "mean": 28.208333323399227,
+                "stdDev": 5.0953558800090075,
+                "cvPct": 18.06330002411853,
+                "mad": 3.150000035762787
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0-one",
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "swap-1000",
+              "samples": [
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 29.5
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 25.199999928474426
+                },
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 32.700000047683716
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 29.700000047683716
+                },
+                {
+                  "syncMs": 1.2000000476837158,
+                  "frameMs": 23.899999976158142
+                },
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 29.699999928474426
+                },
+                {
+                  "syncMs": 0.7000000476837158,
+                  "frameMs": 28.90000009536743
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 29.100000023841858
+                },
+                {
+                  "syncMs": 0.8999999761581421,
+                  "frameMs": 23.300000071525574
+                },
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 32.200000047683716
+                },
+                {
+                  "syncMs": 0.8999999761581421,
+                  "frameMs": 21.100000023841858
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 31.899999976158142
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0.30000007152557373,
+                "median": 0.5,
+                "p95": 1.090000021457672,
+                "max": 1.2000000476837158,
+                "mean": 0.6333333353201548,
+                "stdDev": 0.29644357096876167,
+                "cvPct": 46.806879479809346,
+                "mad": 0.1499999761581421
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 21.100000023841858,
+                "median": 29.30000001192093,
+                "p95": 32.42500004768372,
+                "max": 32.700000047683716,
+                "mean": 28.10000001390775,
+                "stdDev": 3.804542743605867,
+                "cvPct": 13.539298013248596,
+                "mad": 2.75
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 998,
+                "penultimateId": 1,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0",
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "remove-one-1000",
+              "samples": [
+                {
+                  "syncMs": 0.8000000715255737,
+                  "frameMs": 31.700000047683716
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 31.799999952316284
+                },
+                {
+                  "syncMs": 1.6999999284744263,
+                  "frameMs": 25.59999990463257
+                },
+                {
+                  "syncMs": 2,
+                  "frameMs": 30.299999952316284
+                },
+                {
+                  "syncMs": 1.100000023841858,
+                  "frameMs": 27.600000023841858
+                },
+                {
+                  "syncMs": 1.7000000476837158,
+                  "frameMs": 29.600000023841858
+                },
+                {
+                  "syncMs": 1.3000000715255737,
+                  "frameMs": 31.800000071525574
+                },
+                {
+                  "syncMs": 1.600000023841858,
+                  "frameMs": 31.100000023841858
+                },
+                {
+                  "syncMs": 1.899999976158142,
+                  "frameMs": 27.700000047683716
+                },
+                {
+                  "syncMs": 1.7000000476837158,
+                  "frameMs": 31
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 29
+                },
+                {
+                  "syncMs": 0.8999999761581421,
+                  "frameMs": 25.5
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0.8000000715255737,
+                "median": 1.4500000476837158,
+                "p95": 1.944999986886978,
+                "max": 2,
+                "mean": 1.3916666805744171,
+                "stdDev": 0.42094769474788846,
+                "cvPct": 30.247738242474863,
+                "mad": 0.3999999761581421
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 25.5,
+                "median": 29.94999998807907,
+                "p95": 31.800000005960463,
+                "max": 31.800000071525574,
+                "mean": 29.39166667064031,
+                "stdDev": 2.3169173776388345,
+                "cvPct": 7.882905735159386,
+                "mad": 1.800000011920929
+              },
+              "verification": {
+                "rowCount": 999,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": null,
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "clear-1000",
+              "samples": [
+                {
+                  "syncMs": 1.4000000953674316,
+                  "frameMs": 30.40000009536743
+                },
+                {
+                  "syncMs": 1.2999999523162842,
+                  "frameMs": 25.899999976158142
+                },
+                {
+                  "syncMs": 1.100000023841858,
+                  "frameMs": 29
+                },
+                {
+                  "syncMs": 1.5,
+                  "frameMs": 31.200000047683716
+                },
+                {
+                  "syncMs": 1.3000000715255737,
+                  "frameMs": 31.100000023841858
+                },
+                {
+                  "syncMs": 2,
+                  "frameMs": 26
+                },
+                {
+                  "syncMs": 1.5,
+                  "frameMs": 31
+                },
+                {
+                  "syncMs": 2,
+                  "frameMs": 30.5
+                },
+                {
+                  "syncMs": 3,
+                  "frameMs": 28.299999952316284
+                },
+                {
+                  "syncMs": 1.7999999523162842,
+                  "frameMs": 32.39999997615814
+                },
+                {
+                  "syncMs": 2.100000023841858,
+                  "frameMs": 31.800000071525574
+                },
+                {
+                  "syncMs": 2.0999999046325684,
+                  "frameMs": 25.199999928474426
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 1.100000023841858,
+                "median": 1.649999976158142,
+                "p95": 2.5050000131130212,
+                "max": 3,
+                "mean": 1.758333335320155,
+                "stdDev": 0.5230302000861525,
+                "cvPct": 29.745793336217442,
+                "mad": 0.3500000238418579
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 25.199999928474426,
+                "median": 30.450000047683716,
+                "p95": 32.07000002861023,
+                "max": 32.39999997615814,
+                "mean": 29.400000005960464,
+                "stdDev": 2.495086107392656,
+                "cvPct": 8.48668743839051,
+                "mad": 1.4000000357627869
+              },
+              "verification": {
+                "rowCount": 0,
+                "firstId": null,
+                "secondId": null,
+                "penultimateId": null,
+                "lastId": null,
+                "firstLabel": null,
+                "row500Label": null,
+                "lastLabel": null
+              }
+            },
+            {
+              "scenario": "replace-1000",
+              "samples": [
+                {
+                  "syncMs": 10.399999976158142,
+                  "frameMs": 32
+                },
+                {
+                  "syncMs": 8.700000047683716,
+                  "frameMs": 31.5
+                },
+                {
+                  "syncMs": 11,
+                  "frameMs": 35.5
+                },
+                {
+                  "syncMs": 7.399999976158142,
+                  "frameMs": 29.600000023841858
+                },
+                {
+                  "syncMs": 8.600000023841858,
+                  "frameMs": 29.5
+                },
+                {
+                  "syncMs": 10.899999976158142,
+                  "frameMs": 35.39999997615814
+                },
+                {
+                  "syncMs": 8.5,
+                  "frameMs": 31.100000023841858
+                },
+                {
+                  "syncMs": 8.399999976158142,
+                  "frameMs": 29.100000023841858
+                },
+                {
+                  "syncMs": 10.800000071525574,
+                  "frameMs": 36.300000071525574
+                },
+                {
+                  "syncMs": 6.100000023841858,
+                  "frameMs": 25.200000047683716
+                },
+                {
+                  "syncMs": 7.5,
+                  "frameMs": 28.399999976158142
+                },
+                {
+                  "syncMs": 9,
+                  "frameMs": 34.39999997615814
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 6.100000023841858,
+                "median": 8.650000035762787,
+                "p95": 10.944999986886979,
+                "max": 11,
+                "mean": 8.94166667262713,
+                "stdDev": 1.5623166567075615,
+                "cvPct": 17.472320473432955,
+                "mad": 1.2000000476837158
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 25.200000047683716,
+                "median": 31.30000001192093,
+                "p95": 35.860000032186505,
+                "max": 36.300000071525574,
+                "mean": 31.50000000993411,
+                "stdDev": 3.380962741927048,
+                "cvPct": 10.733215050351742,
+                "mad": 2.550000011920929
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r14",
+                "row500Label": "row-500-r14",
+                "lastLabel": "row-999-r14"
+              }
+            }
+          ],
+          "memory": {
+            "baselineBytes": 1613160,
+            "afterCreate10000Bytes": 16608872,
+            "afterClearBytes": 1601564,
+            "garbageCollected": true
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "app": "svelte",
+          "label": "Svelte",
+          "frameworkPackages": [
+            "svelte"
+          ],
+          "notes": "Svelte 5 runes, keyed each block, compiled by the official Vite plugin.",
+          "buildMs": 120.49309999999969,
+          "startup": {
+            "domContentLoadedEventEnd": 21,
+            "loadEventEnd": 21.399999976158142,
+            "readyMarkMs": 20.899999976158142
+          },
+          "scenarios": [
+            {
+              "scenario": "create-1000",
+              "samples": [
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.600000023841858
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.300000071525574
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 34.299999952316284
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 31
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.5
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.699999928474426
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.200000047683716
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.5
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.40000009536743
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 33.700000047683716
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 33.199999928474426
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.200000047683716
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0.09999996423721313,
+                "p95": 0.1450000345706939,
+                "max": 0.20000004768371582,
+                "mean": 0.06666667262713115,
+                "stdDev": 0.06513390471091436,
+                "cvPct": 97.70084833123501,
+                "mad": 0.050000011920928955
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 31,
+                "median": 32.300000071525574,
+                "p95": 33.97000000476837,
+                "max": 34.299999952316284,
+                "mean": 32.383333345254265,
+                "stdDev": 0.9879577752850548,
+                "cvPct": 3.0508217444818375,
+                "mad": 0.7500000596046448
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0",
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "create-10000",
+              "samples": [
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 569.7000000476837
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 987.3000000715256
+                },
+                {
+                  "syncMs": 1.100000023841858,
+                  "frameMs": 967.6000000238419
+                },
+                {
+                  "syncMs": 0.6000000238418579,
+                  "frameMs": 1609.6999999284744
+                },
+                {
+                  "syncMs": 0.6999999284744263,
+                  "frameMs": 1146.7999999523163
+                },
+                {
+                  "syncMs": 0.7000000476837158,
+                  "frameMs": 1111.3999999761581
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 1597.8000000715256
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 1055
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 1798.6999999284744
+                },
+                {
+                  "syncMs": 0.6000000238418579,
+                  "frameMs": 1011.6999999284744
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 1348.1000000238419
+                },
+                {
+                  "syncMs": 0.6000000238418579,
+                  "frameMs": 1232.8000000715256
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0.2999999523162842,
+                "median": 0.550000011920929,
+                "p95": 0.8800000369548795,
+                "max": 1.100000023841858,
+                "mean": 0.5333333412806193,
+                "stdDev": 0.23868325899750079,
+                "cvPct": 44.75311039515809,
+                "mad": 0.15000003576278687
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 569.7000000476837,
+                "median": 1129.0999999642372,
+                "p95": 1694.7499999284744,
+                "max": 1798.6999999284744,
+                "mean": 1203.0500000019867,
+                "stdDev": 339.9371158235644,
+                "cvPct": 28.25627495307785,
+                "mad": 151.6499999165535
+              },
+              "verification": {
+                "rowCount": 10000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 9998,
+                "lastId": 9999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0",
+                "lastLabel": "row-9999-r0"
+              }
+            },
+            {
+              "scenario": "update-all-1000",
+              "samples": [
+                {
+                  "syncMs": 1.2000000476837158,
+                  "frameMs": 32.40000009536743
+                },
+                {
+                  "syncMs": 1.3000000715255737,
+                  "frameMs": 32.10000002384186
+                },
+                {
+                  "syncMs": 1.3000000715255737,
+                  "frameMs": 32.10000002384186
+                },
+                {
+                  "syncMs": 1.399999976158142,
+                  "frameMs": 31.799999952316284
+                },
+                {
+                  "syncMs": 1.2999999523162842,
+                  "frameMs": 40.10000002384186
+                },
+                {
+                  "syncMs": 1.2999999523162842,
+                  "frameMs": 30.699999928474426
+                },
+                {
+                  "syncMs": 1.1999999284744263,
+                  "frameMs": 32.60000002384186
+                },
+                {
+                  "syncMs": 1.3000000715255737,
+                  "frameMs": 31.600000023841858
+                },
+                {
+                  "syncMs": 1.1999999284744263,
+                  "frameMs": 32.699999928474426
+                },
+                {
+                  "syncMs": 4.199999928474426,
+                  "frameMs": 37.10000002384186
+                },
+                {
+                  "syncMs": 1.7999999523162842,
+                  "frameMs": 37.299999952316284
+                },
+                {
+                  "syncMs": 1.0999999046325684,
+                  "frameMs": 35.5
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 1.0999999046325684,
+                "median": 1.300000011920929,
+                "p95": 2.8799999415874464,
+                "max": 4.199999928474426,
+                "mean": 1.5499999821186066,
+                "stdDev": 0.8522696808153695,
+                "cvPct": 54.98514133209541,
+                "mad": 0.09999996423721313
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 30.699999928474426,
+                "median": 32.500000059604645,
+                "p95": 38.55999998450279,
+                "max": 40.10000002384186,
+                "mean": 33.833333333333336,
+                "stdDev": 2.9317488883989915,
+                "cvPct": 8.665267650440368,
+                "mad": 0.8000000715255737
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0-u",
+                "row500Label": "row-500-r0-u",
+                "lastLabel": "row-999-r0-u"
+              }
+            },
+            {
+              "scenario": "update-one-1000",
+              "samples": [
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 32.799999952316284
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 32.40000009536743
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 32.800000071525574
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 33.299999952316284
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 32.299999952316284
+                },
+                {
+                  "syncMs": 0.6000000238418579,
+                  "frameMs": 17.100000023841858
+                },
+                {
+                  "syncMs": 0.40000009536743164,
+                  "frameMs": 31.90000009536743
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 33
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.5
+                },
+                {
+                  "syncMs": 1.3000000715255737,
+                  "frameMs": 30.100000023841858
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 32.700000047683716
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 32.39999997615814
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0.10000002384185791,
+                "median": 0.25,
+                "p95": 0.9150000452995295,
+                "max": 1.3000000715255737,
+                "mean": 0.3583333392937978,
+                "stdDev": 0.32321774943624226,
+                "cvPct": 90.200300667875,
+                "mad": 0.05000007152557373
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 17.100000023841858,
+                "median": 32.450000047683716,
+                "p95": 33.134999978542325,
+                "max": 33.299999952316284,
+                "mean": 31.108333349227905,
+                "stdDev": 4.48440901342121,
+                "cvPct": 14.415458916035151,
+                "mad": 0.34999996423721313
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0-one",
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "swap-1000",
+              "samples": [
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.899999976158142
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 32.299999952316284
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.800000071525574
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 31.799999952316284
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.200000047683716
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.90000009536743
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 29.5
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 33.89999997615814
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 33.200000047683716
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 33
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.399999976158142
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 33.299999952316284
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0.10000002384185791,
+                "p95": 0.24500000476837153,
+                "max": 0.2999999523162842,
+                "mean": 0.1333333452542623,
+                "stdDev": 0.07784988049551345,
+                "cvPct": 58.38740515139427,
+                "mad": 0
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 29.5,
+                "median": 32.25,
+                "p95": 33.56999996304512,
+                "max": 33.89999997615814,
+                "mean": 32.26666667064031,
+                "stdDev": 1.1491762554529723,
+                "cvPct": 3.5614966590230925,
+                "mad": 0.7000000476837158
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 998,
+                "penultimateId": 1,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0",
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "remove-one-1000",
+              "samples": [
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 32.700000047683716
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 32.5
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 33.299999952316284
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 33.299999952316284
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 32.90000009536743
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 32.699999928474426
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 33.699999928474426
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 31.899999976158142
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 31.899999976158142
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 33
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 31.899999976158142
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 32.39999997615814
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0.09999990463256836,
+                "median": 0.20000004768371582,
+                "p95": 0.3000000059604645,
+                "max": 0.30000007152557373,
+                "mean": 0.2083333134651184,
+                "stdDev": 0.07929615932109368,
+                "cvPct": 38.06216010401542,
+                "mad": 0.09999990463256836
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 31.899999976158142,
+                "median": 32.69999998807907,
+                "p95": 33.47999994158745,
+                "max": 33.699999928474426,
+                "mean": 32.68333331743876,
+                "stdDev": 0.5951826739986338,
+                "cvPct": 1.8210586668681794,
+                "mad": 0.44999998807907104
+              },
+              "verification": {
+                "rowCount": 999,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": null,
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "clear-1000",
+              "samples": [
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 32.39999997615814
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.5
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 27.299999952316284
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 21.800000071525574
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 29.899999976158142
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 30.799999952316284
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 30.899999976158142
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 27.600000023841858
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.399999976158142
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 30.100000023841858
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 25.5
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0.10000002384185791,
+                "p95": 0.14499998092651362,
+                "max": 0.19999992847442627,
+                "mean": 0.07499999801317851,
+                "stdDev": 0.062158144718137326,
+                "cvPct": 82.87752848635449,
+                "mad": 5.960464477539063e-8
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 21.800000071525574,
+                "median": 30.44999998807907,
+                "p95": 32.17999998927117,
+                "max": 32.39999997615814,
+                "mean": 29.266666660706203,
+                "stdDev": 3.1554666164224727,
+                "cvPct": 10.781776595894476,
+                "mad": 1.300000011920929
+              },
+              "verification": {
+                "rowCount": 0,
+                "firstId": null,
+                "secondId": null,
+                "penultimateId": null,
+                "lastId": null,
+                "firstLabel": null,
+                "row500Label": null,
+                "lastLabel": null
+              }
+            },
+            {
+              "scenario": "replace-1000",
+              "samples": [
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 31.5
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 31.100000023841858
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 33.200000047683716
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.300000071525574
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.10000002384186
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.40000009536743
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 34
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 31.5
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 32.5
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 35.60000002384186
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 20.399999976158142
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 25
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0.1499999761581421,
+                "p95": 0.24500005841255182,
+                "max": 0.30000007152557373,
+                "mean": 0.15000000596046448,
+                "stdDev": 0.07977241574840792,
+                "cvPct": 53.18160838569136,
+                "mad": 0.050000011920928955
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 20.399999976158142,
+                "median": 32.200000047683716,
+                "p95": 34.72000001072883,
+                "max": 35.60000002384186,
+                "mean": 30.966666688521702,
+                "stdDev": 4.166606076117885,
+                "cvPct": 13.45513263674035,
+                "mad": 0.8500000238418579
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r14",
+                "row500Label": "row-500-r14",
+                "lastLabel": "row-999-r14"
+              }
+            }
+          ],
+          "memory": {
+            "baselineBytes": 1776876,
+            "afterCreate10000Bytes": 19722096,
+            "afterClearBytes": 1805820,
+            "garbageCollected": true
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "app": "vue",
+          "label": "Vue",
+          "frameworkPackages": [
+            "vue"
+          ],
+          "notes": "Vue 3 Composition API, keyed v-for, official Vue Vite plugin.",
+          "buildMs": 100.34889999999723,
+          "startup": {
+            "domContentLoadedEventEnd": 20.700000047683716,
+            "loadEventEnd": 20.899999976158142,
+            "readyMarkMs": 20.200000047683716
+          },
+          "scenarios": [
+            {
+              "scenario": "create-1000",
+              "samples": [
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 31.899999976158142
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.199999928474426
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 33.39999997615814
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 31.800000071525574
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 32.299999952316284
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.10000002384186
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.600000023841858
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.39999997615814
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.89999997615814
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.5
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 33.300000071525574
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0.10000002384185791,
+                "p95": 0.1899999916553496,
+                "max": 0.2999999523162842,
+                "mean": 0.08333333333333333,
+                "stdDev": 0.0834847006088242,
+                "cvPct": 100.18164073058904,
+                "mad": 5.960464477539063e-8
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 31.600000023841858,
+                "median": 32.249999940395355,
+                "p95": 33.34500002861023,
+                "max": 33.39999997615814,
+                "mean": 32.36666666467985,
+                "stdDev": 0.5726070083402232,
+                "cvPct": 1.7691256695428603,
+                "mad": 0.30000001192092896
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0",
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "create-10000",
+              "samples": [
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 122.10000002384186
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 144
+                },
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 134.89999997615814
+                },
+                {
+                  "syncMs": 0.40000009536743164,
+                  "frameMs": 121.30000007152557
+                },
+                {
+                  "syncMs": 0.7999999523162842,
+                  "frameMs": 158.89999997615814
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 123.10000002384186
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 150.60000002384186
+                },
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 121.79999995231628
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 119.10000002384186
+                },
+                {
+                  "syncMs": 0.7000000476837158,
+                  "frameMs": 203.30000007152557
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 212
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 274.5
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0.19999992847442627,
+                "median": 0.3500000238418579,
+                "p95": 0.7450000047683715,
+                "max": 0.7999999523162842,
+                "mean": 0.3916666805744171,
+                "stdDev": 0.19286515103028445,
+                "cvPct": 49.24216447195075,
+                "mad": 0.10000002384185791
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 119.10000002384186,
+                "median": 139.44999998807907,
+                "p95": 240.12499999999994,
+                "max": 274.5,
+                "mean": 157.13333334525427,
+                "stdDev": 48.611508801061035,
+                "cvPct": 30.936471445082596,
+                "mad": 17.899999976158142
+              },
+              "verification": {
+                "rowCount": 10000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 9998,
+                "lastId": 9999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0",
+                "lastLabel": "row-9999-r0"
+              }
+            },
+            {
+              "scenario": "update-all-1000",
+              "samples": [
+                {
+                  "syncMs": 0.8999999761581421,
+                  "frameMs": 32.700000047683716
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 32.700000047683716
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 34.10000002384186
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 36.700000047683716
+                },
+                {
+                  "syncMs": 3.8000000715255737,
+                  "frameMs": 22.600000023841858
+                },
+                {
+                  "syncMs": 2,
+                  "frameMs": 32.700000047683716
+                },
+                {
+                  "syncMs": 2.600000023841858,
+                  "frameMs": 31.299999952316284
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 32.10000002384186
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 28
+                },
+                {
+                  "syncMs": 2.3000000715255737,
+                  "frameMs": 32.800000071525574
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 32.89999997615814
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 35.10000002384186
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0.8999999761581421,
+                "median": 1,
+                "p95": 3.140000045299529,
+                "max": 3.8000000715255737,
+                "mean": 1.550000011920929,
+                "stdDev": 0.9278518940500917,
+                "cvPct": 59.86141205897131,
+                "mad": 0
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 22.600000023841858,
+                "median": 32.700000047683716,
+                "p95": 35.82000003457069,
+                "max": 36.700000047683716,
+                "mean": 31.975000023841858,
+                "stdDev": 3.616659692005911,
+                "cvPct": 11.310898168285169,
+                "mad": 1
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0-u",
+                "row500Label": "row-500-r0-u",
+                "lastLabel": "row-999-r0-u"
+              }
+            },
+            {
+              "scenario": "update-one-1000",
+              "samples": [
+                {
+                  "syncMs": 0.5999999046325684,
+                  "frameMs": 36.89999997615814
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 31.799999952316284
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 32
+                },
+                {
+                  "syncMs": 0.6000000238418579,
+                  "frameMs": 67.10000002384186
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 25.399999976158142
+                },
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 33.39999997615814
+                },
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 25.399999976158142
+                },
+                {
+                  "syncMs": 0.6000000238418579,
+                  "frameMs": 32
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 31.5
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 30.300000071525574
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 36.299999952316284
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 34.39999997615814
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0.19999992847442627,
+                "median": 0.3500000238418579,
+                "p95": 0.6000000238418579,
+                "max": 0.6000000238418579,
+                "mean": 0.39166664083798725,
+                "stdDev": 0.15050421738368897,
+                "cvPct": 38.42661122777239,
+                "mad": 0.10000002384185791
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 25.399999976158142,
+                "median": 32,
+                "p95": 50.4899999976158,
+                "max": 67.10000002384186,
+                "mean": 34.70833332339922,
+                "stdDev": 10.806181600304965,
+                "cvPct": 31.134256720474074,
+                "mad": 2.049999952316284
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0-one",
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "swap-1000",
+              "samples": [
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 31.100000023841858
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 32.09999990463257
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 30.300000071525574
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 32.200000047683716
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 31.200000047683716
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 20.700000047683716
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 31.799999952316284
+                },
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 32.10000002384186
+                },
+                {
+                  "syncMs": 0.6000000238418579,
+                  "frameMs": 32
+                },
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 33.5
+                },
+                {
+                  "syncMs": 0.40000009536743164,
+                  "frameMs": 31.40000009536743
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 30.799999952316284
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0.19999992847442627,
+                "median": 0.40000003576278687,
+                "p95": 0.545000010728836,
+                "max": 0.6000000238418579,
+                "mean": 0.4166666666666667,
+                "stdDev": 0.11146409941619263,
+                "cvPct": 26.75138385988623,
+                "mad": 0.09999996423721313
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 20.700000047683716,
+                "median": 31.600000023841858,
+                "p95": 32.785000026226044,
+                "max": 33.5,
+                "mean": 30.766666680574417,
+                "stdDev": 3.274233646104768,
+                "cvPct": 10.642146190546105,
+                "mad": 0.5
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 998,
+                "penultimateId": 1,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": "row-500-r0",
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "remove-one-1000",
+              "samples": [
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 31.199999928474426
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 31.699999928474426
+                },
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 32.299999952316284
+                },
+                {
+                  "syncMs": 0.3999999761581421,
+                  "frameMs": 31
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 31.600000023841858
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 31.899999976158142
+                },
+                {
+                  "syncMs": 0.7000000476837158,
+                  "frameMs": 30.700000047683716
+                },
+                {
+                  "syncMs": 0.19999992847442627,
+                  "frameMs": 32.59999990463257
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 30.899999976158142
+                },
+                {
+                  "syncMs": 0.5,
+                  "frameMs": 31.399999976158142
+                },
+                {
+                  "syncMs": 0.2999999523162842,
+                  "frameMs": 32.299999952316284
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 33.39999997615814
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0.19999992847442627,
+                "median": 0.30000007152557373,
+                "p95": 0.5900000214576719,
+                "max": 0.7000000476837158,
+                "mean": 0.35833332935969037,
+                "stdDev": 0.1505042191838407,
+                "cvPct": 42.00117791241419,
+                "mad": 0.09999996423721313
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 30.700000047683716,
+                "median": 31.649999976158142,
+                "p95": 32.959999936819074,
+                "max": 33.39999997615814,
+                "mean": 31.749999970197678,
+                "stdDev": 0.7925792006827117,
+                "cvPct": 2.4963124454383334,
+                "mad": 0.6499999761581421
+              },
+              "verification": {
+                "rowCount": 999,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r0",
+                "row500Label": null,
+                "lastLabel": "row-999-r0"
+              }
+            },
+            {
+              "scenario": "clear-1000",
+              "samples": [
+                {
+                  "syncMs": 0,
+                  "frameMs": 27.199999928474426
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 29.5
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 25.199999928474426
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 31.300000071525574
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 34.200000047683716
+                },
+                {
+                  "syncMs": 0.09999990463256836,
+                  "frameMs": 21.799999952316284
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 33.60000002384186
+                },
+                {
+                  "syncMs": 0.8000000715255737,
+                  "frameMs": 15.700000047683716
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 25.59999990463257
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 23.399999976158142
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.799999952316284
+                },
+                {
+                  "syncMs": 0.30000007152557373,
+                  "frameMs": 27.200000047683716
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0,
+                "p95": 0.5250000715255734,
+                "max": 0.8000000715255737,
+                "mean": 0.1083333392937978,
+                "stdDev": 0.2353270054086491,
+                "cvPct": 217.22491611787856,
+                "mad": 0
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 15.700000047683716,
+                "median": 27.19999998807907,
+                "p95": 33.870000034570694,
+                "max": 34.200000047683716,
+                "mean": 27.29166665673256,
+                "stdDev": 5.441667257079284,
+                "cvPct": 19.938933468311593,
+                "mad": 3.950000047683716
+              },
+              "verification": {
+                "rowCount": 0,
+                "firstId": null,
+                "secondId": null,
+                "penultimateId": null,
+                "lastId": null,
+                "firstLabel": null,
+                "row500Label": null,
+                "lastLabel": null
+              }
+            },
+            {
+              "scenario": "replace-1000",
+              "samples": [
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 38.5
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 23.100000023841858
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 24.899999976158142
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 33.800000071525574
+                },
+                {
+                  "syncMs": 1.7000000476837158,
+                  "frameMs": 22.200000047683716
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 33.200000047683716
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 32.10000002384186
+                },
+                {
+                  "syncMs": 0.10000002384185791,
+                  "frameMs": 40.5
+                },
+                {
+                  "syncMs": 0.20000004768371582,
+                  "frameMs": 36.300000071525574
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 38.5
+                },
+                {
+                  "syncMs": 0,
+                  "frameMs": 32.59999990463257
+                },
+                {
+                  "syncMs": 1,
+                  "frameMs": 20.59999990463257
+                }
+              ],
+              "syncSummary": {
+                "count": 12,
+                "min": 0,
+                "median": 0.10000002384185791,
+                "p95": 1.3150000214576716,
+                "max": 1.7000000476837158,
+                "mean": 0.30000002185503644,
+                "stdDev": 0.5169842679826574,
+                "cvPct": 172.32807677343115,
+                "mad": 0.10000002384185791
+              },
+              "frameSummary": {
+                "count": 12,
+                "min": 20.59999990463257,
+                "median": 32.89999997615814,
+                "p95": 39.4,
+                "max": 40.5,
+                "mean": 31.358333339293797,
+                "stdDev": 6.947656038941114,
+                "cvPct": 22.155692918269036,
+                "mad": 5.600000023841858
+              },
+              "verification": {
+                "rowCount": 1000,
+                "firstId": 0,
+                "secondId": 1,
+                "penultimateId": 998,
+                "lastId": 999,
+                "firstLabel": "row-0-r14",
+                "row500Label": "row-500-r14",
+                "lastLabel": "row-999-r14"
+              }
+            }
+          ],
+          "memory": {
+            "baselineBytes": 3984800,
+            "afterCreate10000Bytes": 13023800,
+            "afterClearBytes": 3985384,
+            "garbageCollected": true
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        }
+      ],
+      "notes": [
+        "All applications expose the same imperative benchmark contract and render the same table markup.",
+        "frameMs includes two requestAnimationFrame waits after the state update, so it has a fixed frame-scheduling floor of roughly 16-34 ms depending on refresh timing.",
+        "syncMs measures only work completed before control returns to the benchmark harness; asynchronous commits are visible in frameMs but not syncMs.",
+        "Preparation renders are outside the timed region. Warm-up runs are discarded.",
+        "No CPU or network throttling is applied. Frame latency is expected to vary on shared desktop hardware.",
+        "Memory values are CDP garbage-collected heap sizes after create-10000 and clear; they are not proof of absence of leaks.",
+        "React fixtures use production React without React Compiler. Angular and Next.js are not part of the DOM baseline in Milestone 0."
+      ]
+    }
+  },
+  "status": "completed",
+  "notes": [
+    "Milestone 0 baseline only. MSF Fusion is not implemented, so this run contains no MSF Fusion measurements.",
+    "All result values are machine- and time-specific. Raw samples are preserved in the JSON file."
+  ]
+}
