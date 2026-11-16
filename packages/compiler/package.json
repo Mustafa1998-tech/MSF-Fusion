@@ -1,0 +1,25 @@
+{
+  "name": "@msf/compiler",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MSF Fusion compiler (Milestone 1 subset - scaffold).",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@msf/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "typescript": "7.0.2",
+    "vitest": "5.1.0"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@msf/runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MSF Fusion reactive runtime kernel (Milestone 1).",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@msf/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "typescript": "7.0.2",
+    "vitest": "5.1.0"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@msf/dev",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MSF Fusion development tooling (Milestone 1 scaffold).",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@msf/compiler": "workspace:*",
+    "@msf/contracts": "workspace:*",
+    "@msf/runtime": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "typescript": "7.0.2",
+    "vitest": "5.1.0"
+  }
+}
