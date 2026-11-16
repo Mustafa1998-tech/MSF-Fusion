@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-16_09-37-02-734Z-arcv",
+  "generatedAt": "2026-11-16T09:37:04.533Z",
+  "environment": {
+    "runStartedAt": "2026-11-16T09:37:02.917Z",
+    "node": "v26.12.1",
+    "pnpm": "12.21.0",
+    "platform": "win32",
+    "release": "10.0.26100",
+    "osVersion": "Windows 11 Pro",
+    "arch": "x64",
+    "os": "Windows_NT 10.0.26100",
+    "cpuModel": "12th Gen Intel(R) Core(TM) i7-12700",
+    "cpuCores": 20,
+    "totalMemoryBytes": 16833290240,
+    "gitCommit": "ac39961a89ae8c4ebdc183ed41809a87a13a37d7",
+    "gitDirty": true,
+    "timezone": "Asia/Riyadh",
+    "powerScheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "browser": null,
+    "packageVersions": {
+      "react": "19.3.1",
+      "react-dom": "19.3.1",
+      "solid-js": "1.9.19",
+      "svelte": "5.57.3",
+      "vue": "3.5.45",
+      "@preact/signals-core": "1.14.5",
+      "@vue/reactivity": "3.5.45",
+      "vite": "8.3.8",
+      "@vitejs/plugin-react": "6.3.0",
+      "vite-plugin-solid": "2.11.16",
+      "@sveltejs/vite-plugin-svelte": "7.3.1",
+      "@vitejs/plugin-vue": "6.0.11",
+      "playwright": "1.65.1",
+      "typescript": "7.0.2",
+      "vitest": "5.1.0"
+    },
+    "notes": [
+      "Package versions are resolved from the installed node_modules tree, not copied from package.json ranges.",
+      "gitDirty reports any tracked or untracked change at run start.",
+      "On Windows, command versions are captured through the .cmd shim when present."
+    ]
+  },
+  "suites": {
+    "ssr": {
+      "kind": "ssr",
+      "status": "completed",
+      "config": {
+        "samples": 12,
+        "warmup": 2,
+        "rendersPerSample": 10
+      },
+      "totalDurationMs": 1599.6912000000002,
+      "apps": [
+        {
+          "app": "react",
+          "label": "React",
+          "frameworkPackages": [
+            "react",
+            "react-dom"
+          ],
+          "notes": "React 19 client root and renderToString SSR. No React Compiler, no experimental APIs.",
+          "buildMs": 84.29140000000007,
+          "htmlBytes": 68815,
+          "validation": {
+            "rowCount": 1000,
+            "firstRow": true,
+            "lastRow": true
+          },
+          "samplesMsPerRender": [
+            1.10791999999999,
+            0.5460299999999961,
+            0.5286200000000008,
+            0.5446100000000001,
+            0.4826599999999985,
+            0.5324200000000019,
+            0.6366700000000037,
+            0.6253100000000018,
+            0.7234199999999987,
+            0.6045500000000061,
+            0.5307100000000105,
+            0.5231600000000072
+          ],
+          "summary": {
+            "count": 12,
+            "min": 0.4826599999999985,
+            "median": 0.5453199999999981,
+            "p95": 0.8964449999999946,
+            "max": 1.10791999999999,
+            "mean": 0.615506666666668,
+            "stdDev": 0.16853725481508505,
+            "cvPct": 27.38187316927269,
+            "mad": 0.04069499999999948
+          },
+          "rendersPerSecond": 1833.785667131232,
+          "warmupRenders": 2
+        },
+        {
+          "app": "solid",
+          "label": "Solid",
+          "frameworkPackages": [
+            "solid-js"
+          ],
+          "notes": "Solid store + For for keyed rows; Vite Solid plugin compiles JSX to fine-grained DOM operations.",
+          "buildMs": 372.04679999999996,
+          "htmlBytes": 68807,
+          "validation": {
+            "rowCount": 1000,
+            "firstRow": true,
+            "lastRow": true
+          },
+          "samplesMsPerRender": [
+            0.5226200000000063,
+            0.1826899999999796,
+            0.2231899999999996,
+            0.15386000000000877,
+            0.3211500000000115,
+            0.1442199999999957,
+            0.1408300000000054,
+            0.14320000000000163,
+            0.13545999999998912,
+            0.1486199999999826,
+            0.2946199999999862,
+            0.1442199999999957
+          ],
+          "summary": {
+            "count": 12,
+            "min": 0.13545999999998912,
+            "median": 0.15123999999999568,
+            "p95": 0.411811500000009,
+            "max": 0.5226200000000063,
+            "mean": 0.21288999999999683,
+            "stdDev": 0.11616676085384105,
+            "cvPct": 54.566565293739856,
+            "mad": 0.013094999999998427
+          },
+          "rendersPerSecond": 6612.007405448483,
+          "warmupRenders": 2
+        },
+        {
+          "app": "svelte",
+          "label": "Svelte",
+          "frameworkPackages": [
+            "svelte"
+          ],
+          "notes": "Svelte 5 runes, keyed each block, compiled by the official Vite plugin.",
+          "buildMs": 536.3948,
+          "htmlBytes": 68842,
+          "validation": {
+            "rowCount": 1000,
+            "firstRow": true,
+            "lastRow": true
+          },
+          "samplesMsPerRender": [
+            0.1925499999999829,
+            0.4033200000000079,
+            0.14502999999999702,
+            0.1440900000000056,
+            0.14221000000000003,
+            0.15867000000000644,
+            0.1863399999999956,
+            0.12372000000000298,
+            0.12284999999999399,
+            0.12459999999998672,
+            0.12252000000000862,
+            0.12291000000000167
+          ],
+          "summary": {
+            "count": 12,
+            "min": 0.12252000000000862,
+            "median": 0.14315000000000283,
+            "p95": 0.287396499999994,
+            "max": 0.4033200000000079,
+            "mean": 0.1657341666666658,
+            "stdDev": 0.07867584467678962,
+            "cvPct": 47.47110765339476,
+            "mad": 0.019835000000000505
+          },
+          "rendersPerSecond": 6985.679357317361,
+          "warmupRenders": 2
+        },
+        {
+          "app": "vue",
+          "label": "Vue",
+          "frameworkPackages": [
+            "vue"
+          ],
+          "notes": "Vue 3 Composition API, keyed v-for, official Vue Vite plugin.",
+          "buildMs": 125.55570000000012,
+          "htmlBytes": 68821,
+          "validation": {
+            "rowCount": 1000,
+            "firstRow": true,
+            "lastRow": true
+          },
+          "samplesMsPerRender": [
+            0.7283599999999979,
+            0.6203699999999799,
+            0.5539300000000139,
+            0.5624900000000025,
+            1.6695300000000088,
+            0.535979999999995,
+            0.575240000000008,
+            0.5927199999999857,
+            2.1406600000000027,
+            0.566190000000006,
+            0.6003799999999956,
+            0.5577800000000025
+          ],
+          "summary": {
+            "count": 12,
+            "min": 0.535979999999995,
+            "median": 0.5839799999999968,
+            "p95": 1.8815385000000058,
+            "max": 2.1406600000000027,
+            "mean": 0.8086358333333332,
+            "stdDev": 0.5242563392681876,
+            "cvPct": 64.83219239829066,
+            "mad": 0.02812499999998863
+          },
+          "rendersPerSecond": 1712.387410527767,
+          "warmupRenders": 2
+        },
+        {
+          "app": "msf",
+          "label": "MSF Fusion",
+          "frameworkPackages": [
+            "@msf/runtime"
+          ],
+          "notes": "MSF Fusion runtime-preview renderToString snapshot of an equivalent 1,000-row table. SSR-suite only; DOM/bundle MSF fixtures pending. Informational; not a production SSR claim.",
+          "buildMs": 20.050599999999804,
+          "htmlBytes": 68939,
+          "validation": {
+            "rowCount": 1000,
+            "firstRow": true,
+            "lastRow": true
+          },
+          "samplesMsPerRender": [
+            1.5125600000000077,
+            1.32817,
+            1.3026200000000017,
+            1.3598300000000108,
+            1.607569999999987,
+            1.3517799999999625,
+            1.3177099999999882,
+            1.3553399999999782,
+            1.3301699999999983,
+            1.489390000000003,
+            1.3757700000000113,
+            1.375229999999965
+          ],
+          "summary": {
+            "count": 12,
+            "min": 1.3026200000000017,
+            "median": 1.3575849999999945,
+            "p95": 1.5553144999999984,
+            "max": 1.607569999999987,
+            "mean": 1.3921783333333264,
+            "stdDev": 0.09363164478989412,
+            "cvPct": 6.725549633121326,
+            "mad": 0.028414999999995305
+          },
+          "rendersPerSecond": 736.6021280435509,
+          "warmupRenders": 2
+        }
+      ],
+      "notes": [
+        "Each application renders the same 1,000-row markup on every request; no data fetching or I/O is included.",
+        "SSR builds use Vite's SSR mode and each framework's official production renderer.",
+        "React uses react-dom/server renderToString; Solid uses renderToString; Svelte uses svelte/server; Vue uses vue/server-renderer.",
+        "Next.js, Angular SSR, and Qwik are not included because their server stacks add routing, bundling, and transport layers that are not functionally equivalent to a single render call.",
+        "Hydration and streaming SSR are not measured in Milestone 0.",
+        "SSR build time is recorded separately and is not part of the render latency samples."
+      ]
+    }
+  },
+  "status": "completed",
+  "notes": [
+    "Baseline benchmark run. When MSF runtime preview fixtures are included, treat them as informational developer-preview measurements (not superiority claims).",
+    "All result values are machine- and time-specific. Raw samples are preserved in the JSON file."
+  ]
+}

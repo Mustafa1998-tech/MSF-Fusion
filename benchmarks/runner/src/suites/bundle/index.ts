@@ -1,4 +1,4 @@
-import { performance } from "node:perf_hooks";
+﻿import { performance } from "node:perf_hooks";
 import { APP_FIXTURES, buildClientFixture, collectAssets, extensionOf } from "../../fixtures.ts";
 import { summarize, type Summary } from "../../stats.ts";
 
@@ -43,7 +43,7 @@ export async function runBundleSuite(): Promise<BundleSuiteResult> {
   const startedAt = performance.now();
   const apps: BundleAppResult[] = [];
 
-  for (const fixture of APP_FIXTURES) {
+  for (const fixture of APP_FIXTURES.filter((item) => item.supportsClientBench !== false)) {
     const { buildTimesMs, distDirectory } = await buildClientFixture(
       fixture,
       3,
@@ -100,3 +100,4 @@ export async function runBundleSuite(): Promise<BundleSuiteResult> {
     ],
   };
 }
+

@@ -1,4 +1,4 @@
-import { performance } from "node:perf_hooks";
+﻿import { performance } from "node:perf_hooks";
 import { chromium, type Browser, type Page } from "playwright";
 import { APP_FIXTURES, buildClientFixture, type AppFixture } from "../../fixtures.ts";
 import { summarize, type Summary } from "../../stats.ts";
@@ -320,7 +320,7 @@ export async function runDomSuite(
   });
   try {
     const apps: DomAppResult[] = [];
-    for (const fixture of APP_FIXTURES) {
+    for (const fixture of APP_FIXTURES.filter((item) => item.supportsClientBench !== false)) {
       apps.push(await runApp(browser, fixture, options));
     }
     const context = await browser.newContext();
@@ -358,3 +358,4 @@ export async function runDomSuite(
     await browser.close();
   }
 }
+

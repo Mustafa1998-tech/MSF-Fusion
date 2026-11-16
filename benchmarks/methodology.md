@@ -1,6 +1,6 @@
 # Benchmark methodology — MSF Fusion baselines
 
-> **Scope:** reproducible baseline competitor measurements (M0) plus measurement rules for MSF Fusion. A developer-preview MSF runtime is now **included in the micro suite** (`msf-runtime` candidate) and its results are informational preview measurements only — **no superiority claims**. Historical M0 result files/reports are preserved intact as evidence.
+> **Scope:** reproducible baseline competitor measurements (M0) plus measurement rules for MSF Fusion. A developer-preview MSF runtime is now **included in the micro and SSR suites** (`msf-runtime` micro candidate; MSF SSR-preview fixture in the SSR suite) and its results are informational preview measurements only — **no superiority claims**. Historical M0 result files/reports are preserved intact as evidence.
 
 ## Purpose
 This laboratory establishes reproducible baselines for selected competitors so Milestone 1+ can compare MSF Fusion against measured evidence, not intuition. Results are inputs to architecture decisions; they are not a universal ranking.

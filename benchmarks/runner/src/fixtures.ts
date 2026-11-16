@@ -11,6 +11,11 @@ export interface AppFixture {
   frameworkPackages: string[];
   serverEntry: string;
   notes: string;
+  /**
+   * When false, skip client-only suites (`bundle`, `dom`) because the fixture
+   * does not ship a client application yet.
+   */
+  supportsClientBench?: boolean;
 }
 
 export const APP_FIXTURES: readonly AppFixture[] = [
@@ -49,6 +54,16 @@ export const APP_FIXTURES: readonly AppFixture[] = [
     serverEntry: "src/entry-server.ts",
     notes:
       "Vue 3 Composition API, keyed v-for, official Vue Vite plugin.",
+  },
+  {
+    id: "msf",
+    label: "MSF Fusion",
+    directory: join(FIXTURES_DIR, "apps", "msf"),
+    frameworkPackages: ["@msf/runtime"],
+    serverEntry: "src/entry-server.ts",
+    notes:
+      "MSF Fusion runtime-preview renderToString snapshot of an equivalent 1,000-row table. SSR-suite only; DOM/bundle MSF fixtures pending. Informational; not a production SSR claim.",
+    supportsClientBench: false,
   },
 ];
 

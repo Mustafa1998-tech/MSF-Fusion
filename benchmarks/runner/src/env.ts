@@ -43,10 +43,13 @@ function commandCandidates(command: string): string[] {
 function commandOutput(command: string, args: string[]): string | null {
   for (const candidate of commandCandidates(command)) {
     try {
+      // On Windows, `.cmd` shims require a shell; Node returns EINVAL otherwise.
+      const shell = process.platform === "win32" && candidate.endsWith(".cmd");
       return execFileSync(candidate, args, {
         encoding: "utf8",
         stdio: ["ignore", "pipe", "ignore"],
         timeout: 10_000,
+        shell,
       }).trim();
     } catch {
       // Try the next candidate (for example `pnpm` after `pnpm.cmd` fails).
