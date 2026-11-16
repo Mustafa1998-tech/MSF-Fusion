@@ -7,6 +7,7 @@
 import {
   createEffect,
   createRoot,
+  createSignal,
   onCleanup,
   untrack,
   type Accessor,
@@ -93,40 +94,29 @@ export function insert(
     return;
   }
 
-  let current: Node | Node[] | null = null;
+  let current: Node[] = [];
+  const clear = () => {
+    for (let i = current.length - 1; i >= 0; i--) {
+      current[i]!.parentNode?.removeChild(current[i]!);
+    }
+    current = [];
+  };
   createEffect(() => {
+    clear();
     const nextValue = value();
-    // remove previous
-    if (Array.isArray(current)) {
-      for (const n of current) n.parentNode?.removeChild(n);
-    } else if (current) {
-      current.parentNode?.removeChild(current);
-    }
-
-    if (nextValue == null || nextValue === false || nextValue === true) {
-      current = null;
-      return;
-    }
-
-    if (Array.isArray(nextValue)) {
-      const nodes: Node[] = [];
-      for (const item of nextValue) {
-        const n = toNode(item);
-        if (n) {
-          nodes.push(n);
-          parent.insertBefore(n, anchor);
-        }
+    if (nextValue == null || nextValue === false || nextValue === true) return;
+    const items = Array.isArray(nextValue) ? nextValue : [nextValue];
+    for (const item of items) {
+      const node = toNode(item);
+      if (!node) continue;
+      if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+        const children = Array.from(node.childNodes);
+        parent.insertBefore(node, anchor);
+        current.push(...children);
+      } else {
+        parent.insertBefore(node, anchor);
+        current.push(node);
       }
-      current = nodes;
-      return;
-    }
-
-    const node = toNode(nextValue);
-    if (node) {
-      parent.insertBefore(node, anchor);
-      current = node;
-    } else {
-      current = null;
     }
   });
 }
@@ -185,24 +175,125 @@ export function show<T extends Node>(
   return () => (read(when) ? renderFn() : fallback ? fallback() : null);
 }
 
+// (reserved for future diff helpers)
+
 /**
- * Simple reactive list renderer (keyed by index by default, or by key fn).
- * For Milestone 1 this provides a usable primitive; compiler can target more
- * optimized strategies later.
+ * Reactive list renderer. If `key` is provided, performs keyed reconciliation
+ * to preserve DOM nodes/identity when possible.
  */
+export function list<T>(
+  parent: Node,
+  each: MaybeAccessor<readonly T[] | T[] | undefined | null>,
+  mapFn: (item: Accessor<T>, index: Accessor<number>) => Node,
+  keyFn?: (item: T, index: number) => unknown,
+  anchor: Node | null = null,
+): void {
+  if (!keyFn) {
+    // non-keyed: simple replace (fine-grained per-item signals not tracked here)
+    insert(parent, () => {
+      const items = (read(each) ?? []) as readonly T[];
+      return items.map((item, i) => untrack(() => mapFn(() => item, () => i)));
+    }, anchor);
+    return;
+  }
+
+  type Entry = {
+    key: unknown;
+    node: Node;
+    dispose: Dispose;
+    item: ReturnType<typeof createSignal<T>>[1];
+    setItem: ReturnType<typeof createSignal<T>>[1];
+    index: ReturnType<typeof createSignal<number>>[1];
+    setIndex: ReturnType<typeof createSignal<number>>[1];
+    getItem: Accessor<T>;
+    getIndex: Accessor<number>;
+  };
+
+  let entries: Entry[] = [];
+  let keyToEntry = new Map<unknown, Entry>();
+
+  const removeEntry = (entry: Entry) => {
+    entry.dispose();
+    entry.node.parentNode?.removeChild(entry.node);
+  };
+
+  createEffect(() => {
+    const items = (read(each) ?? []) as readonly T[];
+    const newEntries: Entry[] = new Array(items.length);
+    const newMap = new Map<unknown, Entry>();
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i] as T;
+      const key = keyFn(item, i);
+      let entry = keyToEntry.get(key);
+      if (!entry) {
+        let node!: Node;
+        let dispose!: Dispose;
+        let getItem!: Accessor<T>;
+        let setItem!: (v: T | ((p: T) => T)) => T;
+        let getIndex!: Accessor<number>;
+        let setIndex!: (v: number | ((p: number) => number)) => number;
+        dispose = createRoot((d) => {
+          [getItem, setItem] = createSignal(item);
+          [getIndex, setIndex] = createSignal(i);
+          node = mapFn(getItem, getIndex);
+          return d;
+        });
+        entry = {
+          key,
+          node,
+          dispose,
+          item: setItem,
+          setItem,
+          index: setIndex,
+          setIndex,
+          getItem,
+          getIndex,
+        };
+      } else {
+        entry.setItem(item);
+        entry.setIndex(i);
+      }
+      newEntries[i] = entry;
+      newMap.set(key, entry);
+    }
+
+    // remove stale
+    for (const [key, entry] of keyToEntry) {
+      if (!newMap.has(key)) removeEntry(entry);
+    }
+
+    // reorder/insert
+    let currentAnchor = anchor;
+    for (let i = newEntries.length - 1; i >= 0; i--) {
+      const entry = newEntries[i]!;
+      if (entry.node.nextSibling !== currentAnchor || entry.node.parentNode !== parent) {
+        parent.insertBefore(entry.node, currentAnchor);
+      }
+      currentAnchor = entry.node;
+    }
+
+    entries = newEntries;
+    keyToEntry = newMap;
+  });
+
+  onCleanup(() => {
+    for (const entry of entries) removeEntry(entry);
+    entries = [];
+    keyToEntry.clear();
+  });
+}
+
+/** Accessor-returning convenience wrapper for non-keyed lists. */
 export function For<T>(props: {
   each: MaybeAccessor<readonly T[] | T[] | undefined | null>;
   children: (item: T, index: Accessor<number>) => Node;
 }): Accessor<Node[]> {
   return () => {
-    const list = (read(props.each) ?? []) as readonly T[];
+    const items = (read(props.each) ?? []) as readonly T[];
     const out: Node[] = [];
-    // Simplified implementation: recreates nodes when list identity/content changes
-    // in the tracking context. A keyed diff can replace this later.
-    for (let i = 0; i < list.length; i++) {
-      const item = list[i] as T;
-      const node = untrack(() => props.children(item, () => i));
-      out.push(node);
+    for (let i = 0; i < items.length; i++) {
+      out.push(untrack(() => props.children(items[i] as T, () => i)));
     }
     return out;
   };
