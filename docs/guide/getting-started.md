@@ -9,6 +9,9 @@ git clone https://github.com/Mustafa1998-tech/MSF-Fusion.git
 cd MSF-Fusion
 pnpm install --frozen-lockfile
 
+# Build workspace packages (dist outputs used by examples/consumer checks)
+pnpm build
+
 # Verify
 pnpm run typecheck
 pnpm --filter @msf/runtime run test

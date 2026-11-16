@@ -1,5 +1,5 @@
 ﻿import { describe, expect, it } from "vitest";
-import { compile } from "../src/index.ts";
+import { compile } from "../src/index.js";
 
 describe("compiler subset (jsx-dom-v1)", () => {
   it("transforms intrinsic JSX to DOM runtime calls", () => {
@@ -36,3 +36,4 @@ describe("compiler subset (jsx-dom-v1)", () => {
     expect(res.diagnostics.some((d) => d.code === "MSF_UNSUPPORTED_COMPONENT")).toBe(true);
   });
 });
+

@@ -6,13 +6,13 @@
  *   reactive bindings. Falls back to a fresh mount when the server markup
  *   does not match the view tree.
  */
-import { createRoot, onCleanup, type Dispose } from "./core.ts";
+import { createRoot, onCleanup, type Dispose } from "./core.js";
 import {
   addEventListener,
   insert,
   setAttribute,
   setText,
-} from "./dom.ts";
+} from "./dom.js";
 import {
   isFragment,
   isText,
@@ -23,10 +23,10 @@ import {
   type ViewMaybeAccessor,
   type ViewNode,
   type ViewText,
-} from "./view.ts";
+} from "./view.js";
 
-export { h, fragment, text } from "./view.ts";
-export type { ViewChild, ViewElement, ViewFragment, ViewMaybeAccessor, ViewNode, ViewText } from "./view.ts";
+export { h, fragment, text } from "./view.js";
+export type { ViewChild, ViewElement, ViewFragment, ViewMaybeAccessor, ViewNode, ViewText } from "./view.js";
 
 function isAccessor(value: unknown): value is () => unknown {
   return typeof value === "function";
@@ -239,3 +239,4 @@ export function hydrate(
     return dispose;
   });
 }
+

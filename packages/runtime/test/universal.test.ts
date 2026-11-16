@@ -1,9 +1,9 @@
 ﻿// @vitest-environment jsdom
 import { describe, expect, it } from "vitest";
-import { createSignal } from "../src/core.ts";
-import { h } from "../src/view.ts";
-import { mount, hydrate } from "../src/universal.ts";
-import { renderToString } from "../src/server.ts";
+import { createSignal } from "../src/core.js";
+import { h } from "../src/view.js";
+import { mount, hydrate } from "../src/universal.js";
+import { renderToString } from "../src/server.js";
 
 describe("universal view mount/hydrate", () => {
   it("mounts a view into the DOM with reactive text", () => {
@@ -42,3 +42,4 @@ describe("universal view mount/hydrate", () => {
     expect(container.querySelector("p")?.textContent).toContain("Count: 7");
   });
 });
+

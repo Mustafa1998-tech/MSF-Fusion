@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Minimal DOM runtime helpers (Milestone 1).
  *
  * These are fine-grained primitives intended as compiler/runtime targets and
@@ -12,7 +12,7 @@ import {
   untrack,
   type Accessor,
   type Dispose,
-} from "./core.ts";
+} from "./core.js";
 
 export type MaybeAccessor<T> = T | Accessor<T>;
 
@@ -298,3 +298,4 @@ export function For<T>(props: {
     return out;
   };
 }
+

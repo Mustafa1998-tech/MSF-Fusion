@@ -1,19 +1,22 @@
-{
+﻿{
   "name": "@msf/dev",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "MSF Fusion development tooling (Milestone 1 scaffold).",
+  "description": "MSF Fusion dev tooling preview (compile APIs/CLI).",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
+  "files": ["dist", "README.md"],
   "bin": {
-    "msf-dev": "./src/cli.ts"
+    "msf-dev": "./dist/cli.js"
   },
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "pnpm run build",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --passWithNoTests",
     "dev:status": "node src/cli.ts status"

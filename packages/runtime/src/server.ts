@@ -5,7 +5,7 @@
  * default. The same tree can be mounted or hydrated on the client via
  * `@msf/runtime/universal`.
  */
-import { untrack } from "./core.ts";
+import { untrack } from "./core.js";
 import {
   isFragment,
   isText,
@@ -14,10 +14,10 @@ import {
   type ViewElement,
   type ViewMaybeAccessor,
   type ViewNode,
-} from "./view.ts";
+} from "./view.js";
 
-export { h, fragment, text } from "./view.ts";
-export type { ViewElement, ViewFragment, ViewNode, ViewText, ViewMaybeAccessor, ViewChild } from "./view.ts";
+export { h, fragment, text } from "./view.js";
+export type { ViewElement, ViewFragment, ViewNode, ViewText, ViewMaybeAccessor, ViewChild } from "./view.js";
 
 const VOID_ELEMENTS = new Set([
   "area",
@@ -104,3 +104,4 @@ export function renderToString(view: () => ViewNode): string {
 export type ServerNode = ViewNode;
 /** @deprecated use `@msf/runtime/universal` for isomorphic rendering */
 export type ServerElement = ViewElement;
+

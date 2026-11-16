@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "@msf/contracts",
   "version": "0.0.0",
   "private": true,
@@ -6,11 +6,14 @@
   "description": "Shared contracts and internal interfaces for MSF Fusion packages.",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
+  "files": ["dist", "README.md"],
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "pnpm run build",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --passWithNoTests"
   },

@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
-import { createSignal } from "../src/core.ts";
-import { escapeHtml, h, renderToString } from "../src/server.ts";
+﻿import { describe, expect, it } from "vitest";
+import { createSignal } from "../src/core.js";
+import { escapeHtml, h, renderToString } from "../src/server.js";
 
 describe("SSR server renderer", () => {
   it("escapes text and attributes", () => {
@@ -30,3 +30,4 @@ function renderNodeLike(node: ReturnType<typeof h>): string {
   // helper to test h() output via renderToString
   return renderToString(() => node);
 }
+

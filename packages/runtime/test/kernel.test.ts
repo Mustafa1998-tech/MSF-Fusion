@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 import {
   batch,
   createEffect,
@@ -7,7 +7,7 @@ import {
   createSignal,
   onCleanup,
   untrack,
-} from "../src/index.ts";
+} from "../src/index.js";
 
 describe("createSignal", () => {
   it("reads and writes values", () => {
@@ -289,3 +289,4 @@ describe("correctness edge cases", () => {
     expect(runs).toBe(3);
   });
 });
+

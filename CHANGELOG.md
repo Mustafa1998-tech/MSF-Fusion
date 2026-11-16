@@ -7,6 +7,7 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 ## [Unreleased]
 
 ### Added
+- **Package builds & consumer verification:** `@msf/contracts|runtime|compiler|dev` now emit real `dist` ESM builds with declarations via `tsconfig.build.json`, package exports point at `dist`, and `scripts/verify-package.mjs` packs the four packages, installs them into a temp consumer, runs a runtime smoke test and a TypeScript consumer typecheck — producing `benchmarks/evidence/package-verification.json`. Root scripts: `pnpm build`, `pnpm verify:package`.
 - **Runtime developer preview (M1 progress):** `@msf/runtime` with fine-grained reactive kernel (`createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, ownership/disposal) and DOM helpers (`@msf/runtime/dom`), with tests.
 - **Isomorphic view layer (M2 preview):** `@msf/runtime/universal` with isomorphic view descriptors (`h`, `fragment`, `text`), DOM mounting, and **hydration** that adopts SSR markup, attaches listeners, wires reactive bindings, and falls back to fresh mount on markup mismatch. Includes tests.
 - **Full-stack example:** `examples/fullstack` — Vite + Node.js SSR in dev (middleware mode, on-demand render) and static prerender + hydration in production, served by Node HTTP. Hydration verified in a real Chromium browser.

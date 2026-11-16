@@ -1,7 +1,7 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 import { resolve } from "node:path";
 import process from "node:process";
-import { compilePath, getDevStatus } from "./index.ts";
+import { compilePath, getDevStatus } from "./index.js";
 
 function usage() {
   console.log(`msf-dev (preview)\n\nUsage:\n  node packages/dev/src/cli.ts status\n  node packages/dev/src/cli.ts compile <input-file-or-dir> [--out <dir>]\n`);
@@ -36,3 +36,4 @@ async function main() {
 }
 
 main().catch((e) => { console.error(e instanceof Error ? e.message : String(e)); process.exitCode = 1; });
+

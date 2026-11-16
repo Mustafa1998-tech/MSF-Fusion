@@ -1,7 +1,7 @@
-// @vitest-environment jsdom
+﻿// @vitest-environment jsdom
 import { describe, expect, it } from "vitest";
-import { createSignal } from "../src/core.ts";
-import { insert, render, setAttribute, setText } from "../src/dom.ts";
+import { createSignal } from "../src/core.js";
+import { insert, render, setAttribute, setText } from "../src/dom.js";
 
 describe("DOM runtime", () => {
   it("renders and updates reactive text", () => {
@@ -59,3 +59,4 @@ describe("DOM runtime", () => {
     container.remove();
   });
 });
+
