@@ -7,9 +7,10 @@
 M0 architecture/baseline/toolchain-spike deliverables are complete. M1 is in progress with a **tested reactive runtime preview**, a **real compiler (two targets)**, initial **dev tooling preview**, and **MSF runtime integration in micro benchmarks** (sequential committed evidence). An **M2 isomorphic slice** is in place: isomorphic view descriptors, DOM mounting, **SSR hydration**, **function components**, and a **full-stack example** (dev SSR + production prerender + browser-verified hydration). Full compiler/IR pipeline, dev server/HMR for library packages, publishable release flow, and methodology-compliant SSR/bundle/DOM benchmark coverage remain pending.
 
 ## Implemented / verified
-- **`@msf/runtime`** (27 tests)
+- **`@msf/runtime`** (33 tests)
   - Core: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, `getOwner`, `runWithOwner`, `flushSync`
   - Fix: in-run dependency dedupe; O(1) owner dispose via `ownedSlot` (24 µs → ~134 ns signal create+read+dispose on test machine)
+  - Guards: runaway-update depth limit (`MSF_REACTIVE_CYCLE`) for nested reactive updates
   - DOM: `render`, `mount`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list`, `For`
   - Universal: `@msf/runtime/universal` — isomorphic `h`, `fragment`, `text`, DOM `mount`, `hydrate` (adopts SSR markup, attaches listeners/bindings, fresh-mount fallback on mismatch)
   - Server: `renderToString` (component nodes resolved), `escapeHtml`

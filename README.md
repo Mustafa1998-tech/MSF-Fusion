@@ -6,7 +6,7 @@
 
 **A compiler-assisted, fine-grained reactive, TypeScript-first full-stack framework — designed for correctness, performance, and security.**
 
-[![Status](https://img.shields.io/badge/status-M1%20Developer%20Preview%20(compiler%20%26%20dev%20slices)-0f766e)](#project-status)
+[![Status](https://img.shields.io/badge/status-M1%2FM2%20Developer%20Preview%20(components%20%2B%20hydration)-0f766e)](#project-status)
 [![TypeScript](https://img.shields.io/badge/TypeScript-7.0.2-3178c6)](https://www.typescriptlang.org/)
 [![Node](https://img.shields.io/badge/Node.js-LTS%20%2F%20v26%20tested-339933)](https://nodejs.org/)
 [![pnpm](https://img.shields.io/badge/pnpm-12.21.0-f69220)](https://pnpm.io/)
@@ -29,22 +29,20 @@ The project follows an evidence-driven process: architecture decisions, security
 | Milestone | State | Summary |
 |---|---|---|
 | **M0 — Architecture & Baseline** | ✅ Completed | ADRs, security/threat model, benchmark lab, final competitor baseline, compiler toolchain spike |
-| **M1 — Reactive kernel & compiler slice** | 🚧 In progress | Runtime kernel, DOM helpers, SSR string renderer, tests, and preview example implemented; compiler subset/IR/codegen, dev tooling, and MSF benchmark integration in progress |
-| M2+ | 📋 Planned | SSR/hydration, full-stack boundaries, DX, compatibility, hardening |
+| **M1 / M2 — Reactive kernel, components, hydration slices** | 🚧 In progress | Tested reactive kernel + DOM helpers + SSR; isomorphic view layer with **hydration** and **function components**; compiler subset with two targets (DOM + universal); dev-tooling preview; MSF micro-benchmark evidence; consumer-installable `dist` packages verified |
+| M2+ | 📋 Planned | Streaming/resume, full-stack boundaries, router, DX, compatibility, hardening, release approval |
 
-> **Important:** A **developer-preview runtime** is now implemented (`@msf/runtime`: reactive core, DOM helpers, SSR string render) with tests and an example, but the framework is **not production-ready**: compiler/JSX subset, hydration, dev server/CLI, router, and npm publishing are still in progress/planned. This repository does **not** contain MSF Fusion performance numbers and makes **no superiority claims**.
+> **Important:** A working **developer-preview framework** exists in-repo (runtime, DOM, universal/SSR/hydration, components, compiler subset). It is still preview: full compiler/IR pipeline, dev server/HMR for library packages, router/actions/boundaries, comprehensive MSF measurements, and npm-publish readiness remain in progress. This repository makes **no superiority claims**.
 
 ## What is in this repository today
 
-- **Runtime preview (`packages/runtime`):** real fine-grained reactive kernel (`createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, ownership/disposal), DOM helpers (`@msf/runtime/dom`), SSR string renderer (`@msf/runtime/server`), and isomorphic view mount/hydrate (`@msf/runtime/universal`) with tests.
-- **Compiler subset (`packages/compiler`):** real `jsx-dom-v1` transform for an intrinsic JSX/TSX subset to DOM runtime calls with diagnostics and tests.
-- **Dev tooling preview (`packages/dev`):** compile APIs/CLI (`compilePath`, `status`) for the supported subset.
-- **Examples:** `examples/counter-basic` (SSR snapshot), `examples/counter-browser` (Vite interactive demo), `examples/fullstack` (SSR + hydration pilot).
-- **Architecture & decisions:** system/container views, compile-to-runtime pipeline, and ADR-001–ADR-005 with trade-offs and Mermaid diagrams.
-- **Benchmark laboratory:** reproducible runner with pinned dependencies, environment capture, raw JSON samples, median/P95/CV/MAD reporting, and equivalent fixtures.
-- **Competitor baselines (measured):** React 19.3.1, Solid 1.9.19, Svelte 5.57.3, Vue 3.5.45, and `@preact/signals-core` 1.14.5 (micro primitives where semantically comparable).
-- **Compiler toolchain spike:** TypeScript 7 unstable semantic API + Oxc transform feasibility, with recorded evidence.
-- **Engineering governance:** threat model, security/performance requirements, risks, quality gates, MVP scope, roadmap, and a detailed approval-gated implementation plan.
+- **Runtime + DOM + universal (`@msf/runtime`):** fine-grained reactive kernel (signals/memos/effects/roots/disposal/batch/untrack), DOM bindings (`insert`/`setAttribute`/events/keyed multi-root `list`), SSR string renderer (`h`/`renderToString`/escaping), and an isomorphic view layer (`h`/`fragment`/`text`) with DOM mount + **hydration** and **function components**. Includes unit tests.
+- **Compiler subset (`@msf/compiler`):** `jsx-dom-v1` (intrinsic JSX → DOM calls) and **`jsx-universal-v1`** (JSX → isomorphic view descriptors for SSR/mount/hydrate). Golden-output tests and diagnostics.
+- **Dev tooling preview (`@msf/dev`):** `compileFile`/`compilePath`/`getDevStatus` + CLI for the supported subset.
+- **Package consumption verified:** `dist` ESM+d.ts builds for `@msf/contracts|runtime|compiler|dev`; `pnpm verify:package` packs and smoke-tests them in a temp consumer (install, runtime smoke, TS typecheck); evidence at `benchmarks/evidence/package-verification.json`.
+- **Examples:** `examples/counter-basic` (SSR snapshot), `examples/counter-browser` (Vite), **`examples/fullstack`** — dev SSR via Vite middleware + production prerender + hydration, verified in a real Chromium browser.
+- **Benchmark lab + MSF micro evidence:** competitor baseline preserved; MSF runtime measured in micro suite with 12 samples; raw JSON + report committed (`2026-11-16_09-03-34-486Z-li9o`).
+- **Architecture/governance:** ADR-001–ADR-005, security/threat model/requirements, quality gates, roadmap, DTB ledger (`docs/dtb/STATE.md`, `BACKLOG.md`, `CHANGELOG.md`), and review docs.
 
 **In progress / not yet implemented:** full component model and hydration for all JSX/compiler patterns, fuller IR/sourcemaps and the TypeScript semantic adapter, dev server/HMR for library packages, router/full-stack action boundaries, publishable `dist` packages, comprehensive MSF benchmark fixtures/runs, and production hardening (M2+). **No MSF Fusion superiority/performance claims.**
 
@@ -61,14 +59,15 @@ The project follows an evidence-driven process: architecture decisions, security
 ```text
 .
 ├─ packages/
-│  ├─ runtime/                   # Reactive kernel, DOM helpers, SSR renderer (preview)
-│  ├─ contracts/                 # Shared interfaces (scaffold)
-│  ├─ compiler/                  # Compiler scaffold (IR/codegen pending)
-│  └─ dev/                       # Dev tooling scaffold (CLI/HMR pending)
+│  ├─ runtime/                   # Reactive kernel, DOM helpers, server, universal (mount/hydrate)
+│  ├─ contracts/                 # Shared interfaces (CompileRequest.target, Diagnostic)
+│  ├─ compiler/                  # Compiler subset: jsx-dom-v1 / jsx-universal-v1
+│  └─ dev/                       # Dev tooling preview (compile APIs + CLI)
 ├─ examples/
 │  ├─ counter-basic/             # Runnable SSR snapshot example
-│  └─ counter-browser/           # Runnable Vite browser example
-├─ docs/                         # Architecture, ADRs, guide, security, performance, engineering
+│  ├─ counter-browser/           # Runnable Vite browser example
+│  └─ fullstack/                 # SSR + hydration pilot (dev SSR / prod prerender)
+├─ docs/                         # Architecture, ADRs, guide, security, performance, engineering, DTB ledger
 ├─ benchmarks/                   # Runner, results/reports, evidence, methodology, scenarios
 ├─ spikes/                       # Milestone 0 feasibility probes
 ├─ branding/                     # Visual identity assets
@@ -82,11 +81,17 @@ The project follows an evidence-driven process: architecture decisions, security
 ```bash
 pnpm install --frozen-lockfile
 
+# Build packages
+pnpm build
+
 # Quality checks
 pnpm run typecheck
 pnpm --filter @msf/runtime run test
 pnpm --filter @msf/bench-runner run test
 pnpm --filter @msf/spike-compiler-toolchain run test
+
+# Verify packed packages install & work in a clean consumer
+pnpm verify:package
 
 # Run preview examples
 node examples/counter-basic/src/ssr.ts
@@ -114,8 +119,9 @@ See [benchmarks/methodology.md](benchmarks/methodology.md) for fairness rules, e
 
 ## Baseline evidence (latest)
 
-- **Raw data:** [`benchmarks/results/2026-11-16_06-39-52-525Z-5om9.json`](benchmarks/results/2026-11-16_06-39-52-525Z-5om9.json)
-- **Report:** [`benchmarks/reports/2026-11-16_06-39-52-525Z-5om9.md`](benchmarks/reports/2026-11-16_06-39-52-525Z-5om9.md)
+- **Competitor micro+SSR+bundle+DOM baseline (M0, sequential):** [`benchmarks/results/2026-11-16_06-39-52-525Z-5om9.json`](benchmarks/results/2026-11-16_06-39-52-525Z-5om9.json) · [report](benchmarks/reports/2026-11-16_06-39-52-525Z-5om9.md)
+- **MSF micro preview evidence (2026-11-16):** [`benchmarks/results/2026-11-16_09-03-34-486Z-li9o.json`](benchmarks/results/2026-11-16_09-03-34-486Z-li9o.json) · [report](benchmarks/reports/2026-11-16_09-03-34-486Z-li9o.md) (informational; not a superiority claim)
+- **Package verification:** `benchmarks/evidence/package-verification.json` · reproduction: `pnpm build && pnpm verify:package`
 - **Toolchain spike:** [`benchmarks/evidence/compiler-toolchain.json`](benchmarks/evidence/compiler-toolchain.json)
 
 Results are machine- and time-specific. Read [limitations](benchmarks/methodology.md#known-limitations) before interpreting.

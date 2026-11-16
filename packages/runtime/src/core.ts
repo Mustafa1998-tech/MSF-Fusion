@@ -50,6 +50,8 @@ let Listener: ReactiveNode | null = null;
 let BatchDepth = 0;
 let Effects: ReactiveNode[] = [];
 let NotifiedEffects = false;
+const MAX_REACTIVE_DEPTH = 1000;
+let ReactiveDepth = 0;
 
 function defaultEquals(a: unknown, b: unknown): boolean {
   return Object.is(a, b);
@@ -250,8 +252,16 @@ function scheduleEffect(node: ReactiveNode): void {
 function runEffects(): void {
   if (NotifiedEffects) return;
   NotifiedEffects = true;
+  let iter = 0;
   try {
     while (Effects.length > 0) {
+      iter++;
+      if (iter > MAX_REACTIVE_DEPTH) {
+        Effects = [];
+        throw new Error(
+          "MSF_REACTIVE_CYCLE: effect runaway detected (possible infinite reactive cycle). Check for effects that write signals they depend on.",
+        );
+      }
       const queue = Effects;
       Effects = [];
       for (let i = 0; i < queue.length; i++) {
@@ -267,6 +277,21 @@ function runEffects(): void {
 }
 
 function updateIfNecessary(node: ReactiveNode): void {
+  if (node.disposed) return;
+  if (ReactiveDepth >= MAX_REACTIVE_DEPTH) {
+    throw new Error(
+      "MSF_REACTIVE_CYCLE: reactive update depth exceeded (possible dependency cycle). Check for circular signal/memo dependencies.",
+    );
+  }
+  ReactiveDepth++;
+  try {
+    _updateIfNecessary(node);
+  } finally {
+    ReactiveDepth--;
+  }
+}
+
+function _updateIfNecessary(node: ReactiveNode): void {
   if (node.disposed) return;
   if (node.state === STATE_CLEAN) return;
 

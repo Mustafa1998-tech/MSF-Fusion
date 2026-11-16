@@ -41,7 +41,7 @@ stateDiagram-v2
 - Requires rigorous unit/property tests and long-run memory scenarios before claims.
 
 ## Implementation note (M1)
-`@msf/runtime` implements core primitives with ownership/disposal and synchronous batched propagation in preview form. Dev diagnostics (cycle detection, read/write-after-dispose tracing), effect classification guarantees, and broader stress/leak evidence remain pending.
+`@msf/runtime` implements core primitives with ownership/disposal and synchronous batched propagation in preview form. **A runaway-update depth guard exists** (throws `MSF_REACTIVE_CYCLE` when `updateIfNecessary` nests beyond `MAX_REACTIVE_DEPTH`, 1000) with tests, catching circular chains and pathological recursion. Full dev-mode read/write-after-dispose tracing, effect classification guarantees, and ownership tracing hooks remain pending.
 
 ## ملخص بالعربية
 يعتمد وقت التشغيل على ملكية هرمية وتخلص حتمي وجدولة واضحة وتأثيرات مصنفة، مع أدوات تطوير لكشف التسريبات والحلقات.

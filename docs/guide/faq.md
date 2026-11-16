@@ -1,14 +1,16 @@
 # FAQ
 
 ## Is MSF Fusion ready to use?
-**As a developer preview, partially.** You can use the in-repo runtime APIs (`@msf/runtime` core, DOM helpers, SSR string renderer) and run the included examples/tests. It is **not** yet a complete, stable, or production-ready framework (no compiler/JSX subset, no hydration, no CLI/dev server, no published packages).
+**As a developer preview, partially.** You can use the in-repo runtime (`@msf/runtime` core/DOM/SSR/universal), function components, and a JSX **subset** via the compiler. It is **not** production-ready: no compiler/IR pipeline for full TSX, no dev server/HMR for library packages, no router/actions/boundaries, limited benchmark coverage, and no npm-published packages.
 
 ## What works right now?
 - Reactive kernel: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, owner helpers
-- DOM helpers: `@msf/runtime/dom` (`render`, `insert`, `setText`, `setAttribute`, `list`, etc.)
+- DOM helpers: `@msf/runtime/dom` (`render`, `insert`, multi-root keyed `list`, `setAttribute`, ...)
+- Isomorphic view + hydration: `@msf/runtime/universal` (`h`, `fragment`, `text`, `mount`, `hydrate`, function components)
 - SSR string rendering: `@msf/runtime/server` (`h`, `renderToString`, `escapeHtml`)
-- Examples: `examples/counter-basic`, `examples/counter-browser`
-- Tooling/evidence: benchmark runner, baseline results, compiler toolchain spike
+- Compiler subset with two targets: `dom` (→ `@msf/runtime/dom`) and `universal` (→ isomorphic view descriptors) — JSX **subset only**
+- Dev preview: `@msf/dev` compile APIs/CLI (`status`, `compile`)
+- Examples: `examples/counter-basic`, `examples/counter-browser`, **`examples/fullstack`** (dev SSR + production prerender + Chromium-verified hydration)
 
 ## Can I install it from npm today?
 No. Packages are private and currently export source files for monorepo development. Publishable builds/exports require further work and explicit approval before release.

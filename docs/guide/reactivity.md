@@ -37,6 +37,26 @@ untrack(() => count()); // read without tracking
 dispose();
 ```
 
+**Function components** are also supported by the isomorphic view layer (`@msf/runtime/universal`):
+
+```ts
+import { h } from "@msf/runtime/server";   // or @msf/runtime/universal
+import { renderToString } from "@msf/runtime/server";
+import { mount, hydrate } from "@msf/runtime/universal";
+
+function Counter({ initial = 0 }: { initial?: number }) {
+  const [count, setCount] = createSignal(initial);
+  return h("div", null,
+    h("p", null, () => `Count: ${count()}`),
+    h("button", { onClick: () => setCount((n) => n + 1) }, "Inc"),
+  );
+}
+
+renderToString(() => h(Counter, { initial: 3 })); // SSR snapshot
+mount(() => h(Counter, { initial: 3 }), container);  // CSR mount
+hydrate(() => h(Counter, { initial: 3 }), container); // adopt SSR markup
+```
+
 ### Semantics (current behavior)
 - **`createSignal(initial)`** returns `[getter, setter]`. Reading the getter in a reactive computation tracks a dependency.
 - **Setter:** accepts a value or updater function (`prev => next`). *Note:* passing a function is treated as an updater in the current implementation; API semantics for storing function values should be treated as preview and may be clarified.

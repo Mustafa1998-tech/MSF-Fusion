@@ -1,7 +1,7 @@
 # MSF Fusion Guide
 
-> **Status:** Milestone 1 developer preview in progress.  
-> A **runnable runtime subset** is available now (`@msf/runtime` core + DOM helpers + SSR string renderer). Compiler/JSX subset, hydration, CLI/dev server, and stable package publishing are still planned/in progress. Examples marked **Proposed** are not implemented yet.
+> **Status:** Milestone 1/M2 developer preview.  
+> A **runnable** subset exists: reactive kernel, DOM helpers, isomorphic view layer (`mount`/`hydrate`), function components, SSR string renderer, and examples. Compiler/JSX execution is limited to a subset (two targets: `dom` and `universal`). Streaming, hydration for all patterns, CLI/dev server, router, and npm publishing are **not implemented yet**. Examples marked **Proposed** are not implemented.
 
 This guide explains both the **currently runnable APIs** and the **intended** developer experience for MSF Fusion.
 
