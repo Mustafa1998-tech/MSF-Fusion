@@ -13,7 +13,7 @@ M0 architecture/baseline/toolchain-spike deliverables are complete. M1 is in pro
   - DOM: `render`, `mount`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list`, `For`
   - Server: `renderToString`, `escapeHtml`
   - Universal: `@msf/runtime/universal` — isomorphic `h`, `fragment`, `text`, DOM `mount`, and `hydrate` (adopts SSR markup, attaches listeners/reactive bindings, falls back to fresh mount on mismatch)
-- **`@msf/compiler`** (4 tests): real `jsx-dom-v1` subset compiler to DOM runtime calls with diagnostics
+- **`@msf/compiler`** (14 tests): real `jsx-dom-v1` subset compiler to DOM runtime calls with diagnostics, plus `jsx-universal-v1` target emitting isomorphic view descriptors for the same subset (executable golden tests)
 - **`@msf/dev`** (2 tests): `compileFile`, `compilePath`, `getDevStatus`, CLI
 - **`@msf/contracts`**: shared compile/diagnostic contracts (including `meta`)
 - **Benchmarks**: `@msf/bench-runner` includes `msf-runtime` micro candidate (smoke-verified)

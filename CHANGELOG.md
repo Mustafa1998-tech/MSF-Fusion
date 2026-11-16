@@ -12,6 +12,7 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 - **Isomorphic view layer (M2 preview):** `@msf/runtime/universal` with isomorphic view descriptors (`h`, `fragment`, `text`), DOM mounting, and **hydration** that adopts SSR markup, attaches listeners, wires reactive bindings, and falls back to fresh mount on markup mismatch. Includes tests.
 - **Full-stack example:** `examples/fullstack` — Vite + Node.js SSR in dev (middleware mode, on-demand render) and static prerender + hydration in production, served by Node HTTP. Hydration verified in a real Chromium browser.
 - **Compiler subset (real, M1):** `@msf/compiler` `jsx-dom-v1` transform for intrinsic JSX/TSX subset to DOM runtime calls with diagnostics and tests.
+- **Compiler universal target:** `@msf/compiler` `jsx-universal-v1` emits isomorphic view descriptors (`h("...")` from `@msf/runtime/universal`) for the same JSX/TSX subset — the same compiled component can be SSR-rendered, mounted, or hydrated. Includes golden-output and executable-eval tests.
 - **Dev tooling preview:** `@msf/dev` compile APIs/CLI (`compileFile`, `compilePath`, `status`) and tests.
 - **Benchmark integration (partial):** `msf-runtime` micro-benchmark candidate in `@msf/bench-runner` (smoke-verified), alongside existing competitor baselines.
 - **Examples:** `examples/counter-basic` (SSR snapshot), `examples/counter-browser` (Vite interactive demo), `examples/fullstack` (SSR + hydration pilot).

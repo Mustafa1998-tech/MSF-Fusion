@@ -16,6 +16,8 @@ export interface Diagnostic {
 export interface CompileRequest {
   filename: string;
   source: string;
+  /** Emit target for JSX files. Defaults to "dom". Use "universal" for isomorphic view output. */
+  target?: "dom" | "universal";
 }
 
 export interface CompileResult {
