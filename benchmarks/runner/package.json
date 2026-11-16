@@ -1,0 +1,37 @@
+{
+  "name": "@msf/bench-runner",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Reproducible baseline benchmark laboratory for MSF Fusion. Not part of the framework runtime.",
+  "scripts": {
+    "bench": "node --expose-gc src/cli.ts all",
+    "bench:bundle": "node --expose-gc src/cli.ts bundle",
+    "bench:dom": "node --expose-gc src/cli.ts dom",
+    "bench:micro": "node --expose-gc src/cli.ts micro",
+    "bench:ssr": "node --expose-gc src/cli.ts ssr",
+    "report": "node src/cli.ts report",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@preact/signals-core": "1.14.5",
+    "@vue/reactivity": "3.5.45",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "solid-js": "1.9.19",
+    "svelte": "5.57.3",
+    "vue": "3.5.45"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "7.3.1",
+    "@types/node": "26.6.6",
+    "@vitejs/plugin-vue": "6.0.11",
+    "oxc-transform-react": "0.158.0",
+    "playwright": "1.65.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.8",
+    "vite-plugin-solid": "2.11.16",
+    "vitest": "5.1.0"
+  }
+}

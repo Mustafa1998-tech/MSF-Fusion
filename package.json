@@ -1,0 +1,26 @@
+{
+  "name": "msf-fusion",
+  "version": "0.0.0",
+  "private": true,
+  "description": "MSF Fusion — Mustafa AI Software Factory Fusion Framework",
+  "license": "UNLICENSED",
+  "packageManager": "pnpm@12.21.0",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=12.0.0"
+  },
+  "scripts": {
+    "bench": "pnpm --filter @msf/bench-runner run bench",
+    "bench:bundle": "pnpm --filter @msf/bench-runner run bench:bundle",
+    "bench:dom": "pnpm --filter @msf/bench-runner run bench:dom",
+    "bench:micro": "pnpm --filter @msf/bench-runner run bench:micro",
+    "bench:ssr": "pnpm --filter @msf/bench-runner run bench:ssr",
+    "bench:report": "pnpm --filter @msf/bench-runner run report",
+    "test:lab": "pnpm --filter @msf/bench-runner run test",
+    "spike:toolchain": "pnpm --filter @msf/spike-compiler-toolchain run probe",
+    "typecheck": "pnpm -r --if-present run typecheck"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2"
+  }
+}

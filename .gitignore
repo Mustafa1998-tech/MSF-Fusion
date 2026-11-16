@@ -1,0 +1,21 @@
+node_modules/
+.pnpm-store/
+dist/
+dist-ssr/
+coverage/
+.vite/
+.turbo/
+*.tsbuildinfo
+*.log
+.DS_Store
+Thumbs.db
+
+# Benchmark lab and spike outputs are committed deliberately as evidence.
+# Only transient working directories are ignored.
+benchmarks/runner/.tmp/
+benchmarks/runner/fixtures/apps/*/dist-ssr/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example

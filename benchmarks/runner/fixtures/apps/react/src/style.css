@@ -1,0 +1,16 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 16px;
+}
+
+table {
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+td,
+th {
+  border: 1px solid #ccc;
+  padding: 2px 6px;
+  text-align: left;
+}

@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-16T06:32:48.713Z",
+  "environment": {
+    "node": "v26.12.1",
+    "platform": "win32",
+    "arch": "x64",
+    "os": "Windows_NT 10.0.26100"
+  },
+  "typescript": {
+    "version": "7.0.2",
+    "rootExports": [
+      "default",
+      "module.exports",
+      "version",
+      "versionMajorMinor"
+    ],
+    "unstable": {
+      "typescript/unstable/ast": {
+        "exportCount": 409,
+        "features": {
+          "createScanner": "function",
+          "formatSyntaxKind": "function",
+          "forEachChild": "undefined",
+          "visitEachChild": "function"
+        }
+      },
+      "typescript/unstable/ast/factory": {
+        "exportCount": 370,
+        "features": {
+          "createIdentifier": "function",
+          "createCallExpression": "function",
+          "updateCallExpression": "function"
+        }
+      },
+      "typescript/unstable/sync": {
+        "exportCount": 44,
+        "features": {
+          "API": "function",
+          "Snapshot": "function",
+          "Project": "function",
+          "Program": "function",
+          "Checker": "function",
+          "Emitter": "function"
+        }
+      },
+      "typescript/unstable/async": {
+        "exportCount": 44,
+        "features": {
+          "API": "function",
+          "Snapshot": "function",
+          "Project": "function",
+          "Program": "function",
+          "Checker": "function",
+          "Emitter": "function"
+        }
+      }
+    },
+    "scanner": {
+      "tokenCount": 11,
+      "tokens": [
+        "ConstKeyword",
+        "WhitespaceTrivia",
+        "Identifier",
+        "ColonToken",
+        "WhitespaceTrivia",
+        "NumberKeyword",
+        "WhitespaceTrivia",
+        "EqualsToken",
+        "WhitespaceTrivia",
+        "NumericLiteral",
+        "SemicolonToken"
+      ],
+      "endOfFileConstantDefined": false
+    },
+    "api": {
+      "available": true,
+      "error": null,
+      "projects": 1,
+      "sourceFiles": 1,
+      "semanticDiagnostics": 2,
+      "diagnosticElapsedMs": 117.669,
+      "notes": [
+        "The API spawns the pinned native TypeScript server (tsc.exe on Windows) and communicates over a pipe.",
+        "Semantic diagnostics prove the server parsed and checked the fixture project."
+      ]
+    }
+  },
+  "oxc": {
+    "bindingTarget": "native",
+    "variants": [
+      {
+        "name": "typescript-strip",
+        "fatal": false,
+        "errorCount": 0,
+        "codeBytes": 26,
+        "sourceMap": false,
+        "codeSample": "export const answer = 42;\n",
+        "checks": {
+          "emits export": true,
+          "removes type annotation": true
+        },
+        "elapsedMs": 6.475099999999998
+      },
+      {
+        "name": "classic-jsx",
+        "fatal": false,
+        "errorCount": 0,
+        "codeBytes": 145,
+        "sourceMap": true,
+        "codeSample": "export function Greeting({ name }) {\n\treturn /* @__PURE__ */ h(\"div\", { class: \"greeting\" }, /* @__PURE__ */ h(\"span\", null, \"Hello \", name));\n}\n",
+        "checks": {
+          "emits pragma call": true,
+          "keeps text child": true,
+          "produces source map": true
+        },
+        "elapsedMs": 1.6908999999999992
+      },
+      {
+        "name": "preserve-jsx",
+        "fatal": false,
+        "errorCount": 0,
+        "codeBytes": 114,
+        "sourceMap": false,
+        "codeSample": "export function Greeting({ name }) {\n\treturn <div class=\"greeting\">\n      <span>Hello {name}</span>\n    </div>;\n}\n",
+        "checks": {
+          "keeps JSX syntax": true,
+          "removes types": true
+        },
+        "elapsedMs": 0.06980000000000075
+      }
+    ]
+  },
+  "notes": [
+    "TypeScript 7.0.2 exposes compiler APIs only under unstable/* subpaths; the root export is version-only.",
+    "The unstable API is a client/server protocol and may change in minor releases; any adoption must be isolated behind an adapter.",
+    "Oxc provides synchronous parse, TypeScript stripping, JSX transform, and source maps in one call.",
+    "This probe validates feasibility only. It is not a performance benchmark and its elapsedMs values are not comparable measurements."
+  ]
+}
