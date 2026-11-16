@@ -1,0 +1,1035 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-16_09-03-34-486Z-li9o",
+  "generatedAt": "2026-11-16T09:03:55.494Z",
+  "environment": {
+    "runStartedAt": "2026-11-16T09:03:34.692Z",
+    "node": "v26.12.1",
+    "pnpm": null,
+    "platform": "win32",
+    "release": "10.0.26100",
+    "osVersion": "Windows 11 Pro",
+    "arch": "x64",
+    "os": "Windows_NT 10.0.26100",
+    "cpuModel": "12th Gen Intel(R) Core(TM) i7-12700",
+    "cpuCores": 20,
+    "totalMemoryBytes": 16833290240,
+    "gitCommit": "f415fdf47cb2afcb5c4640019b9faa876ad9e80c",
+    "gitDirty": true,
+    "timezone": "Asia/Riyadh",
+    "powerScheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "browser": null,
+    "packageVersions": {
+      "react": "19.3.1",
+      "react-dom": "19.3.1",
+      "solid-js": "1.9.19",
+      "svelte": "5.57.3",
+      "vue": "3.5.45",
+      "@preact/signals-core": "1.14.5",
+      "@vue/reactivity": "3.5.45",
+      "vite": "8.3.8",
+      "@vitejs/plugin-react": "6.3.0",
+      "vite-plugin-solid": "2.11.16",
+      "@sveltejs/vite-plugin-svelte": "7.3.1",
+      "@vitejs/plugin-vue": "6.0.11",
+      "playwright": "1.65.1",
+      "typescript": "7.0.2",
+      "vitest": "5.1.0"
+    },
+    "notes": [
+      "Package versions are resolved from the installed node_modules tree, not copied from package.json ranges.",
+      "gitDirty reports any tracked or untracked change at run start.",
+      "On Windows, command versions are captured through the .cmd shim when present."
+    ]
+  },
+  "suites": {
+    "micro": {
+      "kind": "micro",
+      "status": "completed",
+      "config": {
+        "samples": 12,
+        "warmup": 2
+      },
+      "totalDurationMs": 20784.9757,
+      "candidates": [
+        {
+          "id": "msf-runtime",
+          "packageName": "@msf/runtime",
+          "notes": "MSF Fusion reactive kernel (developer preview). Fine-grained signals/memos/effects with ownership and synchronous batched propagation."
+        },
+        {
+          "id": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "notes": "Framework-independent signal package maintained by the Preact team. Public API only; effects run synchronously."
+        },
+        {
+          "id": "solid-signals",
+          "packageName": "solid-js",
+          "notes": "Solid's public reactive primitives, loaded from Solid's client runtime rather than its non-reactive server build. Effect scenarios are excluded because Solid schedules effects until a render flush; createComputed would be a different primitive."
+        },
+        {
+          "id": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "notes": "Vue's standalone reactivity package. Its public effects run synchronously in this package; no scheduler queue is configured."
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "create-read-100k",
+          "units": 100000,
+          "unitLabel": "signal create+read",
+          "description": "Create 100,000 independent signals and read each value once."
+        },
+        {
+          "id": "unobserved-write-1m",
+          "units": 1000000,
+          "unitLabel": "write",
+          "description": "Write one signal 1,000,000 times with no subscribers; measures setter overhead."
+        },
+        {
+          "id": "computed-chain-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + tail read",
+          "description": "A 64-link computed chain; update the root and read the tail 20,000 times."
+        },
+        {
+          "id": "diamond-fanout-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + sink read",
+          "description": "One source fans out to 64 computeds merged by a final computed; 20,000 updates."
+        },
+        {
+          "id": "dynamic-deps-50k",
+          "units": 50000,
+          "unitLabel": "conditional read",
+          "description": "Toggle a conditional dependency, read the derived value, and update both active and inactive sources."
+        },
+        {
+          "id": "effect-fanout-512x200",
+          "units": 102400,
+          "unitLabel": "effect execution",
+          "description": "512 synchronous effects observe one signal; the signal is written 200 times."
+        },
+        {
+          "id": "effect-mount-dispose-10k",
+          "units": 10000,
+          "unitLabel": "effect mount+dispose",
+          "description": "Create and dispose 10,000 effects, each observing its own signal."
+        }
+      ],
+      "results": [
+        {
+          "candidate": "msf-runtime",
+          "packageName": "@msf/runtime",
+          "scenario": "create-read-100k",
+          "units": 100000,
+          "unitLabel": "signal create+read",
+          "samplesNsPerOp": [
+            142.40099999999984,
+            177.41499999999857,
+            217.54799999999932,
+            104.10800000000108,
+            163.75699999999824,
+            133.91900000000078,
+            135.29800000000023,
+            72.87600000000111,
+            83.77399999999852,
+            95.86399999999912,
+            86.19900000000143,
+            142.2309999999993
+          ],
+          "summary": {
+            "count": 12,
+            "min": 72.87600000000111,
+            "median": 134.6085000000005,
+            "p95": 195.47484999999887,
+            "max": 217.54799999999932,
+            "mean": 129.61583333333314,
+            "stdDev": 43.22414341089959,
+            "cvPct": 33.347888370813486,
+            "mad": 34.6225000000004
+          },
+          "opsPerSecond": 7428951.366369852,
+          "checksum": 4999950000
+        },
+        {
+          "candidate": "msf-runtime",
+          "packageName": "@msf/runtime",
+          "scenario": "unobserved-write-1m",
+          "units": 1000000,
+          "unitLabel": "write",
+          "samplesNsPerOp": [
+            3.244099999999889,
+            4.195100000000139,
+            3.314200000000028,
+            3.2450000000001182,
+            3.2047000000000025,
+            3.2164999999999964,
+            3.279800000000023,
+            3.2177999999998974,
+            3.207400000000007,
+            3.2128999999999905,
+            3.2078000000001343,
+            3.3485999999998057
+          ],
+          "summary": {
+            "count": 12,
+            "min": 3.2047000000000025,
+            "median": 3.2309499999998934,
+            "p95": 3.729524999999955,
+            "max": 4.195100000000139,
+            "mean": 3.324491666666669,
+            "stdDev": 0.2780779075214986,
+            "cvPct": 8.36452412588887,
+            "mad": 0.02334999999982279
+          },
+          "opsPerSecond": 309506491.89867777,
+          "checksum": 999999
+        },
+        {
+          "candidate": "msf-runtime",
+          "packageName": "@msf/runtime",
+          "scenario": "computed-chain-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + tail read",
+          "samplesNsPerOp": [
+            5438.580000000002,
+            5544.320000000004,
+            5443.325000000004,
+            5413.004999999998,
+            6157.944999999995,
+            5540.355,
+            5211.245000000008,
+            4957.985000000008,
+            5054.404999999997,
+            4917.854999999986,
+            5062.384999999995,
+            4852.7250000000095
+          ],
+          "summary": {
+            "count": 12,
+            "min": 4852.7250000000095,
+            "median": 5312.125000000004,
+            "p95": 5820.45125,
+            "max": 6157.944999999995,
+            "mean": 5299.510833333334,
+            "stdDev": 368.5062440869355,
+            "cvPct": 6.953589787364378,
+            "mad": 240.96750000000475
+          },
+          "opsPerSecond": 188248.58225286478,
+          "checksum": 201270000
+        },
+        {
+          "candidate": "msf-runtime",
+          "packageName": "@msf/runtime",
+          "scenario": "diamond-fanout-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + sink read",
+          "samplesNsPerOp": [
+            9085.284999999998,
+            9244.560000000001,
+            9438.130000000001,
+            9084.854999999992,
+            9861.775000000012,
+            9352.330000000029,
+            9029.334999999992,
+            9525.750000000016,
+            9423.709999999983,
+            9114.269999999988,
+            9426.639999999998,
+            9552.559999999994
+          ],
+          "summary": {
+            "count": 12,
+            "min": 9029.334999999992,
+            "median": 9388.020000000006,
+            "p95": 9691.706750000001,
+            "max": 9861.775000000012,
+            "mean": 9344.933333333334,
+            "stdDev": 245.4108917836844,
+            "cvPct": 2.6261384969789447,
+            "mad": 153.99999999999636
+          },
+          "opsPerSecond": 106518.73344965173,
+          "checksum": 839679916
+        },
+        {
+          "candidate": "msf-runtime",
+          "packageName": "@msf/runtime",
+          "scenario": "dynamic-deps-50k",
+          "units": 50000,
+          "unitLabel": "conditional read",
+          "samplesNsPerOp": [
+            190.12800000000425,
+            185.88999999999942,
+            188.38799999999537,
+            195.41799999999057,
+            182.86599999999453,
+            281.21399999999994,
+            582.4360000000161,
+            517.8559999999925,
+            212.06200000000536,
+            341.7199999999866,
+            177.12799999999334,
+            180.02599999999802
+          ],
+          "summary": {
+            "count": 12,
+            "min": 177.12799999999334,
+            "median": 192.7729999999974,
+            "p95": 546.9170000000031,
+            "max": 582.4360000000161,
+            "mean": 269.59433333333135,
+            "stdDev": 140.66823795230667,
+            "cvPct": 52.17774283793343,
+            "mad": 14.196000000001732
+          },
+          "opsPerSecond": 5187448.4497311,
+          "checksum": 249874997
+        },
+        {
+          "candidate": "msf-runtime",
+          "packageName": "@msf/runtime",
+          "scenario": "effect-fanout-512x200",
+          "units": 102400,
+          "unitLabel": "effect execution",
+          "samplesNsPerOp": [
+            131.1630859375068,
+            134.28027343749704,
+            149.63378906250213,
+            125.85253906250314,
+            134.0654296874977,
+            125.89160156250223,
+            122.7695312500021,
+            133.7958984374943,
+            206.47460937500028,
+            182.85742187500455,
+            121.6826171874974,
+            125.09960937499898
+          ],
+          "summary": {
+            "count": 12,
+            "min": 121.6826171874974,
+            "median": 132.47949218750054,
+            "p95": 193.4851562500026,
+            "max": 206.47460937500028,
+            "mean": 141.13053385416723,
+            "stdDev": 26.579650451302367,
+            "cvPct": 18.83338050628194,
+            "mad": 7.003417968749481
+          },
+          "opsPerSecond": 7548338.112473155,
+          "checksum": 10291200
+        },
+        {
+          "candidate": "msf-runtime",
+          "packageName": "@msf/runtime",
+          "scenario": "effect-mount-dispose-10k",
+          "units": 10000,
+          "unitLabel": "effect mount+dispose",
+          "samplesNsPerOp": [
+            1107.930000000033,
+            384.8500000000058,
+            1339.969999999994,
+            384.3200000000252,
+            1208.7499999999636,
+            382.7800000000025,
+            574.7400000000198,
+            2021.7500000000655,
+            463.64999999996144,
+            387.3000000000502,
+            1102.0800000000236,
+            1189.8600000000442
+          ],
+          "summary": {
+            "count": 12,
+            "min": 382.7800000000025,
+            "median": 838.4100000000217,
+            "p95": 1646.7710000000257,
+            "max": 2021.7500000000655,
+            "mean": 878.998333333349,
+            "stdDev": 528.1097518652364,
+            "cvPct": 60.080859296118525,
+            "mad": 412.93500000001586
+          },
+          "opsPerSecond": 1192733.8652926064,
+          "checksum": 49995000
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "create-read-100k",
+          "units": 100000,
+          "unitLabel": "signal create+read",
+          "samplesNsPerOp": [
+            93.23599999999715,
+            17.36200000000281,
+            95.26799999999639,
+            16.01400000000467,
+            18.51699999999255,
+            69.16199999999662,
+            15.596999999997932,
+            15.927999999994427,
+            88.90199999999822,
+            27.3070000000007,
+            20.46900000000278,
+            67.17100000000755
+          ],
+          "summary": {
+            "count": 12,
+            "min": 15.596999999997932,
+            "median": 23.88800000000174,
+            "p95": 94.15039999999681,
+            "max": 95.26799999999639,
+            "mean": 45.41108333333265,
+            "stdDev": 34.091085300887556,
+            "cvPct": 75.07216916770628,
+            "mad": 8.125500000005559
+          },
+          "opsPerSecond": 41862022.77293734,
+          "checksum": 4999950000
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "unobserved-write-1m",
+          "units": 1000000,
+          "unitLabel": "write",
+          "samplesNsPerOp": [
+            14.932299999999486,
+            14.535300000000461,
+            16.842599999999948,
+            15.052300000000287,
+            15.70249999999942,
+            28.44250000000011,
+            35.533799999999246,
+            27.072900000000118,
+            22.89719999999943,
+            15.542999999999665,
+            15.362200000000485,
+            14.872700000000805
+          ],
+          "summary": {
+            "count": 12,
+            "min": 14.535300000000461,
+            "median": 15.622749999999542,
+            "p95": 31.633584999999716,
+            "max": 35.533799999999246,
+            "mean": 19.73244166666662,
+            "stdDev": 7.046988848947768,
+            "cvPct": 35.71270584750806,
+            "mad": 0.9187499999989086
+          },
+          "opsPerSecond": 64009217.32729701,
+          "checksum": 999999
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "computed-chain-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + tail read",
+          "samplesNsPerOp": [
+            2381.04000000003,
+            2520.2450000000226,
+            2521.6199999999844,
+            2454.0950000000066,
+            2466.3800000000265,
+            2557.529999999997,
+            2433.854999999994,
+            2414.310000000023,
+            2281.13000000003,
+            2486.979999999994,
+            2393.9600000000155,
+            2368.329999999969
+          ],
+          "summary": {
+            "count": 12,
+            "min": 2281.13000000003,
+            "median": 2443.9750000000004,
+            "p95": 2537.77949999999,
+            "max": 2557.529999999997,
+            "mean": 2439.956250000008,
+            "stdDev": 77.86119485471346,
+            "cvPct": 3.1910897932990894,
+            "mad": 56.474999999977626
+          },
+          "opsPerSecond": 409169.48823126254,
+          "checksum": 201270000
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "diamond-fanout-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + sink read",
+          "samplesNsPerOp": [
+            3607.1050000000014,
+            3277.8449999999793,
+            3403.1349999999748,
+            3640.8449999999903,
+            3518.170000000009,
+            3890.999999999985,
+            3867.850000000044,
+            3726.3350000000173,
+            3976.1800000000226,
+            3733.4400000000187,
+            4010.5800000000277,
+            3944.0950000000157
+          ],
+          "summary": {
+            "count": 12,
+            "min": 3277.8449999999793,
+            "median": 3729.887500000018,
+            "p95": 3991.660000000025,
+            "max": 4010.5800000000277,
+            "mean": 3716.381666666674,
+            "stdDev": 234.92714428031485,
+            "cvPct": 6.321394446309051,
+            "mad": 186.4149999999879
+          },
+          "opsPerSecond": 268104.6010100828,
+          "checksum": 839679916
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "dynamic-deps-50k",
+          "units": 50000,
+          "unitLabel": "conditional read",
+          "samplesNsPerOp": [
+            183.23599999999712,
+            121.00999999998749,
+            128.0240000000049,
+            176.4719999999943,
+            110.48399999999674,
+            178.63400000000183,
+            135.52199999998265,
+            167.9700000000048,
+            524.7999999999956,
+            123.88599999998405,
+            132.56399999998393,
+            115.52599999999074
+          ],
+          "summary": {
+            "count": 12,
+            "min": 110.48399999999674,
+            "median": 134.0429999999833,
+            "p95": 336.9397999999962,
+            "max": 524.7999999999956,
+            "mean": 174.84399999999368,
+            "stdDev": 113.33196471508884,
+            "cvPct": 64.8189041174378,
+            "mad": 21.03799999998955
+          },
+          "opsPerSecond": 7460292.592676414,
+          "checksum": 249874997
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "effect-fanout-512x200",
+          "units": 102400,
+          "unitLabel": "effect execution",
+          "samplesNsPerOp": [
+            60.04296875000037,
+            55.40234375001063,
+            54.01464843750147,
+            55.25390625001236,
+            54.9775390625129,
+            56.33203124999042,
+            52.089843749989484,
+            52.028320312498266,
+            58.89160156250738,
+            52.284179687500654,
+            55.6220703125021,
+            77.26171874999466
+          ],
+          "summary": {
+            "count": 12,
+            "min": 52.028320312498266,
+            "median": 55.3281250000115,
+            "p95": 67.79140624999779,
+            "max": 77.26171874999466,
+            "mean": 57.01676432291839,
+            "stdDev": 6.844950212712968,
+            "cvPct": 12.005153736795934,
+            "mad": 2.1787109375104343
+          },
+          "opsPerSecond": 18073990.398188844,
+          "checksum": 10291200
+        },
+        {
+          "candidate": "preact-signals",
+          "packageName": "@preact/signals-core",
+          "scenario": "effect-mount-dispose-10k",
+          "units": 10000,
+          "unitLabel": "effect mount+dispose",
+          "samplesNsPerOp": [
+            154.37000000001717,
+            184.56999999998516,
+            150.07999999997992,
+            188.63000000001193,
+            95.09999999991123,
+            95.43999999987136,
+            877.180000000044,
+            154.38000000012835,
+            94.59999999999127,
+            96.55999999995402,
+            95.01999999993131,
+            1064.7299999998722
+          ],
+          "summary": {
+            "count": 12,
+            "min": 94.59999999999127,
+            "median": 152.22499999999854,
+            "p95": 961.5774999999666,
+            "max": 1064.7299999998722,
+            "mean": 270.88833333330814,
+            "stdDev": 331.3633137600711,
+            "cvPct": 122.32468991285532,
+            "mad": 56.225000000085856
+          },
+          "opsPerSecond": 6569223.1893579215,
+          "checksum": 49995000
+        },
+        {
+          "candidate": "solid-signals",
+          "packageName": "solid-js",
+          "scenario": "create-read-100k",
+          "units": 100000,
+          "unitLabel": "signal create+read",
+          "samplesNsPerOp": [
+            21.39299999998911,
+            21.833999999998923,
+            89.02299999999741,
+            21.532999999999447,
+            85.79799999999523,
+            21.12600000000384,
+            95.20200000000843,
+            21.296000000002095,
+            92.7390000000014,
+            22.938000000012835,
+            122.471000000005,
+            21.06900000000678
+          ],
+          "summary": {
+            "count": 12,
+            "min": 21.06900000000678,
+            "median": 22.38600000000588,
+            "p95": 107.47305000000686,
+            "max": 122.471000000005,
+            "mean": 53.035166666668374,
+            "stdDev": 39.84591851993112,
+            "cvPct": 75.13112718277463,
+            "mad": 1.2885000000005675
+          },
+          "opsPerSecond": 44670776.37808172,
+          "checksum": 4999950000
+        },
+        {
+          "candidate": "solid-signals",
+          "packageName": "solid-js",
+          "scenario": "unobserved-write-1m",
+          "units": 1000000,
+          "unitLabel": "write",
+          "samplesNsPerOp": [
+            7.501399999999194,
+            12.065699999999197,
+            7.297900000001391,
+            7.7929000000003725,
+            7.550100000000383,
+            8.291300000000774,
+            7.280699999999342,
+            7.978900000000067,
+            7.437599999999293,
+            7.638199999999415,
+            7.254499999999098,
+            7.73910000000069
+          ],
+          "summary": {
+            "count": 12,
+            "min": 7.254499999999098,
+            "median": 7.5941499999999,
+            "p95": 9.989780000000062,
+            "max": 12.065699999999197,
+            "mean": 7.985691666666601,
+            "stdDev": 1.3207446931444693,
+            "cvPct": 16.538889156683112,
+            "mad": 0.24749999999949068
+          },
+          "opsPerSecond": 131680306.5517554,
+          "checksum": 999999
+        },
+        {
+          "candidate": "solid-signals",
+          "packageName": "solid-js",
+          "scenario": "computed-chain-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + tail read",
+          "samplesNsPerOp": [
+            17614.190000000053,
+            16106.214999999976,
+            16001.985000000059,
+            17304.115,
+            16409.189999999944,
+            16912.395000000015,
+            20118.50999999997,
+            17911.085000000003,
+            16101.110000000062,
+            16620.87500000007,
+            15482.924999999976,
+            16042.510000000038
+          ],
+          "summary": {
+            "count": 12,
+            "min": 15482.924999999976,
+            "median": 16515.03250000001,
+            "p95": 18904.426249999986,
+            "max": 20118.50999999997,
+            "mean": 16885.425416666683,
+            "stdDev": 1250.0555288365342,
+            "cvPct": 7.403162774937684,
+            "mad": 492.78499999995984
+          },
+          "opsPerSecond": 60550.895070899765,
+          "checksum": 201270000
+        },
+        {
+          "candidate": "solid-signals",
+          "packageName": "solid-js",
+          "scenario": "diamond-fanout-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + sink read",
+          "samplesNsPerOp": [
+            17093.295000000035,
+            18065.50500000003,
+            17934.539999999924,
+            17664.410000000044,
+            17878.589999999986,
+            18716.74499999999,
+            17658.380000000034,
+            16620.940000000155,
+            17931.73000000006,
+            18029.299999999967,
+            16997.27500000008,
+            17385.23499999992
+          ],
+          "summary": {
+            "count": 12,
+            "min": 16620.940000000155,
+            "median": 17771.500000000015,
+            "p95": 18358.563000000013,
+            "max": 18716.74499999999,
+            "mean": 17664.662083333355,
+            "stdDev": 566.4706930052602,
+            "cvPct": 3.2068017510492117,
+            "mad": 275.9024999999838
+          },
+          "opsPerSecond": 56269.87029794892,
+          "checksum": 839679916
+        },
+        {
+          "candidate": "solid-signals",
+          "packageName": "solid-js",
+          "scenario": "dynamic-deps-50k",
+          "units": 50000,
+          "unitLabel": "conditional read",
+          "samplesNsPerOp": [
+            710.9859999999753,
+            716.2140000000363,
+            743.1060000000433,
+            688.7020000000484,
+            807.4399999999878,
+            695.7839999999851,
+            717.3159999999916,
+            694.994000000006,
+            700.5779999999504,
+            769.1839999999502,
+            727.1240000000398,
+            814.4919999999547
+          ],
+          "summary": {
+            "count": 12,
+            "min": 688.7020000000484,
+            "median": 716.765000000014,
+            "p95": 810.6133999999729,
+            "max": 814.4919999999547,
+            "mean": 732.1599999999975,
+            "stdDev": 43.14362099692275,
+            "cvPct": 5.892649283889163,
+            "mad": 21.376000000018394
+          },
+          "opsPerSecond": 1395157.408634602,
+          "checksum": 249874997
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "create-read-100k",
+          "units": 100000,
+          "unitLabel": "signal create+read",
+          "samplesNsPerOp": [
+            25.308999999979278,
+            83.58000000000175,
+            137.8989999999976,
+            132.31800000001385,
+            131.07100000001083,
+            155.708999999988,
+            130.93199999999342,
+            116.30300000000716,
+            225.46800000000076,
+            169.62499999997817,
+            30.369000000027885,
+            76.36300000001938
+          ],
+          "summary": {
+            "count": 12,
+            "min": 25.308999999979278,
+            "median": 131.00150000000212,
+            "p95": 194.7543499999883,
+            "max": 225.46800000000076,
+            "mean": 117.91216666666817,
+            "stdDev": 57.02273897606853,
+            "cvPct": 48.36035210621562,
+            "mad": 31.665499999980966
+          },
+          "opsPerSecond": 7633500.37976652,
+          "checksum": 4999950000
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "unobserved-write-1m",
+          "units": 1000000,
+          "unitLabel": "write",
+          "samplesNsPerOp": [
+            14.462500000001455,
+            14.52980000000025,
+            14.292300000000978,
+            15.841199999998935,
+            21.16939999999886,
+            21.830300000001447,
+            20.967000000000553,
+            20.755300000000716,
+            20.05919999999969,
+            21.539600000000064,
+            20.427599999999074,
+            20.717599999999948
+          ],
+          "summary": {
+            "count": 12,
+            "min": 14.292300000000978,
+            "median": 20.57259999999951,
+            "p95": 21.670415000000688,
+            "max": 21.830300000001447,
+            "mean": 18.882650000000165,
+            "stdDev": 3.086238142728978,
+            "cvPct": 16.34430624265636,
+            "mad": 0.7818999999999505
+          },
+          "opsPerSecond": 48608343.136017025,
+          "checksum": 999999
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "computed-chain-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + tail read",
+          "samplesNsPerOp": [
+            3445.6799999999935,
+            3592.975000000115,
+            3433.600000000115,
+            3655.9199999999696,
+            3669.66999999986,
+            3947.180000000117,
+            3579.5699999998765,
+            3617.6900000000387,
+            3550.1199999998794,
+            3911.4100000000694,
+            2575.49999999992,
+            4313.214999999946
+          ],
+          "summary": {
+            "count": 12,
+            "min": 2575.49999999992,
+            "median": 3605.332500000077,
+            "p95": 4111.89575000004,
+            "max": 4313.214999999946,
+            "mean": 3607.710833333325,
+            "stdDev": 408.7480672227684,
+            "cvPct": 11.329845603094189,
+            "mad": 111.99499999993327
+          },
+          "opsPerSecond": 277366.9280156487,
+          "checksum": 201270000
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "diamond-fanout-64x20k",
+          "units": 20000,
+          "unitLabel": "root update + sink read",
+          "samplesNsPerOp": [
+            5293.414999999914,
+            4631.314999999995,
+            4791.244999999981,
+            4867.289999999957,
+            4751.094999999987,
+            4751.3450000000375,
+            4985.08499999989,
+            4896.450000000004,
+            4922.310000000107,
+            5204.255000000012,
+            4876.8300000001545,
+            5432.7000000001135
+          ],
+          "summary": {
+            "count": 12,
+            "min": 4631.314999999995,
+            "median": 4886.640000000079,
+            "p95": 5356.0932500000035,
+            "max": 5432.7000000001135,
+            "mean": 4950.27791666668,
+            "stdDev": 240.9126976016874,
+            "cvPct": 4.866649946876285,
+            "mad": 116.86999999992622
+          },
+          "opsPerSecond": 204639.58875627912,
+          "checksum": 839679916
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "dynamic-deps-50k",
+          "units": 50000,
+          "unitLabel": "conditional read",
+          "samplesNsPerOp": [
+            152.65999999995984,
+            173.99799999999232,
+            176.04800000000975,
+            199.52799999999112,
+            158.62200000003213,
+            160.9780000000319,
+            147.89199999999255,
+            155.3480000000127,
+            160.37799999998242,
+            149.57599999994272,
+            154.15799999995215,
+            158.52599999998347
+          ],
+          "summary": {
+            "count": 12,
+            "min": 147.89199999999255,
+            "median": 158.5740000000078,
+            "p95": 186.61400000000134,
+            "max": 199.52799999999112,
+            "mean": 162.3093333333236,
+            "stdDev": 14.529058289789209,
+            "cvPct": 8.951461996305458,
+            "mad": 5.165000000051805
+          },
+          "opsPerSecond": 6306204.043537723,
+          "checksum": 249874997
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "effect-fanout-512x200",
+          "units": 102400,
+          "unitLabel": "effect execution",
+          "samplesNsPerOp": [
+            56.48437499999659,
+            59.83886718748721,
+            60.52441406250608,
+            58.078124999987324,
+            56.40136718749744,
+            56.40234374997277,
+            67.27636718750318,
+            61.41113281248778,
+            60.879882812479025,
+            76.76367187499977,
+            57.497070312493285,
+            62.657226562485846
+          ],
+          "summary": {
+            "count": 12,
+            "min": 56.40136718749744,
+            "median": 60.181640624996646,
+            "p95": 71.54565429687665,
+            "max": 76.76367187499977,
+            "mean": 61.18457031249136,
+            "stdDev": 5.842370448569379,
+            "cvPct": 9.548764367765134,
+            "mad": 2.5800781249962803
+          },
+          "opsPerSecond": 16616363.22331576,
+          "checksum": 10291200
+        },
+        {
+          "candidate": "vue-reactivity",
+          "packageName": "@vue/reactivity",
+          "scenario": "effect-mount-dispose-10k",
+          "units": 10000,
+          "unitLabel": "effect mount+dispose",
+          "samplesNsPerOp": [
+            183.33000000020547,
+            377.70999999993364,
+            79.5799999999872,
+            84.4199999999546,
+            81.81000000004133,
+            121.9600000000355,
+            75.17000000007101,
+            74.35000000004948,
+            72.89999999993597,
+            70.85999999981141,
+            72.03000000008615,
+            71.0399999999936
+          ],
+          "summary": {
+            "count": 12,
+            "min": 70.85999999981141,
+            "median": 77.3750000000291,
+            "p95": 270.80100000008304,
+            "max": 377.70999999993364,
+            "mean": 113.76333333334212,
+            "stdDev": 89.31324592113835,
+            "cvPct": 78.50793687579312,
+            "mad": 5.839999999989232
+          },
+          "opsPerSecond": 12924071.082386091,
+          "checksum": 49995000
+        }
+      ],
+      "skipped": [
+        {
+          "candidate": "solid-signals",
+          "scenario": "effect-fanout-512x200",
+          "reason": "Solid effects are scheduled until a render flush; a browser render root is required for an equivalent measurement."
+        },
+        {
+          "candidate": "solid-signals",
+          "scenario": "effect-mount-dispose-10k",
+          "reason": "Solid effects are scheduled until a render flush; a browser render root is required for an equivalent measurement."
+        }
+      ],
+      "notes": [
+        "Graph construction is performed outside the timed region; warm-up runs are discarded.",
+        "Each sample uses a fresh graph and disposes it afterwards where the primitive exposes disposal.",
+        "MSF runtime measurements use the in-repo developer-preview kernel (`@msf/runtime`) for supported primitives; they are informational and not superiority claims.",
+        "Solid runs through its client runtime exported by the package (solid-js/dist/solid.js) so computed invalidation is live. Solid effect scenarios are skipped because effects require a render flush.",
+        "Vue effects are synchronous in the standalone @vue/reactivity package; Vue's default scheduler batching is not part of this matrix.",
+        "Angular is excluded from microbenchmarks: its signal API is not designed as a standalone package and effects require an injector/DI context.",
+        "React has no comparable standalone signal primitive; React component rendering is measured in the DOM suite instead.",
+        "Compare results only with documented methodology; this run may include MSF preview alongside competitor baselines depending on command."
+      ]
+    }
+  },
+  "status": "completed",
+  "notes": [
+    "Baseline benchmark run. When MSF runtime preview fixtures are included, treat them as informational developer-preview measurements (not superiority claims).",
+    "All result values are machine- and time-specific. Raw samples are preserved in the JSON file."
+  ]
+}

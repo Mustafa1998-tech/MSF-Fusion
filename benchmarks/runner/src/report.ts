@@ -149,7 +149,7 @@ export function renderReport(run: BenchmarkRun): string {
   lines.push(`- Raw data: \`benchmarks/results/${run.runId}.json\``);
   lines.push("");
   lines.push(
-    "> This report contains competitor baselines only. MSF Fusion is not implemented and no MSF Fusion performance claim is made.",
+    "> This report contains competitor baselines and, where integrated, the MSF Fusion runtime developer preview. MSF Fusion numbers are informational preview measurements, not superiority claims.",
   );
   lines.push("");
   lines.push("## Environment");
@@ -184,7 +184,7 @@ export function renderReport(run: BenchmarkRun): string {
   lines.push("## Method");
   lines.push("");
   lines.push(
-    "The benchmark laboratory is independent of MSF Fusion packages. Each scenario is executed with pinned competitor versions, production builds where applicable, warm-up runs, and repeated samples. Raw samples are preserved in the JSON file. Medians, P95 values, and coefficients of variation are reported; no composite performance score is calculated.",
+    "Library-specific primitives are compared, not whole frameworks. Read the semantic notes in the JSON before interpreting these numbers. Competitors were measured as pinned packages; MSF Fusion measurements use the in-repo developer-preview runtime.",
   );
   lines.push("");
   lines.push(

@@ -99,7 +99,7 @@ describe("renderReport", () => {
     expect(markdown).toContain("### effect-fanout-512x200");
     expect(markdown).toContain("Excluded measurements");
     expect(markdown).toContain("## Limitations and exclusions");
-    expect(markdown).toContain("no MSF Fusion performance claim is made");
+    expect(markdown).toContain("not superiority claims");
     expect(markdown).toContain("benchmarks/methodology.md");
   });
 

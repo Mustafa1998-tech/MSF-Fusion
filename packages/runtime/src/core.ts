@@ -26,6 +26,8 @@ interface ReactiveNode {
   sources: ReactiveNode[] | null;
   sourceSlots: number[] | null;
   owned: ReactiveNode[] | null;
+  /** slot of this node within its owner's `owned` array */
+  ownedSlot: number;
   cleanups: Array<() => void> | null;
   owner: ReactiveNode | null;
   state: number;
@@ -62,6 +64,7 @@ function createNode(
     sources: null,
     sourceSlots: null,
     owned: null,
+    ownedSlot: -1,
     cleanups: null,
     owner: Owner,
     state: STATE_CLEAN,
@@ -76,7 +79,9 @@ function createNode(
     equals: flags.equals ?? defaultEquals,
   };
   if (Owner) {
-    (Owner.owned ??= []).push(node);
+    const owned = (Owner.owned ??= []);
+    node.ownedSlot = owned.length;
+    owned.push(node);
   }
   return node;
 }
@@ -146,9 +151,17 @@ function disposeNode(node: ReactiveNode): void {
   node.observerSlots = null;
 
   if (node.owner?.owned) {
-    const idx = node.owner.owned.indexOf(node);
-    if (idx >= 0) node.owner.owned.splice(idx, 1);
+    const owned = node.owner.owned;
+    const slot = node.ownedSlot;
+    const last = owned.length - 1;
+    if (slot >= 0 && slot <= last) {
+      const lastNode = owned[last]!;
+      owned[slot] = lastNode;
+      lastNode.ownedSlot = slot;
+      owned.pop();
+    }
   }
+  node.ownedSlot = -1;
   node.owner = null;
 }
 
