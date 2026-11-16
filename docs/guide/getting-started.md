@@ -22,6 +22,9 @@ pnpm --filter @msf/spike-compiler-toolchain run test
 
 # Run the included SSR example
 node examples/counter-basic/src/ssr.ts
+
+# Run the interactive browser example (Vite)
+pnpm --filter @msf/example-counter-browser dev
 ```
 
 **Current limitations:** no compiler/JSX subset yet, no hydration, no dev server/CLI, no router, and packages are not published to npm. APIs may change.

@@ -1,0 +1,21 @@
+{
+  "name": "@msf/example-counter-browser",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Browser counter example using MSF runtime + Vite.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@msf/runtime": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "typescript": "7.0.2",
+    "vite": "8.3.8"
+  }
+}
