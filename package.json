@@ -1,9 +1,9 @@
-{
+﻿{
   "name": "msf-fusion",
   "version": "0.0.0",
   "private": true,
-  "description": "MSF Fusion — Mustafa AI Software Factory Fusion Framework",
-  "license": "UNLICENSED",
+  "description": "MSF Fusion â€” Mustafa AI Software Factory Fusion Framework",
+  "license": "MIT",
   "packageManager": "pnpm@12.21.0",
   "engines": {
     "node": ">=24.0.0",
@@ -26,3 +26,4 @@
     "typescript": "7.0.2"
   }
 }
+

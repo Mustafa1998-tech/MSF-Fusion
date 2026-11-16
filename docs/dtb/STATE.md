@@ -2,40 +2,36 @@
 
 - Product / repository: **MSF Fusion** (https://github.com/Mustafa1998-tech/MSF-Fusion) — compiler-assisted, fine-grained reactive, TypeScript-first full-stack framework
 - Active branch: `master`
-- Authorized scope: M1/M2 preview work inside the repository — **developer preview only, no npm publish, no license change, no production mutation**
-- Last verified iteration: **DTB-003 partial (Show/For)** + DTB-007/008 (this session)
-- Current item / status: DTB-001..008 shipped (003 partial — compiler lowering still unsupported); next: DTB-009 still approval-gated (license/npm), or stability hardening before any release
-- Relevant files: `packages/compiler/src/index.ts`, `packages/compiler/test/{compile,universal,universal-exec,universal-component}.test.ts`
-- Baseline checks and results (2026-11-16, after DTB-002):
+- License: **MIT** (`LICENSE`); packages remain `private: true` and are **not published to npm** — distribution is via the public GitHub repository and source clones only.
+- Last verified iteration: **DTB-004/006 (list() fix, depth guard) + benchmarks coverage (micro/SSR/DOM) + DTB-008/003/007**
+- Current item / status: DTB-001..008 shipped (DTB-003 partial — Show/For runtime, no compiler lowering for control flow yet); next: stabilize benchmark harnesses and docs, or DTB-009 (npm publish under MIT — still requires owner approval)
+- Relevant files: `benchmarks/{micro,ssr,dom}/`, `benchmarks/results/2026-11-16_{09-03-34-486Z-li9o,09-37-02-734Z-arcv,09-50-15-877Z-jjuo}.json`
+- Baseline checks and results (2026-11-16, after list() fix):
   - `pnpm run typecheck` (workspace): **pass**
-  - `@msf/runtime` tests: **27/27 pass** (incl. component mount/hydrate/SSR)
-  - `@msf/compiler` tests: **14/14 pass** (`jsx-dom-v1` + `jsx-universal-v1` golden and executable-eval tests)
-  - `@msf/dev` tests: **2/2 pass**
+  - `@msf/runtime` tests: **37/37 pass**
+  - `@msf/compiler` tests: **14/14 pass**
+  - `@msf/dev` tests: **6/6 pass**
   - `@msf/bench-runner` tests: **31/31 pass**
   - `pnpm run build`: **pass**
-  - `pnpm verify:package`: **pass** (consumer install + runtime smoke + TS consumer typecheck; evidence `benchmarks/evidence/package-verification.json`)
-  - `examples/example-fullstack` dev SSR / production prerender + Chromium hydration: **pass**
+  - `pnpm verify:package`: **pass** (consumer install + runtime smoke + TS consumer typecheck)
+  - `examples/fullstack` dev SSR / production prerender + Chromium hydration: **pass**
+  - MSF benchmarks: micro `2026-11-16_09-03-34-486Z-li9o`, SSR `2026-11-16_09-37-02-734Z-arcv`, DOM `2026-11-16_09-50-15-877Z-jjuo` (informational preview measurements)
 - Most recent checks and results: see latest iteration notes below
-- Unverified checks / limitations:
-  - No systematic MSF benchmark run committed yet (methodology-compliant, sequential, raw data)
-  - No CI (workflow file exists locally, unpushed due to GitHub token `workflow` scope)
-  - No licensed/npm release (approval required)
+- Notes / limitations:
+  - No CI workflow pushed yet (workflow scope needed; validate locally)
+  - No npm release (owner approval required even though repo is MIT)
+  - No compiler support for `<Show>`/`<For>` lowering yet (runtime supports them)
 - Known risks / blockers:
   - Hydration/component model still preview (not compiler-emitted)
-  - Compiler subset constrained; wrapper package not published
-- Next safe action: see `docs/dtb/BACKLOG.md` (start with highest-value READY item)
-- Approval required (if any): license/publishing/npm; any production-facing or destructive change; major scope expansion
+  - Compiler subset constrained; bundle/dom MSF fixtures verified working
+- Next safe action: pick next DTB backlog item; highest value = stabilize & close the preview, or approve and execute npm publish under MIT
+- Approval required: npm publish/releases; any production-facing or destructive change; major scope expansion
 
 ## Iteration notes
-- 2026-11-16 `e568729` — DTB-001: function components in isomorphic view layer (`h(Component, props, children)`) resolved by SSR/mount/hydrate; `packages/runtime/test/component.test.ts` (3 tests). DTB-001 VERIFIED.
-- 2026-11-16 `73a8be7` — dist builds, conditional exports, consumer install/smoke/typecheck verification (`pnpm verify:package`), evidence JSON.
-- 2026-11-16 (this iteration) — DTB-002: compiler `target: "universal"` (`jsx-universal-v1`) emits isomorphic view descriptors for the JSX subset; golden + executable-eval tests; 14 compiler tests pass. DTB-002 VERIFIED.
-- 2026-11-16 `ab1812c` — isomorphic view layer + SSR hydration; full-stack example tested (dev SSR HTTP 200, prod prerender + hydration in Chromium).
-- 2026-11-16 `c7e30e7` — runtime dependency-tracking fix, compiler `jsx-dom-v1`, MSF micro-benchmark candidate.
-- 2026-11-16 `33c64a1` / earlier — docs update to M1-preview reality.
-- 2026-11-16 `6aaf9b6` — public repo created, M0 baseline/benchmark evidence.
-- 2026-11-16 `aca8423` — getting-started guide updates.
-
----
-
-**ملخص بالعربية:** سجّل تنفيذ DTB — الإطار بدور معاينة مطوّر في المستودع، مع قيود واضحة (الترخيص/النشر يحتاج موافقة)، وحالة التحقق الحالية وجداول المهام التالية.
+- 2026-11-16 — benchmarks expanded: MSF micro/SSR/DOM evidence committed; SSR fixture added; DOM fixture used fine-grained `list(keyFn)` (real app wiring fixed); Windows `.cmd` shim detection fixed in `env.ts`.
+- 2026-11-16 — License decision: **MIT** (`LICENSE` modified); package metadata set to `MIT`; DTB-009 still blocked on owner npm-publish approval.
+- 2026-11-16 — list() item ownership fixed: per-item `createRoot` now runs under detached owner (`runWithOwner(null, ...)`) so reconciliation no longer disposes sibling effects; added test.
+- 2026-11-16 `d67853e` — depth guard (`MSF_REACTIVE_CYCLE`) added for nested updateIfNecessary; test added.
+- 2026-11-16 `fca2179` — `@msf/dev` ships `check` command (recursive `.tsx/.jsx` scan, exit non-zero on unsupported patterns); tests added.
+- 2026-11-16 `73a8be7` — dist builds + conditional exports + consumer install/smoke/typecheck verification; evidence written; CI workflow outstanding.
+- 2026-11-16 `e568729` — isomorphic view layer + SSR hydration; `examples/fullstack` verified end-to-end in Chromium.

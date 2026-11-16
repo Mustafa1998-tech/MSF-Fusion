@@ -10,7 +10,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-7.0.2-3178c6)](https://www.typescriptlang.org/)
 [![Node](https://img.shields.io/badge/Node.js-LTS%20%2F%20v26%20tested-339933)](https://nodejs.org/)
 [![pnpm](https://img.shields.io/badge/pnpm-12.21.0-f69220)](https://pnpm.io/)
-[![License](https://img.shields.io/badge/license-pending%20approval-lightgrey)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-yellowgreen)](LICENSE)
 
 [Developer Guide](docs/guide/README.md) · [Architecture](docs/architecture/overview.md) · [ADRs](docs/adr/README.md) · [Benchmarks](benchmarks/methodology.md) · [Roadmap](docs/engineering/roadmap.md) · [Implementation Plan](docs/engineering/implementation-plan.md)
 
@@ -135,7 +135,7 @@ Results are machine- and time-specific. Read [limitations](benchmarks/methodolog
 
 ## License
 
-No final open-source or commercial license has been selected yet. Until explicitly approved, repository contents are provided under the terms in [LICENSE](LICENSE) (**all rights reserved, pending approval**). Package metadata currently declares `UNLICENSED`.
+The repository is licensed under the **MIT License**; see [LICENSE](LICENSE). Package metadata declares `MIT`. The packages are still marked `private: true` and are **not published to npm**; GitHub is the primary distribution channel.
 
 ---
 

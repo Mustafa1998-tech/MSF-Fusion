@@ -1,6 +1,6 @@
 # Implementation plan — M1/M2+ progress (updated)
 
-> **Status:** M1 execution advanced under approved direction. This document tracks completed slices and remaining work. Packaging/publishing and license changes still require separate explicit approval.
+> **Status:** M1 execution advanced under approved direction. This document tracks completed slices and remaining work. Packaging/publishing remains flagged for owner approval (license is MIT; npm publish not yet performed).
 
 ## 1. Progress summary
 
@@ -28,7 +28,7 @@
 - [ ] Streaming/resume evaluation and serialization contracts
 - [ ] **M3 Full-stack & DX:** server/client/shared boundaries, actions/endpoints, dev server/HMR, richer CLI/build pipeline
 - [ ] **M4 Compatibility:** adapters/interop experiments (evidence-gated), packaging matrix
-- [ ] **M5 Hardening & release readiness:** perf/security hardening, migration/docs, approvals for license/publishing
+- [ ] **M5 Hardening & release readiness:** perf/security hardening, migration/docs, owner approval for npm publish
 
 ## 2. Sequencing (current)
 ```mermaid
@@ -46,9 +46,8 @@ graph TD
 ```
 
 ## 3. Explicit approvals still required
-1. **License choice** before changing `LICENSE` terms or publishing under new terms
-2. **Publishing/release** (npm, registries, releases) before any public package release
-3. Scope/claims for M2+ capabilities must remain evidence-based
+1. **npm publishing** — license is MIT; publishing the `@msf/*` packages to npm requires explicit owner approval (`private: true` for now).
+2. **Scope/claims for M2+** capabilities must remain evidence-based.
 
 ## ملخص بالعربية
 تم إنجاز واختبار شرائح مهمة من M1 (نواة + إصلاح تتبع، مترجم JSX فرعي، أدوات dev معاينة، دمج micro benchmark لـ MSF). العمل المتبقي يشمل توسيع المترجم/IR، الترطيب والنموذج الموحد، أدوات وخادم dev كاملة، قياسات MSF الشاملة، وبنود M2+ مع بوابات الأدلة والموافقات.

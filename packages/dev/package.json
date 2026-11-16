@@ -2,6 +2,7 @@
   "name": "@msf/dev",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "MSF Fusion dev tooling preview (compile APIs/CLI).",
   "exports": {
@@ -34,3 +35,4 @@
     "vitest": "5.1.0"
   }
 }
+

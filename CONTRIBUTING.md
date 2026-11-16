@@ -44,7 +44,7 @@ pnpm bench:micro && pnpm bench:ssr && pnpm bench:bundle && pnpm bench:dom && pnp
 
 ## License and rights
 
-By contributing, you agree that your contributions may be incorporated under the repository's current terms ([LICENSE](LICENSE), pending final license approval). Do not submit material you do not have the right to contribute.
+By contributing, you agree that your contributions may be incorporated under the repository's current terms ([LICENSE](LICENSE), MIT License). Do not submit material you do not have the right to contribute.
 
 ## Questions
 

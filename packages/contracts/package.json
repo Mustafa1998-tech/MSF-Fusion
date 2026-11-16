@@ -2,6 +2,7 @@
   "name": "@msf/contracts",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "Shared contracts and internal interfaces for MSF Fusion packages.",
   "exports": {
@@ -23,3 +24,4 @@
     "vitest": "5.1.0"
   }
 }
+

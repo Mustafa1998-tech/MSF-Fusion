@@ -2,6 +2,7 @@
   "name": "@msf/runtime",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "MSF Fusion reactive runtime kernel (Milestone 1).",
   "exports": {
@@ -39,3 +40,4 @@
     "vitest": "5.1.0"
   }
 }
+

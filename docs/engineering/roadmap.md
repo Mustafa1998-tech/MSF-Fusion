@@ -45,7 +45,7 @@
 ## M5 — Hardening and pre-release 📋 Planned
 - Streaming/resume evaluation, perf tuning, fuzz/property tests, security review
 - Documentation bilingual completion, migration guides
-- Release only with explicit approval (including license/publishing)
+- npm publish only with explicit owner approval (license: MIT)
 
 ## ملخص بالعربية
 M0 مكتملة، وM1 قيد التنفيذ (نواة تفاعلية وDOM/SSR معاينة وأمثلة واختبارات منجزة؛ المتبقي: المترجم/IR، توحيد النموذج، قياسات MSF، أدوات المطوّر، وتجهيز الحزم). المراحل M2–M5 مخططة بحسب الأدلة والاعتمادات.

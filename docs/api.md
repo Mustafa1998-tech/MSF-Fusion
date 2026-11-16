@@ -53,7 +53,7 @@ All MSF Fusion packages are still `private: true` (not published). The policy be
 2. **Deprecation first** — stable exports are deprecated for at least one milestone before removal.
 3. **`MSF_CONTRACTS_VERSION`** bumped whenever diagnostic shape/semantics change, so consumer tools can pin or degrade gracefully.
 4. **Pre-publish sign-off** — publishing anything (even a pre-release) needs **explicit user approval**; currently nothing is published.
-5. **License** — final license selection is **approval-gated**. Do not redistribute under a chosen license until the owner explicitly approves.
+5. **License** — repository and packages are licensed under the **MIT License** (`LICENSE`); package metadata declares `MIT`. Redistribution under MIT is fine; publishing requires explicit approval.
 
 ## What is intentionally NOT in the public API
 - Deep runtime internals (`ReactiveNode`, `Owner`, `Listener` internals, array-slot disposal details)

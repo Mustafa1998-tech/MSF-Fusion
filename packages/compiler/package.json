@@ -2,6 +2,7 @@
   "name": "@msf/compiler",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "MSF Fusion compiler (Milestone 1 subset).",
   "exports": {
@@ -26,3 +27,4 @@
     "vitest": "5.1.0"
   }
 }
+

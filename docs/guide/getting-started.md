@@ -35,7 +35,7 @@ pnpm verify:package
 - `@msf/runtime/dom`: `render`, `mount`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list` (multi-root keyed), `For`
 - `@msf/runtime/server`: `h`, `renderNode`, `renderToString`, `escapeHtml` (component nodes resolved)
 
-**Current limitations:** compiler subset is limited (default `jsx-dom-v1` and `jsx-universal-v1`; no sourcemaps/IR pipeline/components/control-flow), SSR/hydration is a preview (no streaming/resume), dev tooling is compile-only (no dev server/HMR for library packages), no router, and packages are still marked `private: true` pending approval to publish.
+**Current limitations:** compiler subset is limited (default `jsx-dom-v1` and `jsx-universal-v1`; no sourcemaps/IR pipeline/components/control-flow), SSR/hydration is a preview (no streaming/resume), dev tooling is compile-only (no dev server/HMR for library packages), no router, and packages are still marked `private: true` (no npm publish yet; MIT-licensed on GitHub).
 
 **Package builds & consumer verification:** `pnpm build` emits ESM+d.ts into `dist/`, and `pnpm verify:package` packs the four `@msf/*` packages and smoke-tests them in a temp consumer (install, runtime smoke, TS typecheck). Evidence: `benchmarks/evidence/package-verification.json`.
 

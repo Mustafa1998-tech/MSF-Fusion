@@ -27,7 +27,7 @@ M0 architecture/baseline/toolchain-spike deliverables are complete. M1 is in pro
 - Dev tooling: dev server/HMR, templates, richer diagnostics/build pipeline
 - Methodology-compliant SSR/bundle/DOM MSF fixtures and measured runs
 - Additional hardening: edge cases, leaks, security boundaries, API stabilization
-- Publishing/license remains **approval-gated**
+- Publishing/release requires explicit owner approval (license: MIT; GitHub distribution is allowed; npm not published yet)
 
 ## Verification (this update)
 - `pnpm run typecheck` (workspace): **pass**

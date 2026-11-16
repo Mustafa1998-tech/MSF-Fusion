@@ -35,7 +35,7 @@
 - [ ] All recurring gates satisfied for release scope
 - [ ] Changelog/migration notes and compatibility matrix complete
 - [ ] Supply-chain/provenance checks complete
-- [ ] **Explicit user approval** for final license choice
+- [x] **License choice: MIT** (`LICENSE`), 2026-11-16
 - [ ] **Explicit user approval** for publishing/release
 
 ## ملخص بالعربية

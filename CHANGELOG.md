@@ -18,7 +18,7 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 - **Benchmark integration (partial):** `msf-runtime` micro-benchmark candidate in `@msf/bench-runner` (smoke-verified), alongside existing competitor baselines.
 - **Examples:** `examples/counter-basic` (SSR snapshot), `examples/counter-browser` (Vite interactive demo), `examples/fullstack` (SSR + hydration pilot).
 - **Documentation:** refreshed README/guide, engineering status and architecture/code review, ADR/engineering updates, and package READMEs.
-- Repository presentation and governance: LICENSE (pending final approval), CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policy, issue/PR templates.
+- Repository presentation and governance: MIT LICENSE, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policy, issue/PR templates.
 
 ### Changed
 - Project status moved from M0-only to **M1 in progress** with runnable preview slices and documented limitations.
@@ -40,4 +40,4 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 ### Notes
 - No MSF Fusion framework runtime/compiler/server implementation was included in the M0 snapshot.
 - No performance superiority claims are made; baseline results are environment-specific and documented with exclusions/limitations.
-- License is pending explicit approval (`UNLICENSED` metadata; all rights reserved per `LICENSE`).
+- License is MIT (`LICENSE`); npm publish still needs owner approval.
