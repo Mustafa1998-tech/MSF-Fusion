@@ -9,6 +9,7 @@ import {
   createRoot,
   createSignal,
   onCleanup,
+  runWithOwner,
   untrack,
   type Accessor,
   type Dispose,
@@ -235,13 +236,13 @@ export function list<T>(
         let setItem!: (v: T | ((p: T) => T)) => T;
         let getIndex!: Accessor<number>;
         let setIndex!: (v: number | ((p: number) => number)) => number;
-        dispose = createRoot((d) => {
+        dispose = runWithOwner(null, () => createRoot((d) => {
           [getItem, setItem] = createSignal(item);
           [getIndex, setIndex] = createSignal(i);
           const created = mapFn(getItem, getIndex);
           nodes = normalize(created);
           return d;
-        });
+        }));
         entry = {
           key,
           nodes,
@@ -300,4 +301,8 @@ export function For<T>(props: {
     return out;
   };
 }
+
+
+
+
 

@@ -62,8 +62,8 @@ export const APP_FIXTURES: readonly AppFixture[] = [
     frameworkPackages: ["@msf/runtime"],
     serverEntry: "src/entry-server.ts",
     notes:
-      "MSF Fusion runtime-preview renderToString snapshot of an equivalent 1,000-row table. SSR-suite only; DOM/bundle MSF fixtures pending. Informational; not a production SSR claim.",
-    supportsClientBench: false,
+      "MSF Fusion runtime-preview mount of an equivalent 1,000/10,000-row table using fine-grained signals + keyed list(). Informational preview measurement; not a production claim.",
+    supportsClientBench: true,
   },
 ];
 
