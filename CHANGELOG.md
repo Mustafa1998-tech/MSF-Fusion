@@ -17,7 +17,7 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 - **Dev tooling preview:** `@msf/dev` compile APIs/CLI (`compileFile`, `compilePath`, `status`) and tests.
 - **Benchmark integration (partial):** `msf-runtime` micro-benchmark candidate in `@msf/bench-runner` (smoke-verified), alongside existing competitor baselines.
 - **Examples:** `examples/counter-basic` (SSR snapshot), `examples/counter-browser` (Vite interactive demo), `examples/fullstack` (SSR + hydration pilot), `examples/dashboard` (Ops Board — SSR + fine-grained signal filtering).
-- **Benchmarks (informational):** MSF runtime preview measurements committed for micro (`2026-11-16_09-03-34-486Z-li9o`), SSR (`2026-11-16_09-37-02-734Z-arcv`), and DOM (`2026-11-16_09-50-15-877Z-jjuo`) suites; Windows `pnpm` shim detection fixed.
+- **Benchmarks (informational):** MSF runtime preview measurements committed for micro (`2026-11-16_09-03-34-486Z-li9o`), SSR (`2026-11-16_09-37-02-734Z-arcv`), DOM (`2026-11-16_09-50-15-877Z-jjuo`), and bundle (`2026-11-16_11-43-37-434Z-wlh8` — 3.09 KiB brotli MSF vs competitors); `pnpm` shim detection fixed on Windows.
 - **Documentation:** refreshed README/guide, engineering status and architecture/code review, ADR/engineering updates, and package READMEs.
 - Repository presentation and governance: MIT LICENSE, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policy, issue/PR templates.
 

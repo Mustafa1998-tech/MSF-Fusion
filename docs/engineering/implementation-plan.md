@@ -17,7 +17,7 @@
 **Remaining for M1 hardening**
 - [ ] Broaden compiler subset and add IR/sourcemaps/semantic diagnostics
 - [ ] Component model, control flow compilation, and stronger DOM/SSR parity
-- [ ] MSF fixtures/measurements for SSR/bundle/DOM with methodology-compliant runs
+- [x] MSF fixtures/measurements for benchmarks (micro/SSR/bundle/DOM) with methodology-compliant runs; evidence committed (`2026-11-16_09-03-34-486Z-li9o`, `2026-11-16_09-37-02-734Z-arcv`, `2026-11-16_09-50-15-877Z-jjuo`, `2026-11-16_11-43-37-434Z-wlh8`); no superiority claims
 - [ ] Publishable package builds (`dist`, d.ts, exports) and DX polish
 - [ ] Additional edge-case/stress/leak/security evidence
 

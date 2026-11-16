@@ -22,7 +22,7 @@
 **Remaining**
 - Broader compiler/IR, sourcemaps, semantic diagnostics, component/control-flow support
 - Unified component/isomorphic model and hydration
-- MSF fixtures + methodology-compliant measurements for SSR/bundle/DOM
+- MSF benchmark fixtures + measurements for micro/SSR/bundle/DOM — **committed evidence** (see `benchmarks/results/`)
 - Publishable package builds (`dist`/types/exports), dev server/HMR, fuller CLI
 - Additional hardening (edge cases, leaks, security boundaries)
 
