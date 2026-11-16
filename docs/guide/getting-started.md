@@ -2,23 +2,29 @@
 
 > **Proposed / not implemented.** This page describes the intended getting-started experience. Commands, package names, and APIs below are **design placeholders** and may change.
 
-## Today (Milestone 0): explore the project
+## Today: developer preview (runnable subset)
 
-MSF Fusion does not yet ship an installable framework package. You can explore the design and evidence in this repository:
+MSF Fusion is still in active development, but a **real runtime preview** is now available in this monorepo:
+- Reactive kernel: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`
+- DOM helpers: `@msf/runtime/dom` (`render`, `insert`, `setText`, `setAttribute`, `For`, ...)
+- SSR string renderer: `@msf/runtime/server` (`h`, `renderToString`, escaping by default)
 
 ```bash
 git clone https://github.com/Mustafa1998-tech/MSF-Fusion.git
 cd MSF-Fusion
 pnpm install --frozen-lockfile
 
-# Verify Milestone 0 tooling
+# Verify runtime and tooling
 pnpm run typecheck
+pnpm --filter @msf/runtime run test
 pnpm --filter @msf/bench-runner run test
 pnpm --filter @msf/spike-compiler-toolchain run test
 
-# Read baseline evidence
-pnpm bench:report
+# Run the included SSR example
+node examples/counter-basic/src/ssr.ts
 ```
+
+**Current limitations:** no compiler/JSX subset yet, no hydration, no dev server/CLI, no router, and packages are not published to npm. APIs may change.
 
 **Recommended reading:**
 1. [Architecture overview](../architecture/overview.md)
@@ -57,24 +63,47 @@ my-app/
 - **TypeScript:** strict mode, framework-provided config preset
 - **Editor:** TypeScript language service + future MSF tooling/diagnostics
 
-## Your first component (proposed example)
+## Your first app (current preview API)
 
-```tsx
-// Proposed syntax — not runnable yet
-import { signal } from "msf/runtime";
+**SSR snapshot (runnable now):**
+```ts
+import { createSignal } from "@msf/runtime";
+import { h, renderToString } from "@msf/runtime/server";
 
-export function Counter() {
-  const count = signal(0);
-
-  return (
-    <button onClick={() => count.set(count.get() + 1)}>
-      Count: {count}
-    </button>
+function CounterCard() {
+  const [count] = createSignal(0);
+  return h("section", { class: "counter" },
+    h("h1", null, "Counter"),
+    h("p", null, "Count: ", count()),
   );
 }
+
+console.log(renderToString(() => CounterCard()));
 ```
 
-> **Note:** The exact API names (`signal().get()/set()` vs getter/setter functions vs compiler sugar), file extensions, and JSX/template syntax are part of the approved compiler/runtime design and will be finalized during implementation.
+**Browser fine-grained DOM (runnable with bundler/ESM in browser):**
+```ts
+import { createSignal } from "@msf/runtime";
+import { render, insert, setAttribute } from "@msf/runtime/dom";
+
+const [count, setCount] = createSignal(0);
+
+render(() => {
+  const root = document.createElement("section");
+  const value = document.createElement("p");
+  insert(value, () => `Count: ${count()}`);
+  setAttribute(value, "data-count", () => String(count()));
+
+  const btn = document.createElement("button");
+  btn.textContent = "Increment";
+  btn.addEventListener("click", () => setCount((n) => n + 1));
+
+  root.append(value, btn);
+  return root;
+}, document.getElementById("app")!);
+```
+
+> **Note:** JSX/compiler syntax shown elsewhere in the guide remains **proposed** until the compiler subset lands. The APIs above are the currently implemented runtime primitives.
 
 ## Development workflow (planned)
 - `msf dev` — local dev server with HMR and compiler diagnostics

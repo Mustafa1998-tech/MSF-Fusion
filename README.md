@@ -28,11 +28,11 @@ The project follows an evidence-driven process: architecture decisions, security
 
 | Milestone | State | Summary |
 |---|---|---|
-| **M0 — Architecture & Baseline** | ✅ Completed (pending approval) | ADRs, security/threat model, benchmark lab, final competitor baseline, compiler toolchain spike |
-| **M1 — Reactive kernel & compiler slice** | ⏳ Proposed | Awaiting explicit approval of M0 artifacts and implementation plan |
+| **M0 — Architecture & Baseline** | ✅ Completed | ADRs, security/threat model, benchmark lab, final competitor baseline, compiler toolchain spike |
+| **M1 — Reactive kernel & compiler slice** | 🚧 In progress | Runtime kernel, DOM helpers, SSR string renderer, tests, and preview example implemented; compiler subset/IR/codegen, dev tooling, and MSF benchmark integration in progress |
 | M2+ | 📋 Planned | SSR/hydration, full-stack boundaries, DX, compatibility, hardening |
 
-> **Important:** No production MSF Fusion runtime, compiler, or server package is implemented yet. The [developer guide](docs/guide/README.md) documents **proposed syntax and usage** (design preview). This repository does **not** contain MSF Fusion performance numbers and makes **no superiority claims**.
+> **Important:** A **developer-preview runtime** is now implemented (`@msf/runtime`: reactive core, DOM helpers, SSR string render) with tests and an example, but the framework is **not production-ready**: compiler/JSX subset, hydration, dev server/CLI, router, and npm publishing are still in progress/planned. This repository does **not** contain MSF Fusion performance numbers and makes **no superiority claims**.
 
 ## What is in this repository today
 
