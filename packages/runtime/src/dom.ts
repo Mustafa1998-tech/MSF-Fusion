@@ -184,29 +184,31 @@ export function show<T extends Node>(
 export function list<T>(
   parent: Node,
   each: MaybeAccessor<readonly T[] | T[] | undefined | null>,
-  mapFn: (item: Accessor<T>, index: Accessor<number>) => Node,
+  mapFn: (item: Accessor<T>, index: Accessor<number>) => Node | Node[] | DocumentFragment,
   keyFn?: (item: T, index: number) => unknown,
   anchor: Node | null = null,
 ): void {
+  const normalize = (value: Node | Node[] | DocumentFragment): Node[] => {
+    if (Array.isArray(value)) return value;
+    if (value.nodeType === Node.DOCUMENT_FRAGMENT_NODE) return Array.from(value.childNodes);
+    return [value];
+  };
+
   if (!keyFn) {
     // non-keyed: simple replace (fine-grained per-item signals not tracked here)
     insert(parent, () => {
       const items = (read(each) ?? []) as readonly T[];
-      return items.map((item, i) => untrack(() => mapFn(() => item, () => i)));
+      return items.map((item, i) => untrack(() => normalize(mapFn(() => item, () => i) as Node)));
     }, anchor);
     return;
   }
 
   type Entry = {
     key: unknown;
-    node: Node;
+    nodes: Node[];
     dispose: Dispose;
-    item: ReturnType<typeof createSignal<T>>[1];
-    setItem: ReturnType<typeof createSignal<T>>[1];
-    index: ReturnType<typeof createSignal<number>>[1];
-    setIndex: ReturnType<typeof createSignal<number>>[1];
-    getItem: Accessor<T>;
-    getIndex: Accessor<number>;
+    setItem: (v: T | ((p: T) => T)) => T;
+    setIndex: (v: number | ((p: number) => number)) => number;
   };
 
   let entries: Entry[] = [];
@@ -214,7 +216,7 @@ export function list<T>(
 
   const removeEntry = (entry: Entry) => {
     entry.dispose();
-    entry.node.parentNode?.removeChild(entry.node);
+    for (const node of entry.nodes) node.parentNode?.removeChild(node);
   };
 
   createEffect(() => {
@@ -227,7 +229,7 @@ export function list<T>(
       const key = keyFn(item, i);
       let entry = keyToEntry.get(key);
       if (!entry) {
-        let node!: Node;
+        let nodes!: Node[];
         let dispose!: Dispose;
         let getItem!: Accessor<T>;
         let setItem!: (v: T | ((p: T) => T)) => T;
@@ -236,19 +238,16 @@ export function list<T>(
         dispose = createRoot((d) => {
           [getItem, setItem] = createSignal(item);
           [getIndex, setIndex] = createSignal(i);
-          node = mapFn(getItem, getIndex);
+          const created = mapFn(getItem, getIndex);
+          nodes = normalize(created);
           return d;
         });
         entry = {
           key,
-          node,
+          nodes,
           dispose,
-          item: setItem,
           setItem,
-          index: setIndex,
           setIndex,
-          getItem,
-          getIndex,
         };
       } else {
         entry.setItem(item);
@@ -263,14 +262,17 @@ export function list<T>(
       if (!newMap.has(key)) removeEntry(entry);
     }
 
-    // reorder/insert
+    // reorder/insert — walk backwards; anchor after last node so iteration inserts correctly
     let currentAnchor = anchor;
     for (let i = newEntries.length - 1; i >= 0; i--) {
       const entry = newEntries[i]!;
-      if (entry.node.nextSibling !== currentAnchor || entry.node.parentNode !== parent) {
-        parent.insertBefore(entry.node, currentAnchor);
+      for (let j = entry.nodes.length - 1; j >= 0; j--) {
+        const node = entry.nodes[j]!;
+        if (node.nextSibling !== currentAnchor || node.parentNode !== parent) {
+          parent.insertBefore(node, currentAnchor);
+        }
+        currentAnchor = node;
       }
-      currentAnchor = entry.node;
     }
 
     entries = newEntries;
