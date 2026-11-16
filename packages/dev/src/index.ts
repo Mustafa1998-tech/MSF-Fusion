@@ -62,6 +62,6 @@ export function getDevStatus(): { ready: boolean; message: string; features: str
   return {
     ready: true,
     message: "MSF dev tooling preview: file compilation/check for JSX subset is available (no dev server/HMR yet).",
-    features: ["compile-file", "compile-path", "diagnostics"],
+    features: ["compile-file", "compile-path", "check-file", "check-path", "diagnostics"],
   };
 }

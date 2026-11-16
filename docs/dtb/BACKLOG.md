@@ -11,7 +11,7 @@
 | DTB-005 | Methodology-compliant MSF micro benchmark run committed as evidence | Medium | Smoke only; no committed MSF baseline | Medium | Low | P2 | **VERIFIED** | `benchmarks/results/2026-11-16_09-03-34-486Z-li9o.json` committed with 12 sequential samples + report; MSF candidate included; docs updated; no superiority claims |
 | DTB-006 | Cycle detection/dev diagnostics in runtime kernel (debug mode) | Medium | ADR-002 mentions cycle detection; not implemented | Medium | Low | P2 | **VERIFIED** | Depth guard (`MSF_REACTIVE_CYCLE` >1000 nested `updateIfNecessary` steps) implemented and tested (`test/cycle.test.ts`); full read/write-after-dispose tracing still open |
 | DTB-007 | Dev tooling: `msf check` compile diagnostics CLI across a project | Medium | `compilePath` already exists | Low | Low | P3 | **VERIFIED** | `node packages/dev/dist/cli.js check <path>` emits diagnostics; `pnpm --filter @msf/dev run check <path>` alias; tests pass |
-| DTB-008 | API docs frozen list + breaking-change policy for preview exports | Medium | Repeated "preview may change" notes | Low | Low | P3 | PROPOSED | `docs/api.md` listing stable vs preview exports; linked from README |
+| DTB-008 | API docs frozen list + breaking-change policy for preview exports | Medium | Repeated "preview may change" notes; need a single reliable reference | Low | Low | P3 | **VERIFIED** | `docs/api.md` lists stability levels, all exports, and breaking-change rules; linked from README |
 | DTB-009 | Project license selection & npm publishing readiness | High but **approval-gated** | Explicit approvals required | High | High | — | BLOCKED | Separate explicit approval from repo owner |
 
 ## Ranking notes

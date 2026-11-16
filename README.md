@@ -114,7 +114,7 @@ See [benchmarks/methodology.md](benchmarks/methodology.md) for fairness rules, e
 | Architecture | [Overview](docs/architecture/overview.md) · [ADR index](docs/adr/README.md) |
 | Decisions | [ADR-001 Reactivity](docs/adr/ADR-001-reactivity-model.md) · [ADR-002 Runtime & scheduling](docs/adr/ADR-002-runtime-and-scheduling.md) · [ADR-003 Full-stack boundaries](docs/adr/ADR-003-fullstack-ssr-boundaries.md) · [ADR-004 Compiler toolchain](docs/adr/ADR-004-compiler-toolchain.md) · [ADR-005 Security & performance gates](docs/adr/ADR-005-security-performance-gates.md) |
 | Security & Performance | [Security requirements](docs/security/security-requirements.md) · [Threat model](docs/security/threat-model.md) · [Performance requirements](docs/performance/performance-requirements.md) |
-| Engineering | [Status](docs/engineering/status.md) · [Risks](docs/engineering/risks.md) · [Gates](docs/engineering/gates.md) · [Roadmap](docs/engineering/roadmap.md) · [MVP scope](docs/engineering/mvp-scope.md) · [Implementation plan](docs/engineering/implementation-plan.md) · [Code review](docs/reviews/architecture-code-review.md) |
+| Engineering | [Status](docs/engineering/status.md) · [API stability](docs/api.md) · [Risks](docs/engineering/risks.md) · [Gates](docs/engineering/gates.md) · [Roadmap](docs/engineering/roadmap.md) · [MVP scope](docs/engineering/mvp-scope.md) · [Implementation plan](docs/engineering/implementation-plan.md) · [Code review](docs/reviews/architecture-code-review.md) |
 | Benchmarks | [Methodology](benchmarks/methodology.md) · [Competitor versions](benchmarks/competitors/versions.md) · [Scenarios](benchmarks/scenarios) |
 
 ## Baseline evidence (latest)
