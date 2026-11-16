@@ -18,6 +18,9 @@ pnpm --filter @msf/spike-compiler-toolchain run test
 # Examples
 node examples/counter-basic/src/ssr.ts
 pnpm --filter @msf/example-counter-browser dev
+
+# Full-stack SSR + hydration pilot
+pnpm --filter @msf/example-fullstack dev
 ```
 
 **Current implemented surface (preview, subject to change):**
@@ -25,7 +28,7 @@ pnpm --filter @msf/example-counter-browser dev
 - `@msf/runtime/dom`: `render`, `mount`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list`, `For`
 - `@msf/runtime/server`: `h`, `renderNode`, `renderToString`, `escapeHtml`
 
-**Current limitations:** compiler subset is limited (`jsx-dom-v1`, no sourcemaps/IR pipeline/components/control-flow), no hydration/isomorphic component model, dev tooling is compile-only (no dev server/HMR), no router, no publishable `dist` packages yet.
+**Current limitations:** compiler subset is limited (`jsx-dom-v1`, no sourcemaps/IR pipeline/components/control-flow), SSR/hydration preview exists via `@msf/runtime/universal` (no streaming/resume), dev tooling is compile-only (no dev server/HMR for library packages), no router, no publishable `dist` packages yet.
 
 ## Current preview usage
 

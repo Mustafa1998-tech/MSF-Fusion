@@ -21,11 +21,14 @@
 - [ ] Publishable package builds (`dist`, d.ts, exports) and DX polish
 - [ ] Additional edge-case/stress/leak/security evidence
 
-### M2+ — planned / partially started 📋
-- [ ] **M2 SSR & hydration:** deterministic hydration for supported subset, isomorphic component contract, escaping/serialization boundaries
+### M2+ — partially started 🚧
+- [x] Isomorphic/hydration slice: `@msf/runtime/universal` (isomorphic view descriptors, DOM mount, hydration with mismatch fallback) and `examples/fullstack` pilot (dev SSR via Vite middleware + production prerender + browser-verified hydration)
+- [ ] Full component model/context/refs/events and robust control flow primitives
+- [ ] Compiler-side lowering to isomorphic view descriptors and hydration markers
+- [ ] Streaming/resume evaluation and serialization contracts
 - [ ] **M3 Full-stack & DX:** server/client/shared boundaries, actions/endpoints, dev server/HMR, richer CLI/build pipeline
 - [ ] **M4 Compatibility:** adapters/interop experiments (evidence-gated), packaging matrix
-- [ ] **M5 Hardening & release readiness:** streaming/resume evaluation, perf/security hardening, migration/docs, approvals for license/publishing
+- [ ] **M5 Hardening & release readiness:** perf/security hardening, migration/docs, approvals for license/publishing
 
 ## 2. Sequencing (current)
 ```mermaid

@@ -36,17 +36,17 @@ The project follows an evidence-driven process: architecture decisions, security
 
 ## What is in this repository today
 
-- **Runtime preview (`packages/runtime`):** real fine-grained reactive kernel (`createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, ownership/disposal), DOM helpers (`@msf/runtime/dom`), and SSR string renderer (`@msf/runtime/server`) with tests.
+- **Runtime preview (`packages/runtime`):** real fine-grained reactive kernel (`createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, ownership/disposal), DOM helpers (`@msf/runtime/dom`), SSR string renderer (`@msf/runtime/server`), and isomorphic view mount/hydrate (`@msf/runtime/universal`) with tests.
 - **Compiler subset (`packages/compiler`):** real `jsx-dom-v1` transform for an intrinsic JSX/TSX subset to DOM runtime calls with diagnostics and tests.
 - **Dev tooling preview (`packages/dev`):** compile APIs/CLI (`compilePath`, `status`) for the supported subset.
-- **Examples:** `examples/counter-basic` (SSR snapshot) and `examples/counter-browser` (Vite interactive demo).
+- **Examples:** `examples/counter-basic` (SSR snapshot), `examples/counter-browser` (Vite interactive demo), `examples/fullstack` (SSR + hydration pilot).
 - **Architecture & decisions:** system/container views, compile-to-runtime pipeline, and ADR-001–ADR-005 with trade-offs and Mermaid diagrams.
 - **Benchmark laboratory:** reproducible runner with pinned dependencies, environment capture, raw JSON samples, median/P95/CV/MAD reporting, and equivalent fixtures.
 - **Competitor baselines (measured):** React 19.3.1, Solid 1.9.19, Svelte 5.57.3, Vue 3.5.45, and `@preact/signals-core` 1.14.5 (micro primitives where semantically comparable).
 - **Compiler toolchain spike:** TypeScript 7 unstable semantic API + Oxc transform feasibility, with recorded evidence.
 - **Engineering governance:** threat model, security/performance requirements, risks, quality gates, MVP scope, roadmap, and a detailed approval-gated implementation plan.
 
-**In progress / not yet implemented:** broader IR/sourcemaps and full JSX/component compiler coverage, hydration and isomorphic component model, dev server/HMR, router/full-stack boundaries, publishable `dist` packages, comprehensive MSF benchmark fixtures/runs, and production hardening (M2+). **No MSF Fusion superiority/performance claims.**
+**In progress / not yet implemented:** full component model and hydration for all JSX/compiler patterns, fuller IR/sourcemaps and the TypeScript semantic adapter, dev server/HMR for library packages, router/full-stack action boundaries, publishable `dist` packages, comprehensive MSF benchmark fixtures/runs, and production hardening (M2+). **No MSF Fusion superiority/performance claims.**
 
 ## Design principles
 
@@ -91,6 +91,9 @@ pnpm --filter @msf/spike-compiler-toolchain run test
 # Run preview examples
 node examples/counter-basic/src/ssr.ts
 pnpm --filter @msf/example-counter-browser dev
+
+# Full-stack SSR + hydration pilot
+pnpm --filter @msf/example-fullstack dev
 
 # Benchmarks (run sequentially for comparable results)
 pnpm bench:micro && pnpm bench:ssr && pnpm bench:bundle && pnpm bench:dom && pnpm bench:report

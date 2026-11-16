@@ -44,7 +44,7 @@ function CounterCard() {
 const html = renderToString(() => CounterCard());
 ```
 
-`@msf/runtime/server` escapes text/attribute values by default. It is **not** yet a full isomorphic component/hydration system.
+`@msf/runtime/server` escapes text/attribute values by default. `@msf/runtime/universal` adds an isomorphic view layer with DOM mount and **hydration** (mismatch fallback to fresh mount). The compiler does not yet emit this view code, and it is not a full component model.
 
 ## Proposed compiler/component syntax (not implemented)
 

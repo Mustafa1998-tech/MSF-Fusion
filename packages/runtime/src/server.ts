@@ -1,25 +1,23 @@
-/**
- * Minimal SSR string renderer (Milestone 1 preview).
+﻿/**
+ * SSR renderer for the isomorphic view descriptor (Milestone 1 preview).
  *
- * Renders a restricted tree shape to HTML with escaping by default.
- * This is not full isomorphic component rendering yet.
+ * Renders a deterministic HTML snapshot of a `ViewNode` tree with escaping by
+ * default. The same tree can be mounted or hydrated on the client via
+ * `@msf/runtime/universal`.
  */
 import { untrack } from "./core.ts";
+import {
+  isFragment,
+  isText,
+  isElement,
+  type ViewChild,
+  type ViewElement,
+  type ViewMaybeAccessor,
+  type ViewNode,
+} from "./view.ts";
 
-export type ServerNode =
-  | string
-  | number
-  | boolean
-  | null
-  | undefined
-  | ServerElement
-  | ServerNode[];
-
-export interface ServerElement {
-  type: string;
-  props?: Record<string, unknown> | null;
-  children?: ServerNode[];
-}
+export { h, fragment, text } from "./view.ts";
+export type { ViewElement, ViewFragment, ViewNode, ViewText, ViewMaybeAccessor, ViewChild } from "./view.ts";
 
 const VOID_ELEMENTS = new Set([
   "area",
@@ -47,58 +45,62 @@ export function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-function renderAttr(name: string, value: unknown): string {
-  if (value == null || value === false) return "";
-  if (value === true) return ` ${name}`;
+function read<T>(value: ViewMaybeAccessor<T>): T {
+  return typeof value === "function" ? (value as () => T)() : value;
+}
+
+function renderAttr(name: string, raw: unknown): string {
+  if (raw == null || raw === false) return "";
+  if (raw === true) return ` ${name}`;
   if (name === "className") name = "class";
-  return ` ${name}="${escapeHtml(String(value))}"`;
+  return ` ${name}="${escapeHtml(String(raw))}"`;
 }
 
-export function h(
-  type: string,
-  props?: Record<string, unknown> | null,
-  ...children: ServerNode[]
-): ServerElement {
-  const flat: ServerNode[] = [];
-  const push = (value: ServerNode): void => {
-    if (Array.isArray(value)) {
-      for (const item of value) push(item);
-    } else {
-      flat.push(value);
-    }
-  };
-  for (const child of children) push(child);
-  return { type, props: props ?? null, children: flat };
+function eventAttrOk(name: string): boolean {
+  return !/^on/i.test(name);
 }
 
-export function renderNode(node: ServerNode): string {
+export function renderNode(node: ViewNode | (() => ViewNode)): string {
+  if (typeof node === "function") return renderNode(read(node) as ViewNode);
   if (node == null || node === false || node === true) return "";
-  if (Array.isArray(node)) return node.map(renderNode).join("");
   if (typeof node === "string" || typeof node === "number") {
     return escapeHtml(String(node));
   }
-
-  const { type, props, children } = node;
-  let attrs = "";
-  if (props) {
-    for (const [key, value] of Object.entries(props)) {
-      if (key === "children" || key.startsWith("on")) continue;
-      attrs += renderAttr(key, value);
+  if (isText(node)) return escapeHtml(read(node.value) == null ? "" : String(read(node.value)));
+  if (isFragment(node)) return renderChildren(node.children ?? []);
+  if (isElement(node)) {
+    const element = node as ViewElement;
+    let attrs = "";
+    if (element.props) {
+      for (const [name, value] of Object.entries(element.props)) {
+        if (name === "children" || !eventAttrOk(name)) continue;
+        attrs += renderAttr(name, read(value as ViewMaybeAccessor<unknown>));
+      }
     }
+    if (VOID_ELEMENTS.has(element.tag)) return `<${element.tag}${attrs}>`;
+    const inner = renderChildren(element.children ?? []);
+    const propsChildren = element.props ? (element.props["children"] as ViewMaybeAccessor<unknown> | undefined) : undefined;
+    const fallback = propsChildren != null ? renderNode(read(propsChildren) as ViewNode) : "";
+    return `<${element.tag}${attrs}>${inner || fallback}</${element.tag}>`;
   }
-  if (VOID_ELEMENTS.has(type)) {
-    return `<${type}${attrs}>`;
-  }
-  const inner =
-    children && children.length > 0
-      ? children.map(renderNode).join("")
-      : props && props["children"] != null
-        ? renderNode(props["children"] as ServerNode)
-        : "";
-  return `<${type}${attrs}>${inner}</${type}>`;
+  return "";
 }
 
-export function renderToString(view: () => ServerNode): string {
+function renderChildren(children: ViewChild[]): string {
+  let out = "";
+  for (const child of children) {
+    if (Array.isArray(child)) out += renderChildren(child);
+    else out += renderNode(child as ViewNode | (() => ViewNode));
+  }
+  return out;
+}
+
+export function renderToString(view: () => ViewNode): string {
   // Run without tracking reactive reads; SSR snapshot is a point-in-time render.
   return untrack(() => renderNode(view()));
 }
+
+/** @deprecated use `@msf/runtime/universal` for isomorphic rendering */
+export type ServerNode = ViewNode;
+/** @deprecated use `@msf/runtime/universal` for isomorphic rendering */
+export type ServerElement = ViewElement;

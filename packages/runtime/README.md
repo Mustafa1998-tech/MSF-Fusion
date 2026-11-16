@@ -13,6 +13,8 @@ Reactive runtime primitives for MSF Fusion (Milestone 1 preview).
   - `render`, `mount`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list`, `For`
 - `@msf/runtime/server` — SSR string rendering
   - `h`, `renderNode`, `renderToString`, `escapeHtml`
+- `@msf/runtime/universal` — isomorphic view layer (M2 preview)
+  - `h`, `fragment`, `text`, DOM `mount`, `hydrate`, re-export of `renderToString`
 
 ## Example
 

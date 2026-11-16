@@ -26,7 +26,7 @@ Yes for the current codebase and public runtime APIs (typed). Compiler diagnosti
 There are **no MSF Fusion performance numbers yet**. Competitor baselines are measured and documented; any future MSF results must be measured with the same methodology and reported without unsupported superiority claims. See [benchmarks](../../benchmarks/methodology.md).
 
 ## Does it support SSR and hydration?
-SSR **string snapshot rendering** is available in preview (`@msf/runtime/server`). **Hydration, streaming, and resumability are not implemented yet.**
+SSR **string snapshot rendering** is available in preview (`@msf/runtime/server`). A **limited isomorphic/hydration preview** also exists via `@msf/runtime/universal` (view descriptors, DOM mount and hydrate with mismatch fallback), exercised end-to-end in `examples/fullstack`. **Streaming, resume, actions/router, and full component-model hydration are not implemented yet.**
 
 ## What about React/Angular/Web Components/Python interop?
 These are future, evidence-gated goals. No adapters or bridge implementations are shipped.

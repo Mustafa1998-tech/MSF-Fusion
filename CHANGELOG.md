@@ -7,11 +7,13 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 ## [Unreleased]
 
 ### Added
-- **Runtime developer preview (M1 progress):** `@msf/runtime` with fine-grained reactive kernel (`createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, ownership/disposal), DOM helpers, and SSR string renderer (`h`, `renderToString`, HTML escaping), with tests.
+- **Runtime developer preview (M1 progress):** `@msf/runtime` with fine-grained reactive kernel (`createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, ownership/disposal) and DOM helpers (`@msf/runtime/dom`), with tests.
+- **Isomorphic view layer (M2 preview):** `@msf/runtime/universal` with isomorphic view descriptors (`h`, `fragment`, `text`), DOM mounting, and **hydration** that adopts SSR markup, attaches listeners, wires reactive bindings, and falls back to fresh mount on markup mismatch. Includes tests.
+- **Full-stack example:** `examples/fullstack` — Vite + Node.js SSR in dev (middleware mode, on-demand render) and static prerender + hydration in production, served by Node HTTP. Hydration verified in a real Chromium browser.
 - **Compiler subset (real, M1):** `@msf/compiler` `jsx-dom-v1` transform for intrinsic JSX/TSX subset to DOM runtime calls with diagnostics and tests.
 - **Dev tooling preview:** `@msf/dev` compile APIs/CLI (`compileFile`, `compilePath`, `status`) and tests.
 - **Benchmark integration (partial):** `msf-runtime` micro-benchmark candidate in `@msf/bench-runner` (smoke-verified), alongside existing competitor baselines.
-- **Examples:** `examples/counter-basic` (SSR snapshot) and `examples/counter-browser` (Vite interactive demo).
+- **Examples:** `examples/counter-basic` (SSR snapshot), `examples/counter-browser` (Vite interactive demo), `examples/fullstack` (SSR + hydration pilot).
 - **Documentation:** refreshed README/guide, engineering status and architecture/code review, ADR/engineering updates, and package READMEs.
 - Repository presentation and governance: LICENSE (pending final approval), CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policy, issue/PR templates.
 
@@ -20,7 +22,7 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 - Runtime dependency tracking hardened to dedupe repeated reads within a single computation run.
 
 ### Notes
-- Full IR/sourcemaps, broader compiler/JSX/component support, hydration/isomorphic rendering, dev server/HMR, publishable `dist` builds, and comprehensive MSF benchmark coverage are still pending (M1 hardening / M2+).
+- Full IR/sourcemaps, broader compiler/JSX/component support, streaming/resume, dev server/HMR for library packages, publishable `dist` builds, and comprehensive MSF benchmark coverage are still pending (M1 hardening / M2+).
 - No MSF Fusion performance superiority claims are made; benchmark evidence must follow documented methodology.
 
 ## [0.0.0-m0] - 2026-11-16

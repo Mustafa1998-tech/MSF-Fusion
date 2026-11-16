@@ -1,6 +1,6 @@
 # Full-stack & SSR
 
-> **Status:** A **minimal SSR string renderer** is implemented in preview (`@msf/runtime/server`: `h`, `renderToString`, `escapeHtml`). Full-stack boundaries, hydration, streaming/resume, routing, data/actions, and compiler-enforced modules are **planned**.
+> **Status:** A **minimal SSR string renderer** is implemented in preview (`@msf/runtime/server`: `h`, `renderToString`, `escapeHtml`), plus a **partial isomorphic view + hydration preview** (`@msf/runtime/universal`: `h`, `fragment`, `text`, DOM mount/hydrate with mismatch fallback) exercised by `examples/fullstack`. Full compiler-emitted hydration, streaming/resume, routing, data/actions, and compiler-enforced boundaries are **planned**.
 
 ## Implemented now (preview)
 
