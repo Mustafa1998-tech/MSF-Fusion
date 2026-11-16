@@ -10,6 +10,8 @@ import {
   isFragment,
   isText,
   isElement,
+  isComponent,
+  resolveComponent,
   type ViewChild,
   type ViewElement,
   type ViewMaybeAccessor,
@@ -17,7 +19,7 @@ import {
 } from "./view.js";
 
 export { h, fragment, text } from "./view.js";
-export type { ViewElement, ViewFragment, ViewNode, ViewText, ViewMaybeAccessor, ViewChild } from "./view.js";
+export type { ViewComponent, ComponentProps, ViewComponentInstance, ViewElement, ViewFragment, ViewNode, ViewText, ViewMaybeAccessor, ViewChild } from "./view.js";
 
 const VOID_ELEMENTS = new Set([
   "area",
@@ -66,6 +68,7 @@ export function renderNode(node: ViewNode | (() => ViewNode)): string {
   if (typeof node === "string" || typeof node === "number") {
     return escapeHtml(String(node));
   }
+  if (isComponent(node)) return renderNode(resolveComponent(node));
   if (isText(node)) return escapeHtml(read(node.value) == null ? "" : String(read(node.value)));
   if (isFragment(node)) return renderChildren(node.children ?? []);
   if (isElement(node)) {

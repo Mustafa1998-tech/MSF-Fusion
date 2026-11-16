@@ -4,10 +4,10 @@
 **Branch:** `master`
 
 ## Summary
-M0 architecture/baseline/toolchain-spike deliverables are complete. M1 is in progress with a **tested reactive runtime preview**, a **real compiler JSX subset (v1)**, initial **dev tooling preview**, and **MSF runtime integration in micro benchmarks**. An **M2 isomorphic slice** is now also in place: isomorphic view descriptors, DOM mounting, and **SSR hydration** with tests and a **full-stack example** (dev SSR + production prerender + browser-verified hydration). Full compiler/IR pipeline, broader JSX/component support, dev server/HMR for library packages, publishable builds, and comprehensive benchmark coverage remain pending.
+M0 architecture/baseline/toolchain-spike deliverables are complete. M1 is in progress with a **tested reactive runtime preview**, a **real compiler JSX subset (v1)**, initial **dev tooling preview**, and **MSF runtime integration in micro benchmarks**. An **M2 isomorphic slice** is now in place: isomorphic view descriptors, DOM mounting, **SSR hydration**, and **function components** (`h(Component, props, children)`) resolved by SSR/mount/hydrate, with tests and a **full-stack example** (dev SSR + production prerender + browser-verified hydration). Full compiler/IR pipeline (component/control-flow/lowering to the view layer), dev server/HMR for library packages, publishable release flow, and comprehensive benchmark coverage remain pending.
 
 ## Implemented / verified
-- **`@msf/runtime`** (24 tests)
+- **`@msf/runtime`** (27 tests)
   - Core: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, `getOwner`, `runWithOwner`, `flushSync`
   - Fix: dependency tracking dedupes repeated reads within a single computation run
   - DOM: `render`, `mount`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list`, `For`

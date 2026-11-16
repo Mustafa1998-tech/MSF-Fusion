@@ -1,0 +1,25 @@
+# MSF DTB Backlog — MSF Fusion
+
+> Statuses: `PROPOSED` | `READY` | `IN_PROGRESS` | `BLOCKED` | `VERIFIED` | `REJECTED`
+
+| ID | Candidate | Value | Evidence | Effort | Risk | Priority | Status | Acceptance criteria |
+|---|---|---|---|---|---|---|---|---|
+| DTB-001 | Component model in universal view layer (function components, children, props) with SSR/hydration/mount support and tests | High — enables real-world component apps | Component tags currently unsupported by compiler and `h()` view layer | Medium | Medium | **P1** | **VERIFIED** | `h(Component, props, children)` works in SSR + mount + hydrate; subscribers declared in props; tests for mount/hydrate/renderToString |
+| DTB-002 | Compiler lowering of intrinsic JSX to the isomorphic view layer (instead of direct DOM calls) so the same syntax works on server and client | High | Current `jsx-dom-v1` only emits DOM calls; SSR/hydration not compiler-targeted | Medium | Medium | **P1** | READY | A small `.tsx` file compiles to code importing `@msf/runtime/universal` (mountable/hydratable/SSR-safe); golden test output |
+| DTB-003 | Compiler control-flow components (`Show`, `For`) lowering with disposal-safe runtime primitives | High | Required for real UIs; compiler subset currently rejects non-intrinsic tags | High | Medium | P2 | PROPOSED | `Show when={...}` / `For each={...}` compile and pass DOM tests |
+| DTB-004 | Reactive list DOM multi-root item support or documented constraint + tests | Medium | `list(keyFn)` assumes one root node per item | Medium | Medium | P2 | PROPOSED | Either multi-root works, or constraint enforced+documented and tested |
+| DTB-005 | Methodology-compliant MSF micro benchmark run committed as evidence | Medium | Smoke only; no committed MSF baseline | Medium | Low | P2 | READY | `benchmarks/results/<run>` with MSF runtime alongside competitor baseline; docs updated; no superiority claims |
+| DTB-006 | Cycle detection/dev diagnostics in runtime kernel (debug mode) | Medium | ADR-002 mentions cycle detection; not implemented | Medium | Low | P2 | PROPOSED | `createEffect` cycle throws meaningful error in dev; production opt-out; tests |
+| DTB-007 | Dev tooling: `msf check` compile diagnostics CLI across a project | Medium | `compilePath` already exists | Low | Low | P3 | PROPOSED | `node packages/dev/src/cli.ts compile <dir>` emits diagnostics with exit code; example in docs |
+| DTB-008 | API docs frozen list + breaking-change policy for preview exports | Medium | Repeated "preview may change" notes | Low | Low | P3 | PROPOSED | `docs/api.md` listing stable vs preview exports; linked from README |
+| DTB-009 | Project license selection & npm publishing readiness | High but **approval-gated** | Explicit approvals required | High | High | — | BLOCKED | Separate explicit approval from repo owner |
+
+## Ranking notes
+
+- DTB-001 / DTB-002 are the highest leverage because they unlock real components rather than raw DOM APIs.
+- Priority formula: (value + risk_reduction + confidence) / (effort + change_risk).
+- Anything touching deployment, license, npm publish, secrets, or production is **approval-gated** and will not be executed autonomously.
+
+---
+
+**ملخص بالعربية:** قائمة المهام الأولية مرتبة حسب القيمة والمخاطر. أعلى قيمة: نموذج المكوّنات لـ SSR/الترطيب، ثم دعم المترجم له. الترخيص والنشر محجوبان لموافقة صريحة.

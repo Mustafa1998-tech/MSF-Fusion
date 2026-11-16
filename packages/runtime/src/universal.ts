@@ -17,16 +17,16 @@ import {
   isFragment,
   isText,
   isElement,
+  isComponent,
+  resolveComponent,
   type ViewChild,
   type ViewElement,
   type ViewFragment,
   type ViewMaybeAccessor,
-  type ViewNode,
-  type ViewText,
-} from "./view.js";
+  type ViewNode, type ViewText, type ViewComponentInstance } from "./view.js";
 
 export { h, fragment, text } from "./view.js";
-export type { ViewChild, ViewElement, ViewFragment, ViewMaybeAccessor, ViewNode, ViewText } from "./view.js";
+export type { ViewChild, ViewElement, ViewFragment, ViewMaybeAccessor, ViewNode, ViewText, ViewComponent, ComponentProps, ViewComponentInstance } from "./view.js";
 
 function isAccessor(value: unknown): value is () => unknown {
   return typeof value === "function";
@@ -63,6 +63,10 @@ function toDomNode(
     for (const child of created) fragmentNode.appendChild(child);
     return [fragmentNode];
   }
+  if (isComponent(node as ViewNode)) {
+    const resolved = resolveComponent(node as ViewComponentInstance);
+    return toDomNode(resolved, cursor);
+  }
   if (isElement(node as ViewElement)) {
     const element = node as ViewElement;
     const el = document.createElement(element.tag);
@@ -91,6 +95,11 @@ function appendChild(parent: Element | DocumentFragment, child: ViewChild): void
   }
   if (typeof child === "string" || typeof child === "number") {
     parent.appendChild(document.createTextNode(String(child)));
+    return;
+  }
+  if (isComponent(child as ViewNode)) {
+    const resolved = resolveComponent(child as ViewComponentInstance);
+    appendChild(parent, resolved);
     return;
   }
   const nodes = toDomNode(child as ViewNode);
@@ -206,6 +215,10 @@ function adoptChild(
     state.mismatch = true;
     return domIndex + 1;
   }
+  if (isComponent(child as ViewNode)) {
+    const resolved = resolveComponent(child as ViewComponentInstance);
+    return adoptChild(resolved, parent, domChildren, domIndex, state);
+  }
   state.mismatch = true;
   return domIndex + 1;
 }
@@ -221,7 +234,8 @@ export function hydrate(
 ): Dispose {
   return createRoot((dispose) => {
     const state: HydrationState = { mismatch: false };
-    const v = view();
+    let v = view();
+    if (isComponent(v)) v = resolveComponent(v as ViewComponentInstance);
     if (isElement(v) && container.firstElementChild) {
       adoptElement(v, container.firstElementChild, state);
     } else {
@@ -239,4 +253,6 @@ export function hydrate(
     return dispose;
   });
 }
+
+
 
