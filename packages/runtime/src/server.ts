@@ -1,4 +1,4 @@
-﻿/**
+/**
  * SSR renderer for the isomorphic view descriptor (Milestone 1 preview).
  *
  * Renders a deterministic HTML snapshot of a `ViewNode` tree with escaping by

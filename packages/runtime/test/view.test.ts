@@ -1,4 +1,4 @@
-﻿// @vitest-environment jsdom
+// @vitest-environment jsdom
 import { describe, expect, it } from "vitest";
 import { createSignal } from "../src/core.js";
 import { h, Show, For } from "../src/server.js";

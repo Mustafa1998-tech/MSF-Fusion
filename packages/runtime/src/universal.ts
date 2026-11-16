@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Isomorphic DOM mounting and hydration for MSF Fusion views.
  *
  * - `mount` builds a fresh DOM tree from a ViewNode descriptor.

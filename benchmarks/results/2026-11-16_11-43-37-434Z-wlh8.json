@@ -1,0 +1,333 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-16_11-43-37-434Z-wlh8",
+  "generatedAt": "2026-11-16T11:43:41.596Z",
+  "environment": {
+    "runStartedAt": "2026-11-16T11:43:37.599Z",
+    "node": "v26.12.1",
+    "pnpm": "12.21.0",
+    "platform": "win32",
+    "release": "10.0.26100",
+    "osVersion": "Windows 11 Pro",
+    "arch": "x64",
+    "os": "Windows_NT 10.0.26100",
+    "cpuModel": "12th Gen Intel(R) Core(TM) i7-12700",
+    "cpuCores": 20,
+    "totalMemoryBytes": 16833290240,
+    "gitCommit": "232317c4df308087690fa6d96394bc940564464b",
+    "gitDirty": true,
+    "timezone": "Asia/Riyadh",
+    "powerScheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "browser": null,
+    "packageVersions": {
+      "react": "19.3.1",
+      "react-dom": "19.3.1",
+      "solid-js": "1.9.19",
+      "svelte": "5.57.3",
+      "vue": "3.5.45",
+      "@preact/signals-core": "1.14.5",
+      "@vue/reactivity": "3.5.45",
+      "vite": "8.3.8",
+      "@vitejs/plugin-react": "6.3.0",
+      "vite-plugin-solid": "2.11.16",
+      "@sveltejs/vite-plugin-svelte": "7.3.1",
+      "@vitejs/plugin-vue": "6.0.11",
+      "playwright": "1.65.1",
+      "typescript": "7.0.2",
+      "vitest": "5.1.0"
+    },
+    "notes": [
+      "Package versions are resolved from the installed node_modules tree, not copied from package.json ranges.",
+      "gitDirty reports any tracked or untracked change at run start.",
+      "On Windows, command versions are captured through the .cmd shim when present."
+    ]
+  },
+  "suites": {
+    "bundle": {
+      "kind": "bundle",
+      "status": "completed",
+      "totalDurationMs": 3982.937,
+      "config": {
+        "mode": "production",
+        "minifier": "Oxc, as configured by Vite 8.3.8 (build.minify: 'oxc')",
+        "measuredBuilds": 3,
+        "includes": [
+          "all JavaScript assets in dist (initial entry)",
+          "CSS assets in dist",
+          "index.html",
+          "gzip level 9 and Brotli quality 11"
+        ]
+      },
+      "apps": [
+        {
+          "app": "react",
+          "label": "React",
+          "frameworkPackages": [
+            "react",
+            "react-dom"
+          ],
+          "notes": "React 19 client root and renderToString SSR. No React Compiler, no experimental APIs.",
+          "buildTimesMs": [
+            77.55190000000005,
+            76.572,
+            78.644
+          ],
+          "buildSummary": {
+            "count": 3,
+            "min": 76.572,
+            "median": 77.55190000000005,
+            "p95": 78.53479000000002,
+            "max": 78.644,
+            "mean": 77.58930000000002,
+            "stdDev": 1.0365061842555505,
+            "cvPct": 1.3358880467481344,
+            "mad": 0.9799000000000433
+          },
+          "assets": [
+            {
+              "path": "assets/index-CJ9FhOsI.js",
+              "rawBytes": 221963,
+              "gzipBytes": 68543,
+              "brotliBytes": 59066
+            },
+            {
+              "path": "assets/style-Cnq4WTXX.css",
+              "rawBytes": 188,
+              "gzipBytes": 164,
+              "brotliBytes": 110
+            },
+            {
+              "path": "index.html",
+              "rawBytes": 405,
+              "gzipBytes": 284,
+              "brotliBytes": 172
+            }
+          ],
+          "jsRawBytes": 221963,
+          "jsGzipBytes": 68543,
+          "jsBrotliBytes": 59066,
+          "cssRawBytes": 188,
+          "cssGzipBytes": 164,
+          "htmlRawBytes": 405,
+          "totalGzipBytes": 68991,
+          "totalBrotliBytes": 59348
+        },
+        {
+          "app": "solid",
+          "label": "Solid",
+          "frameworkPackages": [
+            "solid-js"
+          ],
+          "notes": "Solid store + For for keyed rows; Vite Solid plugin compiles JSX to fine-grained DOM operations.",
+          "buildTimesMs": [
+            47.06770000000006,
+            47.025300000000016,
+            54.05469999999991
+          ],
+          "buildSummary": {
+            "count": 3,
+            "min": 47.025300000000016,
+            "median": 47.06770000000006,
+            "p95": 53.35599999999992,
+            "max": 54.05469999999991,
+            "mean": 49.38256666666666,
+            "stdDev": 4.046241694873497,
+            "cvPct": 8.19366421795309,
+            "mad": 0.04240000000004329
+          },
+          "assets": [
+            {
+              "path": "assets/index-DKfZBMo2.js",
+              "rawBytes": 18887,
+              "gzipBytes": 7170,
+              "brotliBytes": 6519
+            },
+            {
+              "path": "assets/style-Cnq4WTXX.css",
+              "rawBytes": 188,
+              "gzipBytes": 164,
+              "brotliBytes": 110
+            },
+            {
+              "path": "index.html",
+              "rawBytes": 405,
+              "gzipBytes": 283,
+              "brotliBytes": 169
+            }
+          ],
+          "jsRawBytes": 18887,
+          "jsGzipBytes": 7170,
+          "jsBrotliBytes": 6519,
+          "cssRawBytes": 188,
+          "cssGzipBytes": 164,
+          "htmlRawBytes": 405,
+          "totalGzipBytes": 7617,
+          "totalBrotliBytes": 6798
+        },
+        {
+          "app": "svelte",
+          "label": "Svelte",
+          "frameworkPackages": [
+            "svelte"
+          ],
+          "notes": "Svelte 5 runes, keyed each block, compiled by the official Vite plugin.",
+          "buildTimesMs": [
+            53.52859999999964,
+            114.14690000000019,
+            125.99329999999964
+          ],
+          "buildSummary": {
+            "count": 3,
+            "min": 53.52859999999964,
+            "median": 114.14690000000019,
+            "p95": 124.80865999999969,
+            "max": 125.99329999999964,
+            "mean": 97.88959999999982,
+            "stdDev": 38.87168685547372,
+            "cvPct": 39.70972080330678,
+            "mad": 11.846399999999448
+          },
+          "assets": [
+            {
+              "path": "assets/index-B38D34Ye.js",
+              "rawBytes": 36341,
+              "gzipBytes": 14129,
+              "brotliBytes": 12830
+            },
+            {
+              "path": "assets/style-Cnq4WTXX.css",
+              "rawBytes": 188,
+              "gzipBytes": 164,
+              "brotliBytes": 110
+            },
+            {
+              "path": "index.html",
+              "rawBytes": 406,
+              "gzipBytes": 283,
+              "brotliBytes": 172
+            }
+          ],
+          "jsRawBytes": 36341,
+          "jsGzipBytes": 14129,
+          "jsBrotliBytes": 12830,
+          "cssRawBytes": 188,
+          "cssGzipBytes": 164,
+          "htmlRawBytes": 406,
+          "totalGzipBytes": 14576,
+          "totalBrotliBytes": 13112
+        },
+        {
+          "app": "vue",
+          "label": "Vue",
+          "frameworkPackages": [
+            "vue"
+          ],
+          "notes": "Vue 3 Composition API, keyed v-for, official Vue Vite plugin.",
+          "buildTimesMs": [
+            110.23809999999958,
+            109.65449999999964,
+            101.93889999999965
+          ],
+          "buildSummary": {
+            "count": 3,
+            "min": 101.93889999999965,
+            "median": 109.65449999999964,
+            "p95": 110.17973999999958,
+            "max": 110.23809999999958,
+            "mean": 107.27716666666629,
+            "stdDev": 4.632274332693726,
+            "cvPct": 4.318043136884123,
+            "mad": 0.5835999999999331
+          },
+          "assets": [
+            {
+              "path": "assets/index-C7hEIa76.js",
+              "rawBytes": 66152,
+              "gzipBytes": 25624,
+              "brotliBytes": 23336
+            },
+            {
+              "path": "assets/style-Cnq4WTXX.css",
+              "rawBytes": 188,
+              "gzipBytes": 164,
+              "brotliBytes": 110
+            },
+            {
+              "path": "index.html",
+              "rawBytes": 403,
+              "gzipBytes": 282,
+              "brotliBytes": 172
+            }
+          ],
+          "jsRawBytes": 66152,
+          "jsGzipBytes": 25624,
+          "jsBrotliBytes": 23336,
+          "cssRawBytes": 188,
+          "cssGzipBytes": 164,
+          "htmlRawBytes": 403,
+          "totalGzipBytes": 26070,
+          "totalBrotliBytes": 23618
+        },
+        {
+          "app": "msf",
+          "label": "MSF Fusion",
+          "frameworkPackages": [
+            "@msf/runtime"
+          ],
+          "notes": "MSF Fusion runtime-preview mount of an equivalent 1,000/10,000-row table using fine-grained signals + keyed list(). Informational preview measurement; not a production claim.",
+          "buildTimesMs": [
+            46.10139999999956,
+            51.08649999999943,
+            45.798399999999674
+          ],
+          "buildSummary": {
+            "count": 3,
+            "min": 45.798399999999674,
+            "median": 46.10139999999956,
+            "p95": 50.587989999999444,
+            "max": 51.08649999999943,
+            "mean": 47.662099999999555,
+            "stdDev": 2.9694845966933983,
+            "cvPct": 6.230284852521031,
+            "mad": 0.3029999999998836
+          },
+          "assets": [
+            {
+              "path": "assets/index-hiHvB0gF.js",
+              "rawBytes": 9018,
+              "gzipBytes": 3511,
+              "brotliBytes": 3162
+            },
+            {
+              "path": "index.html",
+              "rawBytes": 335,
+              "gzipBytes": 247,
+              "brotliBytes": 153
+            }
+          ],
+          "jsRawBytes": 9018,
+          "jsGzipBytes": 3511,
+          "jsBrotliBytes": 3162,
+          "cssRawBytes": 0,
+          "cssGzipBytes": 0,
+          "htmlRawBytes": 335,
+          "totalGzipBytes": 3758,
+          "totalBrotliBytes": 3315
+        }
+      ],
+      "notes": [
+        "The same functional application (empty table plus imperative benchmark API) is built for every framework.",
+        "One untimed warm-up build runs before three measured builds; each build starts from an empty dist directory.",
+        "Build time includes Vite's in-process config loading and transform pipeline, but not package installation or TypeScript checking.",
+        "React has no compiler plugin in this baseline (React Compiler intentionally disabled).",
+        "Bundle sizes include framework runtime and benchmark harness code; they are not hello-world sizes.",
+        "Angular and Next.js builds are not included in this baseline; see benchmarks/methodology.md for the reason."
+      ]
+    }
+  },
+  "status": "completed",
+  "notes": [
+    "Baseline benchmark run. When MSF runtime preview fixtures are included, treat them as informational developer-preview measurements (not superiority claims).",
+    "All result values are machine- and time-specific. Raw samples are preserved in the JSON file."
+  ]
+}

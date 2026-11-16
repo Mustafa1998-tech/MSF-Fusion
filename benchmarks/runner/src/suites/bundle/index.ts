@@ -1,4 +1,4 @@
-﻿import { performance } from "node:perf_hooks";
+import { performance } from "node:perf_hooks";
 import { APP_FIXTURES, buildClientFixture, collectAssets, extensionOf } from "../../fixtures.ts";
 import { summarize, type Summary } from "../../stats.ts";
 

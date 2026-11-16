@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Isomorphic view descriptor for MSF Fusion.
  *
  * A component runs on the server (serialized snapshot) and again on the client

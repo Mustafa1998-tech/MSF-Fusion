@@ -1,4 +1,4 @@
-﻿/*
+/*
  * MSF Fusion reactive runtime kernel (Milestone 1).
  *
  * Real implementation of a fine-grained reactive graph with:

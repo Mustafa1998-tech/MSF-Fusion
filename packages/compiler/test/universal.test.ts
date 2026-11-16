@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { compile } from "../src/index.js";
 
 describe("compiler subset (jsx-universal-v1)", () => {

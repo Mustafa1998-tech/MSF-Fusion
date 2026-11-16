@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 import { resolve } from "node:path";
 import process from "node:process";
 import { compilePath, getDevStatus, checkPath } from "./index.js";

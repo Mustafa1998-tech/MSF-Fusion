@@ -1,4 +1,4 @@
-﻿import type { CompileRequest, CompileResult, Diagnostic } from "@msf/contracts";
+import type { CompileRequest, CompileResult, Diagnostic } from "@msf/contracts";
 
 type Target = "dom" | "universal";
 

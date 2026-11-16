@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Minimal DOM runtime helpers (Milestone 1).
  *
  * These are fine-grained primitives intended as compiler/runtime targets and

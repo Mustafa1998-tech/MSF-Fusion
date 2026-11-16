@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { getDevStatus } from "../src/index.js";
 import { compile } from "@msf/compiler";
 
