@@ -12,7 +12,7 @@
 [![pnpm](https://img.shields.io/badge/pnpm-12.21.0-f69220)](https://pnpm.io/)
 [![License](https://img.shields.io/badge/license-MIT-yellowgreen)](LICENSE)
 
-[Developer Guide](docs/guide/README.md) · [Architecture](docs/architecture/overview.md) · [ADRs](docs/adr/README.md) · [Benchmarks](benchmarks/methodology.md) · [Roadmap](docs/engineering/roadmap.md) · [Implementation Plan](docs/engineering/implementation-plan.md)
+[Developer Guide](docs/guide/README.md) · [Why MSF Fusion](docs/why.md) · [Architecture](docs/architecture/overview.md) · [ADRs](docs/adr/README.md) · [Benchmarks](benchmarks/methodology.md) · [Roadmap](docs/engineering/roadmap.md) · [Implementation Plan](docs/engineering/implementation-plan.md)
 
 </div>
 
@@ -23,6 +23,16 @@
 **MSF Fusion** (Mustafa AI Software Factory — Fusion Framework) is a planned **standalone** framework that owns its reactivity model, compiler, runtime, and server integration. It is not built on, wrapped around, or derived from React, Angular, Next.js, or other framework runtimes.
 
 The project follows an evidence-driven process: architecture decisions, security/performance constraints, reproducible competitor baselines, and compiler feasibility spikes were established before implementation. Milestone 1 is now in progress with a **runnable developer-preview runtime** (reactive kernel, DOM helpers, SSR string renderer) while compiler/JSX, hydration, and dev tooling continue.
+
+## Why MSF Fusion — what problem does it solve?
+
+MSF Fusion targets three problems that mainstream React-style stacks leave informal or costly:
+
+1. **Update cost & predictability** — fine-grained, compiler-assisted reactivity with deterministic ownership/disposal instead of whole-tree VDOM diffing as the primary model.
+2. **Full-stack boundaries** — explicit server/client/shared semantics with a safe serialization contract and compile-time diagnostics, so SSR + hydration is one component tree with one mental model.
+3. **Type-safety end to end** — TypeScript as the public contract (`@msf/contracts`, diagnostics codes), not only a build-time aid.
+
+**Honest status:** the runtime, SSR/hydration, components, and packaging slices are implemented and tested in-repo; the full product (router/data/streaming/HMR) is **not** — see [Why MSF Fusion](docs/why.md) for what is solved today vs planned, a runnable usage example, and when *not* to use it.
 
 ## Project status
 
@@ -114,7 +124,7 @@ See [benchmarks/methodology.md](benchmarks/methodology.md) for fairness rules, e
 
 | Area | Documents |
 |---|---|
-| **Developer guide (proposed syntax & usage)** | [Guide index](docs/guide/README.md) · [Getting started](docs/guide/getting-started.md) · [Real-world quickstart](docs/guide/real-world-quickstart.md) · [Reactivity](docs/guide/reactivity.md) · [Syntax & components](docs/guide/syntax-and-components.md) · [Full-stack & SSR](docs/guide/fullstack.md) · [FAQ](docs/guide/faq.md) |
+| **Developer guide (proposed syntax & usage)** | [Why MSF Fusion](docs/why.md) · [Guide index](docs/guide/README.md) · [Getting started](docs/guide/getting-started.md) · [Real-world quickstart](docs/guide/real-world-quickstart.md) · [Reactivity](docs/guide/reactivity.md) · [Syntax & components](docs/guide/syntax-and-components.md) · [Full-stack & SSR](docs/guide/fullstack.md) · [FAQ](docs/guide/faq.md) |
 | Architecture | [Overview](docs/architecture/overview.md) · [ADR index](docs/adr/README.md) |
 | Decisions | [ADR-001 Reactivity](docs/adr/ADR-001-reactivity-model.md) · [ADR-002 Runtime & scheduling](docs/adr/ADR-002-runtime-and-scheduling.md) · [ADR-003 Full-stack boundaries](docs/adr/ADR-003-fullstack-ssr-boundaries.md) · [ADR-004 Compiler toolchain](docs/adr/ADR-004-compiler-toolchain.md) · [ADR-005 Security & performance gates](docs/adr/ADR-005-security-performance-gates.md) |
 | Security & Performance | [Security requirements](docs/security/security-requirements.md) · [Threat model](docs/security/threat-model.md) · [Performance requirements](docs/performance/performance-requirements.md) |

@@ -1,7 +1,7 @@
 # MSF Fusion Guide
 
 > **Status:** Milestone 1/M2 developer preview.  
-> A **runnable** subset exists: reactive kernel, DOM helpers, isomorphic view layer (`mount`/`hydrate`), function components, SSR string renderer, and examples. Compiler/JSX execution is limited to a subset (two targets: `dom` and `universal`). Streaming, hydration for all patterns, CLI/dev server, router, and npm publishing are **not implemented yet**. Examples marked **Proposed** are not implemented.
+> A **runnable** subset exists: reactive kernel, DOM helpers, isomorphic view layer (`mount`/`hydrate`), function components, SSR string renderer, and examples. Compiler/JSX execution is limited to a subset (two targets: `dom` and `universal`). Streaming, hydration for all patterns, CLI/dev server, router are **not implemented yet**. Distribution is **GitHub-only by owner decision**; no npm package exists or is planned. Examples marked **Proposed** are not implemented.
 
 This guide explains both the **currently runnable APIs** and the **intended** developer experience for MSF Fusion.
 
@@ -13,6 +13,7 @@ This guide explains both the **currently runnable APIs** and the **intended** de
 ## Guide map
 | Topic | Description |
 |---|---|
+| [Why MSF Fusion](../why.md) | The three problems targeted, what is solved today vs planned, runnable usage, when not to use |
 | [Getting started](getting-started.md) | Current runnable preview, examples, and planned install/dev workflow |
 | [Real-world quickstart](real-world-quickstart.md) | Practical steps to clone, build, verify, and try building your own app on MSF today |
 | [Reactivity](reactivity.md) | Implemented kernel primitives, semantics notes, and proposed authoring ergonomics |
