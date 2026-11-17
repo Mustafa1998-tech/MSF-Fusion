@@ -25,7 +25,7 @@ The same component function evaluates on the server (`renderToString`) and on th
 
 | Problem area | Status today | Evidence |
 |---|---|---|
-| Fine-grained reactive kernel (signals/memos/effects/ownership) | ✅ implemented & tested | `packages/runtime` (38 tests) |
+| Fine-grained reactive kernel (signals/memos/effects/ownership) | ✅ implemented & tested | `packages/runtime` (40 tests) |
 | Keyed DOM list with multi-root items | ✅ tested | `test/list.test.ts` |
 | SSR string renderer (escaped) | ✅ implemented | `@msf/runtime/server` |
 | SSR + hydration pilot via isomorphic view layer | ✅ implemented & browser-verified | `examples/fullstack`, `examples/dashboard` (Ops Board) |

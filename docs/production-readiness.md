@@ -5,10 +5,10 @@
 ## Foundation — in good shape
 | Capability | Status | Evidence |
 |---|---|---|
-| Reactive kernel (signals/memos/effects/roots/batch/untrack) | ✅ | 38 unit tests pass |
+| Reactive kernel (signals/memos/effects/roots/batch/untrack) | ✅ | 40 unit tests pass |
 | DOM bindings (insert/setText/setAttribute/list/For) | ✅ | tests + multi-root keyed list fixed |
 | SSR snapshot rendering (string, escaped) | ✅ | `@msf/runtime/server` |
-| Isomorphic view layer (`mount`, `hydrate`, view descriptors) | ✅ | verified in Chromium: mismatch → fresh mount fallback |
+| Isomorphic view layer (`mount`, `hydrate`, view descriptors) | ✅ | verified in Chromium; hydration adopts SSR markup including reactive regions (mismatch still falls back to fresh mount) |
 | Function components with props/children | ✅ | mount/hydrate/SSR all tested |
 | `Show`, `For` control-flow components | ✅ | view-layer tests (`test/view.test.ts`) |
 | Keyed `list()` | ✅ | multi-root / swap/remove/identity tests fixed |

@@ -82,8 +82,8 @@ function mountChildren(parent: Element | DocumentFragment, children: ViewChild[]
   }
 }
 
-/** Reactive children mount: evaluates accessor and mounts/inserts the result, replacing previous nodes. */
-function insertReactiveChildren(parent: Element | DocumentFragment, accessor: () => ViewChild | ViewChild[] | null | undefined): void {
+/** Reactive children mount: evaluates accessor and mounts/inserts the result before `position` (or at the end of `parent`), replacing previous nodes. */
+function insertReactiveChildren(parent: Element | DocumentFragment, accessor: () => ViewChild | ViewChild[] | null | undefined, position?: Node | null): void {
   const host = parent;
   let current: Node[] = [];
   let cleanup: Dispose | null = null;
@@ -99,18 +99,37 @@ function insertReactiveChildren(parent: Element | DocumentFragment, accessor: ()
   };
   createEffect(() => {
     clear();
+    let anchor = position ?? null;
+    if (anchor && anchor.parentNode !== host) anchor = null;
     const v = accessor();
     if (v == null || v === false) return;
     const children = Array.isArray(v) ? v : [v as ViewChild];
     for (const child of children) {
       const nodes = toDomNode(child as ViewNode);
       for (const node of nodes) {
-        host.appendChild(node);
+        if (anchor) host.insertBefore(node, anchor);
+        else host.appendChild(node);
         if (node.parentNode) current.push(node);
       }
     }
   });
   onCleanup(clear);
+}
+
+/** Counts the number of parent-level sibling nodes a rendered ViewChild produces (used to match SSR output during hydration adoption). */
+function measureRegion(v: unknown): number {
+  if (v == null || v === false || v === true) return 0;
+  if (typeof v === "string" || typeof v === "number") return 1;
+  if (typeof v === "function") return measureRegion((v as () => unknown)());
+  if (Array.isArray(v)) return v.reduce<number>((sum, c) => sum + measureRegion(c), 0);
+  if (isText(v as ViewText)) return 1;
+  if (isFragment(v as ViewFragment)) {
+    const children = (v as ViewFragment).children ?? [];
+    return children.reduce<number>((sum, c) => sum + measureRegion(c), 0);
+  }
+  if (isElement(v as ViewElement)) return 1;
+  if (isComponent(v as ViewNode)) return measureRegion(resolveComponent(v as ViewComponentInstance));
+  return 0;
 }
 
 function appendChild(parent: Element | DocumentFragment, child: ViewChild): void {  if (child == null || child === false || child === true) return;
@@ -207,14 +226,23 @@ function adoptChild(
 ): number {
   if (child == null || child === false || child === true) return domIndex;
   if (isAccessor(child)) {
-    // Inline text accessors: adopt the matching text node; otherwise mount the reactive subtree
-    const domNode = domChildren[domIndex];
-    if (domNode && domNode.nodeType === Node.TEXT_NODE) {
-      setText(domNode as Text, child as () => unknown);
+    const next = domChildren[domIndex];
+    const v = child();
+    // Inline text accessor directly bound to the SSR text node: no tree rebuild.
+    if (next && next.nodeType === Node.TEXT_NODE && (v == null || typeof v === "string" || typeof v === "number")) {
+      setText(next as Text, child as () => unknown);
       return domIndex + 1;
     }
-    insertReactiveChildren(parent, child as () => ViewChild);
-    return domIndex;
+    // Multi-node accessor: re-mount the region in place (before the next
+    // sibling), removing the matching SSR nodes first so no duplicates remain.
+    const region = measureRegion(v);
+    const position = domChildren[domIndex + region] ?? null;
+    for (let i = 0; i < region; i++) {
+      const stale = domChildren[domIndex + i];
+      stale?.parentNode?.removeChild(stale);
+    }
+    insertReactiveChildren(parent, child as () => ViewChild, position);
+    return domIndex + region;
   }
   if (Array.isArray(child)) {
     for (const inner of child) domIndex = adoptChild(inner, parent, domChildren, domIndex, state);

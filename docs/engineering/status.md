@@ -12,7 +12,7 @@ MSF Fusion is a working **developer preview** with clone-based consumption: the 
   - Fix: in-run dependency dedupe; O(1) owner dispose via `ownedSlot`
   - Guards: runaway-update depth limit (`MSF_REACTIVE_CYCLE`) for nested reactive updates
   - DOM: `render`, `mount`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list` (multi-root keyed), `For`
-  - Universal: `@msf/runtime/universal` — isomorphic `h`, `fragment`, `text`, DOM `mount`, `hydrate` (adopts SSR markup, binds reactive bindings, fresh-mount fallback on mismatch)
+  - Universal: `@msf/runtime/universal` - isomorphic `h`, `fragment`, `text`, DOM `mount`, `hydrate` (adopts SSR markup including reactive multi-root regions, binds reactive bindings, fresh-mount fallback on mismatch)
   - Server: `renderToString` (component nodes resolved), `escapeHtml`
 - **`@msf/compiler`** (14 tests): `jsx-dom-v1` (DOM runtime calls) and **`jsx-universal-v1`** (isomorphic view descriptors); golden-output and executable-eval tests; diagnostics
 - **`@msf/dev`** (6 tests): `compileFile`, `compilePath`, `checkFile`, `checkPath`, preview CLI (`check`, `status`)
@@ -35,7 +35,7 @@ MSF Fusion is a working **developer preview** with clone-based consumption: the 
 
 ## Verification (2026-11-17)
 - `pnpm run typecheck` (10 workspace projects): **pass**
-- `@msf/runtime` tests: **38/38 pass**
+- `@msf/runtime` tests: **40/40 pass**
 - `@msf/compiler` tests: **14/14 pass**
 - `@msf/dev` tests: **6/6 pass**
 - `@msf/bench-runner` tests: **31/31 pass**
@@ -49,7 +49,7 @@ MSF Fusion is a working **developer preview** with clone-based consumption: the 
 ## Known limitations / risks
 - Compiler subset constrained; component lowering targets `universal` output by default; no full JSX/TS/component layer yet
 - No sourcemaps; isomorphic runtime remains preview (compiler now emits it)
-- `list()` keyed multi-root supported; hydration still preview (framework falls back to fresh mount on mismatch)
+- **Hydration adoption (2026-11-17):** SSR markup including **reactive multi-root regions** (e.g. `<tbody>` rows) is adopted in place; inline text accessors bind directly to SSR text nodes; fresh mount only on mismatch; verified in Chromium
 - No MSF performance superiority claims; benchmarks are informational preview measurements on a single machine
 
 ## ملخص بالعربية

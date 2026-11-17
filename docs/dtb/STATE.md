@@ -9,7 +9,7 @@
 ## Baseline checks and results (2026-11-17, after the revert)
 
 - `pnpm run typecheck` (workspace, 10 projects): **pass**
-- `@msf/runtime` tests: **38/38 pass**
+- `@msf/runtime` tests: **40/40 pass**
 - `@msf/compiler` tests: **14/14 pass**
 - `@msf/dev` tests: **6/6 pass**
 - `@msf/bench-runner` tests: **31/31 pass**

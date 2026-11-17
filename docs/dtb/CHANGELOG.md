@@ -1,5 +1,7 @@
 # MSF DTB Changelog
 
+- 2026-11-17 (hydration fix) — **Hydration region adoption (universal runtime):** accessor children that render multi-root regions adopt the SSR region in place during hydration (measure-region matching + sibling anchor), leaving no duplicated SSR markup and preserving following siblings; the Ops Board dashboard now uses real `hydrate()` end-to-end (SSR → adopt → filter with zero duplication), verified in a Chromium browser; inline text accessors adopt the SSR text node directly. New regression tests in `test/universal.test.ts`; runtime suite now **40/40**.
+
 - 2026-11-17 (docs) — Added `docs/why.md` ("Why MSF Fusion"): the three targeted problems (fine-grained updates, explicit full-stack boundaries, TypeScript-as-contract), an honest solved/planned table, runnable usage (clone → build → examples), when not to use it; linked from root README (`#why-msf-fusion` section), guide index (`docs/guide/README.md`), and FAQ (rewritten to match today's reality, including GitHub-only distribution). README navigation and Documentation table now link the Why page. No superiority claims added.
 
 - 2026-11-17 (distribution decision) — **GitHub-only distribution; npm publishing rejected** (owner decision). The `@mustafa-26112026/*` rename (commit `4959ccc`) was reverted (`69410f2`); package scope names stay `@msf/*`. Local tarballs/verification remain in-repo; no publish executed. Docs updated (README, engineering/status, production-readiness, dtb/STATE/BACKLOG/CHANGELOG).

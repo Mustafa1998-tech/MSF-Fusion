@@ -27,12 +27,12 @@ pnpm --filter @msf/example-dashboard start
 
 ## Files
 - `src/app.ts` — shared view + SSR prerender/hydrate helpers
-- `src/entry-client.ts` — client hydration entry (mount with URL param filter)
+- `src/entry-client.ts` — client hydration entry (hydrate with URL param filter)
 - `scripts/prerender.ts` — builds static SSR page into `dist/client/index.html`
 - `src/server.ts` — production Node server + dev SSR via Vite middleware
 
 ## Notes
-- The example uses `mount` for the client by design — the SSR snapshot is static; hydration currently re-mounts the tree client-side. Full fine-grained hydration adoption for `<tbody>` is still in the universal runtime preview.
+- The client uses real **hydration** (`hydrate()`): the SSR snapshot is adopted in place and the `<tbody>` reactive region is re-mounted before its following sibling anchor, leaving no duplicated SSR rows.
 - This is an internal example app, not a shipped product UI.
 
 ---
