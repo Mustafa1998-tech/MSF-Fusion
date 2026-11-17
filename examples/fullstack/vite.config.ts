@@ -5,6 +5,6 @@ export default defineConfig({
     outDir: "dist/client",
   },
   ssr: {
-    noExternal: ["@mustafa-26112026/runtime"],
+    noExternal: ["@msf/runtime"],
   },
 });

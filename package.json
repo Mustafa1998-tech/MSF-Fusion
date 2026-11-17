@@ -10,18 +10,18 @@
     "pnpm": ">=12.0.0"
   },
   "scripts": {
-    "build": "pnpm --filter @mustafa-26112026/contracts --filter @mustafa-26112026/runtime --filter @mustafa-26112026/compiler --filter @mustafa-26112026/dev run build",
+    "build": "pnpm --filter @msf/contracts --filter @msf/runtime --filter @msf/compiler --filter @msf/dev run build",
     "verify:package": "node scripts/verify-package.mjs",
     "publish:packages": "node scripts/publish-packages.mjs",
     "publish:packages:dry": "node scripts/publish-packages.mjs",
-    "bench": "pnpm --filter @mustafa-26112026/bench-runner run bench",
-    "bench:bundle": "pnpm --filter @mustafa-26112026/bench-runner run bench:bundle",
-    "bench:dom": "pnpm --filter @mustafa-26112026/bench-runner run bench:dom",
-    "bench:micro": "pnpm --filter @mustafa-26112026/bench-runner run bench:micro",
-    "bench:ssr": "pnpm --filter @mustafa-26112026/bench-runner run bench:ssr",
-    "bench:report": "pnpm --filter @mustafa-26112026/bench-runner run report",
-    "test:lab": "pnpm --filter @mustafa-26112026/bench-runner run test",
-    "spike:toolchain": "pnpm --filter @mustafa-26112026/spike-compiler-toolchain run probe",
+    "bench": "pnpm --filter @msf/bench-runner run bench",
+    "bench:bundle": "pnpm --filter @msf/bench-runner run bench:bundle",
+    "bench:dom": "pnpm --filter @msf/bench-runner run bench:dom",
+    "bench:micro": "pnpm --filter @msf/bench-runner run bench:micro",
+    "bench:ssr": "pnpm --filter @msf/bench-runner run bench:ssr",
+    "bench:report": "pnpm --filter @msf/bench-runner run report",
+    "test:lab": "pnpm --filter @msf/bench-runner run test",
+    "spike:toolchain": "pnpm --filter @msf/spike-compiler-toolchain run probe",
     "typecheck": "pnpm -r --if-present run typecheck"
   },
   "devDependencies": {

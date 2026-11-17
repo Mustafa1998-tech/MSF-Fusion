@@ -1,5 +1,5 @@
 {
-  "name": "@mustafa-26112026/spike-compiler-toolchain",
+  "name": "@msf/spike-compiler-toolchain",
   "version": "0.0.0",
   "private": true,
   "type": "module",

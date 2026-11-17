@@ -5,8 +5,8 @@
 A realistic internal task board built to exercise MSF Fusion beyond a toy counter.
 
 ## What it demonstrates
-- **SSR snapshot rendering** (`@mustafa-26112026/runtime/server`) producing real HTML with reactive-ready markup
-- **Hydration** (`@mustafa-26112026/runtime/universal`) mounting the same component tree on the client, binding click handlers
+- **SSR snapshot rendering** (`@msf/runtime/server`) producing real HTML with reactive-ready markup
+- **Hydration** (`@msf/runtime/universal`) mounting the same component tree on the client, binding click handlers
 - **Fine-grained reactivity in the browser** — filter buttons update the signal, `<tbody>` re-evaluates and swaps rows, visible count updates via accessor
 - **Reusable components** with props and slots (`h(Component, props, ...children)`)
 - **Production prerender + background start** — image-ready static page served by a Node HTTP server
@@ -15,13 +15,13 @@ A realistic internal task board built to exercise MSF Fusion beyond a toy counte
 
 ```bash
 # Development (on-demand SSR)
-pnpm --filter @mustafa-26112026/example-dashboard dev
+pnpm --filter @msf/example-dashboard dev
 # open http://localhost:4175/
 # optional filter: http://localhost:4175/?filter=open
 
 # Production (static prerender + hydration)
-pnpm --filter @mustafa-26112026/example-dashboard build:static
-pnpm --filter @mustafa-26112026/example-dashboard start
+pnpm --filter @msf/example-dashboard build:static
+pnpm --filter @msf/example-dashboard start
 # open http://localhost:4175/
 ```
 

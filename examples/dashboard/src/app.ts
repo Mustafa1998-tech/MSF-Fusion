@@ -1,7 +1,7 @@
-import { createSignal } from "@mustafa-26112026/runtime";
-import { h, renderToString } from "@mustafa-26112026/runtime/server";
-import { hydrate } from "@mustafa-26112026/runtime/universal";
-import type { ViewNode } from "@mustafa-26112026/runtime/universal";
+import { createSignal } from "@msf/runtime";
+import { h, renderToString } from "@msf/runtime/server";
+import { hydrate } from "@msf/runtime/universal";
+import type { ViewNode } from "@msf/runtime/universal";
 
 /**
  * MSF Fusion dashboard slice — a realistic internal task board.
@@ -86,7 +86,7 @@ export function createDashboardView(initialFilter: StatusFilter = "all") {
             ),
           ),
         ),
-        h("p", { class: "hint" }, "SSR snapshot rendered by @mustafa-26112026/runtime. Hydrated by @mustafa-26112026/runtime/universal."),
+        h("p", { class: "hint" }, "SSR snapshot rendered by @msf/runtime. Hydrated by @msf/runtime/universal."),
       ),
     );
   };

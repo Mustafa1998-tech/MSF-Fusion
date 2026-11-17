@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join, resolve, dirname } from "node:path";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
-const PACKAGES = ["@mustafa-26112026/contracts", "@mustafa-26112026/runtime", "@mustafa-26112026/compiler", "@mustafa-26112026/dev"];
+const PACKAGES = ["@msf/contracts", "@msf/runtime", "@msf/compiler", "@msf/dev"];
 
 const run = (cmd, args, opts = {}) => {
   if (process.platform !== "win32") {
@@ -61,12 +61,12 @@ async function main() {
   run("pnpm", ["install", "--no-frozen-lockfile"], { cwd: consumer });
 
   const smokePath = join(consumer, "smoke.mjs");
-  writeFileSync(smokePath, `import { createSignal, batch, createMemo, createEffect, createRoot, untrack } from "@mustafa-26112026/runtime";
-import { renderToString, h, escapeHtml } from "@mustafa-26112026/runtime/server";
-import { compile } from "@mustafa-26112026/compiler";
-import { getDevStatus } from "@mustafa-26112026/dev";
-import { MSF_CONTRACTS_VERSION } from "@mustafa-26112026/contracts";
-import { h as uh } from "@mustafa-26112026/runtime/universal";
+  writeFileSync(smokePath, `import { createSignal, batch, createMemo, createEffect, createRoot, untrack } from "@msf/runtime";
+import { renderToString, h, escapeHtml } from "@msf/runtime/server";
+import { compile } from "@msf/compiler";
+import { getDevStatus } from "@msf/dev";
+import { MSF_CONTRACTS_VERSION } from "@msf/contracts";
+import { h as uh } from "@msf/runtime/universal";
 import assert from "node:assert/strict";
 
 const [count, setCount] = createSignal(0);
@@ -85,10 +85,10 @@ console.log("consumer smoke: OK");
   run("node", [smokePath], { cwd: consumer });
 
   // Type consumer: verify declarations resolve and are usable.
-  writeFileSync(join(consumer, "types.ts"), `import { createSignal, type Accessor, type Dispose } from "@mustafa-26112026/runtime";
-import { h, renderToString } from "@mustafa-26112026/runtime/server";
-import { compile, type CompileRequest } from "@mustafa-26112026/compiler";
-import type { Diagnostic } from "@mustafa-26112026/contracts";
+  writeFileSync(join(consumer, "types.ts"), `import { createSignal, type Accessor, type Dispose } from "@msf/runtime";
+import { h, renderToString } from "@msf/runtime/server";
+import { compile, type CompileRequest } from "@msf/compiler";
+import type { Diagnostic } from "@msf/contracts";
 const [count]: [Accessor<number>, Dispose] = [0 as unknown as Accessor<number>, (() => {}) as Dispose];
 void count;
 const req: CompileRequest = { filename: "a.tsx", source: "//" };

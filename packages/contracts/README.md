@@ -1,4 +1,4 @@
-# `@mustafa-26112026/contracts`
+# `@msf/contracts`
 
 Shared, dependency-light contracts for MSF Fusion packages: diagnostics, compile requests/results, and version marker.
 
@@ -7,7 +7,7 @@ Shared, dependency-light contracts for MSF Fusion packages: diagnostics, compile
 ## Install
 
 ```bash
-npm install @mustafa-26112026/contracts@0.1.0
+npm install @msf/contracts@0.1.0
 ```
 
 ## Exports
@@ -19,7 +19,7 @@ npm install @mustafa-26112026/contracts@0.1.0
 
 ## Purpose
 
-`@mustafa-26112026/contracts` exists so `@mustafa-26112026/runtime`, `@mustafa-26112026/compiler`, and `@mustafa-26112026/dev` share boundaries without importing each other's internals. It has no runtime dependencies of its own.
+`@msf/contracts` exists so `@msf/runtime`, `@msf/compiler`, and `@msf/dev` share boundaries without importing each other's internals. It has no runtime dependencies of its own.
 
 Repository and issue tracker: <https://github.com/Mustafa1998-tech/MSF-Fusion>
 

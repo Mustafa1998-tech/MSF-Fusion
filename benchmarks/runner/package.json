@@ -1,5 +1,5 @@
 {
-  "name": "@mustafa-26112026/bench-runner",
+  "name": "@msf/bench-runner",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -15,7 +15,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@mustafa-26112026/runtime": "workspace:*",
+    "@msf/runtime": "workspace:*",
     "@preact/signals-core": "1.14.5",
     "@vue/reactivity": "3.5.45",
     "react": "19.3.1",

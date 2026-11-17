@@ -7,16 +7,16 @@
 MSF Fusion is **publishable (v0.1.0)** — packages are prepared for npm (`private: true` removed, `dist` ESM + d.ts, installable tarballs, consumer verification passing). It is **not npm-published yet** because the operator machine needs `npm login`; GitHub is the primary distribution channel. Functionality is a working developer preview: fine-grained reactivity, SSR/hydration, function components, benchmarks in all four suites, real examples, limited JSX compiler subset. See [production-readiness checklist](../production-readiness.md) for what is and isn't production-ready.
 
 ## Implemented / verified
-- **`@mustafa-26112026/runtime`** (37 tests)
+- **`@msf/runtime`** (37 tests)
   - Core: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, `getOwner`, `runWithOwner`, `flushSync`
   - Fix: in-run dependency dedupe; O(1) owner dispose via `ownedSlot`
   - Guards: runaway-update depth limit (`MSF_REACTIVE_CYCLE`) for nested reactive updates
   - DOM: `render`, `mount`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list` (multi-root keyed), `For`
-  - Universal: `@mustafa-26112026/runtime/universal` — isomorphic `h`, `fragment`, `text`, DOM `mount`, `hydrate` (adopts SSR markup, binds reactive bindings, fresh-mount fallback on mismatch)
+  - Universal: `@msf/runtime/universal` — isomorphic `h`, `fragment`, `text`, DOM `mount`, `hydrate` (adopts SSR markup, binds reactive bindings, fresh-mount fallback on mismatch)
   - Server: `renderToString` (component nodes resolved), `escapeHtml`
-- **`@mustafa-26112026/compiler`** (14 tests): `jsx-dom-v1` (DOM runtime calls) and **`jsx-universal-v1`** (isomorphic view descriptors); golden-output and executable-eval tests; diagnostics
-- **`@mustafa-26112026/dev`** (6 tests): `compileFile`, `compilePath`, `checkFile`, `checkPath`, preview CLI (`check`, `status`)
-- **`@mustafa-26112026/contracts`**: `Diagnostic`, `CompileRequest.target`, `MSF_CONTRACTS_VERSION`
+- **`@msf/compiler`** (14 tests): `jsx-dom-v1` (DOM runtime calls) and **`jsx-universal-v1`** (isomorphic view descriptors); golden-output and executable-eval tests; diagnostics
+- **`@msf/dev`** (6 tests): `compileFile`, `compilePath`, `checkFile`, `checkPath`, preview CLI (`check`, `status`)
+- **`@msf/contracts`**: `Diagnostic`, `CompileRequest.target`, `MSF_CONTRACTS_VERSION`
 - **Benchmarks:** MSF runtime preview measured in all four suites, sequential, committed evidence:
   - `micro` — `benchmarks/results/2026-11-16_09-03-34-486Z-li9o.{json,md}` (12 samples; informational)
   - `ssr`   — `benchmarks/results/2026-11-16_09-37-02-734Z-arcv.{json,md}` (12 samples; informational)
@@ -35,11 +35,11 @@ MSF Fusion is **publishable (v0.1.0)** — packages are prepared for npm (`priva
 
 ## Verification (2026-11-17)
 - `pnpm run typecheck` (10 workspace projects): **pass**
-- `@mustafa-26112026/runtime` tests: **38/38 pass**
-- `@mustafa-26112026/compiler` tests: **14/14 pass**
-- `@mustafa-26112026/dev` tests: **6/6 pass**
-- `@mustafa-26112026/bench-runner` tests: **31/31 pass**
-- `@mustafa-26112026/spike-compiler-toolchain` tests: **4/4 pass**
+- `@msf/runtime` tests: **38/38 pass**
+- `@msf/compiler` tests: **14/14 pass**
+- `@msf/dev` tests: **6/6 pass**
+- `@msf/bench-runner` tests: **31/31 pass**
+- `@msf/spike-compiler-toolchain` tests: **4/4 pass**
 - `pnpm run build`: **pass**
 - `pnpm verify:package`: **pass**
 - `pnpm pack` all four packages: `LICENSE` included; `workspace:*` rewritten to `0.1.0`; sourcemaps self-contained

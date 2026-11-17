@@ -7,10 +7,10 @@
 ### Control-flow components (`Show` / `For`)
 
 ```ts
-import { createSignal } from "@mustafa-26112026/runtime";
-import { h, Show, For } from "@mustafa-26112026/runtime/server"; // or @mustafa-26112026/runtime/universal
-import { renderToString } from "@mustafa-26112026/runtime/server";
-import { mount } from "@mustafa-26112026/runtime/universal";
+import { createSignal } from "@msf/runtime";
+import { h, Show, For } from "@msf/runtime/server"; // or @msf/runtime/universal
+import { renderToString } from "@msf/runtime/server";
+import { mount } from "@msf/runtime/universal";
 
 function Conditional() {
   const [on, setOn] = createSignal(true);
@@ -24,17 +24,17 @@ renderToString(() => Conditional());
 mount(() => Conditional(), container);
 ```
 
-`For` renders a list from an accessor; `Show` toggles a branch; both rebuild reactively (items aren't keyed-identity stable by default — use `@mustafa-26112026/runtime/dom`'s `list(..., keyFn)` for keyed identity).
+`For` renders a list from an accessor; `Show` toggles a branch; both rebuild reactively (items aren't keyed-identity stable by default — use `@msf/runtime/dom`'s `list(..., keyFn)` for keyed identity).
 
 ### Function components (isomorphic view layer)
 
 ### Function components (isomorphic view layer)
 
 ```ts
-import { createSignal } from "@mustafa-26112026/runtime";
-import { h } from "@mustafa-26112026/runtime/server";
-import { mount, hydrate } from "@mustafa-26112026/runtime/universal";
-import { renderToString } from "@mustafa-26112026/runtime/server";
+import { createSignal } from "@msf/runtime";
+import { h } from "@msf/runtime/server";
+import { mount, hydrate } from "@msf/runtime/universal";
+import { renderToString } from "@msf/runtime/server";
 
 function Counter({ initial = 0 }: { initial?: number }) {
   const [count, setCount] = createSignal(initial);
@@ -60,8 +60,8 @@ hydrate(() => h(Counter, { initial: 5 }), container);
 ### DOM (fine-grained bindings)
 
 ```ts
-import { createSignal } from "@mustafa-26112026/runtime";
-import { insert, render, setAttribute } from "@mustafa-26112026/runtime/dom";
+import { createSignal } from "@msf/runtime";
+import { insert, render, setAttribute } from "@msf/runtime/dom";
 
 render(() => {
   const [count, setCount] = createSignal(0);
@@ -76,13 +76,13 @@ render(() => {
 
 ### Lists (current helper)
 
-`@mustafa-26112026/runtime/dom` provides `list(parent, items, keyFn?, mapFn)` — keyed reconciliation for `Node`, `Node[]`, or `DocumentFragment` item roots, preserving identity across reorders, and disposing removed item scopes.
+`@msf/runtime/dom` provides `list(parent, items, keyFn?, mapFn)` — keyed reconciliation for `Node`, `Node[]`, or `DocumentFragment` item roots, preserving identity across reorders, and disposing removed item scopes.
 
 ### SSR snapshot
 
 ```ts
-import { createSignal } from "@mustafa-26112026/runtime";
-import { h, renderToString } from "@mustafa-26112026/runtime/server";
+import { createSignal } from "@msf/runtime";
+import { h, renderToString } from "@msf/runtime/server";
 
 function CounterCard() {
   const [count] = createSignal(0);
@@ -92,7 +92,7 @@ function CounterCard() {
 const html = renderToString(() => CounterCard());
 ```
 
-`@mustafa-26112026/runtime/server` escapes text/attribute values by default. `@mustafa-26112026/runtime/universal` adds the isomorphic view layer with mount and hydration. The compiler emits this view code only for explicitly supported JSX subsets.
+`@msf/runtime/server` escapes text/attribute values by default. `@msf/runtime/universal` adds the isomorphic view layer with mount and hydration. The compiler emits this view code only for explicitly supported JSX subsets.
 
 ## Compiler subset (current preview)
 
@@ -102,8 +102,8 @@ node packages/dev/src/cli.ts compile path/to/file.tsx --out dist-compiled
 ```
 
 Two targets, same JSX subset:
-- `target: "dom"` (default) — lowers intrinsic JSX to `@mustafa-26112026/runtime/dom` calls (`document.createElement`, `setAttribute`, `insert`, `addEventListener`)
-- `target: "universal"` — lowers to `@mustafa-26112026/runtime/universal` view descriptors (`h("section", ...)`), usable for SSR **and** mount/hydrate
+- `target: "dom"` (default) — lowers intrinsic JSX to `@msf/runtime/dom` calls (`document.createElement`, `setAttribute`, `insert`, `addEventListener`)
+- `target: "universal"` — lowers to `@msf/runtime/universal` view descriptors (`h("section", ...)`), usable for SSR **and** mount/hydrate
 
 Supported subset (v1): intrinsic elements, nested elements/children, text + `{expr}` child accessors, static/dynamic attributes, basic `onEvent` handlers. Component tags are supported in the `universal` target.
 

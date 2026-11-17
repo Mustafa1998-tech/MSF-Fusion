@@ -1,5 +1,5 @@
-import { createSignal } from "@mustafa-26112026/runtime";
-import { render, insert, list, setAttribute } from "@mustafa-26112026/runtime/dom";
+import { createSignal } from "@msf/runtime";
+import { render, insert, list, setAttribute } from "@msf/runtime/dom";
 import {
   installBench,
   makeRows,

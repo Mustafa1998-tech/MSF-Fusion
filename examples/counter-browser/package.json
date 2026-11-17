@@ -1,5 +1,5 @@
 {
-  "name": "@mustafa-26112026/example-counter-browser",
+  "name": "@msf/example-counter-browser",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,7 +11,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@mustafa-26112026/runtime": "workspace:*"
+    "@msf/runtime": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "26.6.6",

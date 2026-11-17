@@ -1,5 +1,5 @@
 {
-  "name": "@mustafa-26112026/contracts",
+  "name": "@msf/contracts",
   "version": "0.1.0",
   "description": "Shared contracts and internal interfaces for MSF Fusion packages.",
   "license": "MIT",

@@ -10,7 +10,7 @@
 
 ## M1 — Reactive kernel + minimal compiler slice 🚧 In progress
 **Completed so far (tested)**
-- Package scaffolding: `@mustafa-26112026/contracts`, `@mustafa-26112026/runtime`, `@mustafa-26112026/compiler`, `@mustafa-26112026/dev`
+- Package scaffolding: `@msf/contracts`, `@msf/runtime`, `@msf/compiler`, `@msf/dev`
 - Reactive kernel: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, ownership/disposal; dependency-tracking fix (in-run dedupe) and tests
 - DOM helpers preview: `render`, `insert`, reactive text/attrs/props/events, `list` with keyed reconciliation
 - SSR string renderer preview: `h`, `renderToString`, HTML escaping

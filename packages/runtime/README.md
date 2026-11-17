@@ -1,4 +1,4 @@
-# `@mustafa-26112026/runtime`
+# `@msf/runtime`
 
 Fine-grained reactive runtime for **MSF Fusion**: signals/memos/effects with owner-based disposal, DOM bindings, an isomorphic view layer, SSR string rendering, and hydration.
 
@@ -7,23 +7,23 @@ Fine-grained reactive runtime for **MSF Fusion**: signals/memos/effects with own
 ## Install
 
 ```bash
-npm install @mustafa-26112026/runtime@0.1.0
+npm install @msf/runtime@0.1.0
 ```
 
 ## Entry points
 
 | Import | Contents |
 |---|---|
-| `@mustafa-26112026/runtime` | `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, `getOwner`, `runWithOwner`, `flushSync`, plus the view helpers `h`/`fragment`/`text` |
-| `@mustafa-26112026/runtime/dom` | `render`, `mount` (DOM), `template`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list`, keyed `For` |
-| `@mustafa-26112026/runtime/server` | `h`, `fragment`, `text`, `Show`, `For`, `renderNode`, `renderToString`, `escapeHtml` |
-| `@mustafa-26112026/runtime/universal` | `h`, `fragment`, `text`, `Show`, `For`, `mount`, `hydrate` |
+| `@msf/runtime` | `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, `getOwner`, `runWithOwner`, `flushSync`, plus the view helpers `h`/`fragment`/`text` |
+| `@msf/runtime/dom` | `render`, `mount` (DOM), `template`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list`, keyed `For` |
+| `@msf/runtime/server` | `h`, `fragment`, `text`, `Show`, `For`, `renderNode`, `renderToString`, `escapeHtml` |
+| `@msf/runtime/universal` | `h`, `fragment`, `text`, `Show`, `For`, `mount`, `hydrate` |
 
 ## Example — reactive counter
 
 ```ts
-import { batch, createMemo, createSignal } from "@mustafa-26112026/runtime";
-import { insert, render } from "@mustafa-26112026/runtime/dom";
+import { batch, createMemo, createSignal } from "@msf/runtime";
+import { insert, render } from "@msf/runtime/dom";
 
 render(() => {
   const [count, setCount] = createSignal(0);
@@ -39,7 +39,7 @@ render(() => {
 
 ```ts
 // shared.ts
-import { h, createSignal } from "@mustafa-26112026/runtime";
+import { h, createSignal } from "@msf/runtime";
 
 export function App() {
   const [count, setCount] = createSignal(0);
@@ -49,11 +49,11 @@ export function App() {
 }
 
 // server.ts
-import { renderToString } from "@mustafa-26112026/runtime/server";
+import { renderToString } from "@msf/runtime/server";
 const html = renderToString(() => h(App));
 
 // client.ts
-import { hydrate } from "@mustafa-26112026/runtime/universal";
+import { hydrate } from "@msf/runtime/universal";
 hydrate(() => h(App), document.getElementById("app")!);
 ```
 
@@ -70,15 +70,15 @@ hydrate(() => h(App), document.getElementById("app")!);
 ## Known limitations (preview)
 
 - No router, data layer, server actions, streaming SSR, or resume.
-- Compiler support is a JSX subset; `Show`/`For` are runtime components and are not lowered by `@mustafa-26112026/compiler` yet.
+- Compiler support is a JSX subset; `Show`/`For` are runtime components and are not lowered by `@msf/compiler` yet.
 - Hydration is preview-grade. Static SSR markup is adopted and listeners attach; complex reactive regions may still need `mount` while edge cases are hardened.
 - DOM-only concerns (event delegation, portals) are not implemented.
 
 ## Development
 
 ```bash
-pnpm --filter @mustafa-26112026/runtime run typecheck
-pnpm --filter @mustafa-26112026/runtime run test
+pnpm --filter @msf/runtime run typecheck
+pnpm --filter @msf/runtime run test
 ```
 
 Repository and issue tracker: <https://github.com/Mustafa1998-tech/MSF-Fusion>

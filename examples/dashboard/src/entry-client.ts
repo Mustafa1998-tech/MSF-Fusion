@@ -1,4 +1,4 @@
-import { mount } from "@mustafa-26112026/runtime/universal";
+import { mount } from "@msf/runtime/universal";
 import { createDashboardView, type StatusFilter } from "./app.ts";
 
 const container = document.getElementById("app");

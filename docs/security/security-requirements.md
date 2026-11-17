@@ -35,7 +35,7 @@
 
 ## Current status
 - Requirements documented and treated as design gates.
-- **M1 preview:** `@mustafa-26112026/runtime/server` escapes text/attribute values by default for its supported string-rendering model; this is not a complete security boundary.
+- **M1 preview:** `@msf/runtime/server` escapes text/attribute values by default for its supported string-rendering model; this is not a complete security boundary.
 - No executable security benchmark suite yet (see `benchmarks/security/README.md`).
 - Compiler-enforced boundaries, serialization allowlists, auth/CSRF/SSRF controls, and broader runtime hardening are pending implementation.
 

@@ -3,7 +3,7 @@
 > A real project-shaped pilot app using MSF Fusion's isomorphic runtime preview: **server-rendered markup → client hydration** with fine-grained reactivity. This is not a claim that the framework is fully production-ready — it is the current M1/M2 preview applied end-to-end.
 
 ## What this example demonstrates
-- **SSR snapshot** using `@mustafa-26112026/runtime/server` / `@mustafa-26112026/runtime/universal` (`renderAppInner`)
+- **SSR snapshot** using `@msf/runtime/server` / `@msf/runtime/universal` (`renderAppInner`)
 - **Isomorphic view descriptor** (`h`, `fragment`, `text`) shared between Node.js and the browser
 - **Client hydration** (`hydrate`) — adopts SSR markup, attaches event listeners and reactive bindings without wiping the DOM
 - **Dev mode:** Vite on-demand SSR through middleware mode with `ssrLoadModule`
@@ -13,12 +13,12 @@
 
 ```bash
 # development (on-demand SSR)
-pnpm --filter @mustafa-26112026/example-fullstack dev
+pnpm --filter @msf/example-fullstack dev
 # open http://localhost:4173/?count=3
 
 # production static prerender + hydration
-pnpm --filter @mustafa-26112026/example-fullstack build:static
-pnpm --filter @mustafa-26112026/example-fullstack start
+pnpm --filter @msf/example-fullstack build:static
+pnpm --filter @msf/example-fullstack start
 # open http://localhost:4173/
 ```
 

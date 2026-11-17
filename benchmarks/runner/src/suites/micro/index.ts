@@ -138,7 +138,7 @@ export async function runMicroSuite(
     notes: [
       "Graph construction is performed outside the timed region; warm-up runs are discarded.",
       "Each sample uses a fresh graph and disposes it afterwards where the primitive exposes disposal.",
-      "MSF runtime measurements use the in-repo developer-preview kernel (`@mustafa-26112026/runtime`) for supported primitives; they are informational and not superiority claims.",
+      "MSF runtime measurements use the in-repo developer-preview kernel (`@msf/runtime`) for supported primitives; they are informational and not superiority claims.",
       "Solid runs through its client runtime exported by the package (solid-js/dist/solid.js) so computed invalidation is live. Solid effect scenarios are skipped because effects require a render flush.",
       "Vue effects are synchronous in the standalone @vue/reactivity package; Vue's default scheduler batching is not part of this matrix.",
       "Angular is excluded from microbenchmarks: its signal API is not designed as a standalone package and effects require an injector/DI context.",

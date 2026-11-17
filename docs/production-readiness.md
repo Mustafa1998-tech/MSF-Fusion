@@ -7,7 +7,7 @@
 |---|---|---|
 | Reactive kernel (signals/memos/effects/roots/batch/untrack) | ✅ | 38 unit tests pass |
 | DOM bindings (insert/setText/setAttribute/list/For) | ✅ | tests + multi-root keyed list fixed |
-| SSR snapshot rendering (string, escaped) | ✅ | `@mustafa-26112026/runtime/server` |
+| SSR snapshot rendering (string, escaped) | ✅ | `@msf/runtime/server` |
 | Isomorphic view layer (`mount`, `hydrate`, view descriptors) | ✅ | verified in Chromium: mismatch → fresh mount fallback |
 | Function components with props/children | ✅ | mount/hydrate/SSR all tested |
 | `Show`, `For` control-flow components | ✅ | view-layer tests (`test/view.test.ts`) |
@@ -26,7 +26,7 @@
 | Data fetching / streaming / resume | ❌ | No data/route model or streaming SSR |
 | Actions / server boundaries | ❌ | Contracts exist, no enforcement toolchain |
 | Compiler full TSX/IR/codegen | ❌ | Only `jsx-dom-v1` / `jsx-universal-v1` subset; no sourcemaps |
-| Dev server + HMR / CLI (`dev`/`build` for apps) | ❌ | `@mustafa-26112026/dev` is a check/compile preview only |
+| Dev server + HMR / CLI (`dev`/`build` for apps) | ❌ | `@msf/dev` is a check/compile preview only |
 | npm publishing | ⚠️ prepared, not executed | Packages at `v0.1.0`, `public` access, verified tarballs; publication awaits operator `npm login` authorization; no registry release yet |
 | Developer ergonomics (typechecking beyond run, diagnostics) | ⚠️ minimal | compile/dev check commands exist, not a complete HMR world |
 | Streaming SSR | ❌ | Not implemented |

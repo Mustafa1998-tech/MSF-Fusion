@@ -1,6 +1,6 @@
 import { readFile, readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
-import { compile } from "@mustafa-26112026/compiler";
+import { compile } from "@msf/compiler";
 
 export interface CheckDiagnostic {
   code: string;

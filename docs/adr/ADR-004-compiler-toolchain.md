@@ -2,7 +2,7 @@
 
 - **Status:** Accepted direction (compiler implementation pending)
 - **Date:** 2026-11-16
-- **Updated:** 2026-11-16 (spike evidence complete; `@mustafa-26112026/compiler` scaffold only)
+- **Updated:** 2026-11-16 (spike evidence complete; `@msf/compiler` scaffold only)
 - **Evidence:** `spikes/compiler-toolchain/`, `benchmarks/evidence/compiler-toolchain.json`
 
 ## Context
@@ -46,7 +46,7 @@ graph LR
 - Need custom MSF transforms; spike de-risks syntax/emit feasibility only.
 
 ## Implementation note (M1)
-Toolchain feasibility is evidenced, but the MSF-owned Reactive IR, parser/transform integration, semantic adapter, diagnostics, and codegen are not yet implemented (`@mustafa-26112026/compiler` currently returns a not-implemented diagnostic).
+Toolchain feasibility is evidenced, but the MSF-owned Reactive IR, parser/transform integration, semantic adapter, diagnostics, and codegen are not yet implemented (`@msf/compiler` currently returns a not-implemented diagnostic).
 
 ## ملخص بالعربية
 القرار: استخدام Oxc للتحليل/التحويل السريع ومحوّل دلالي مبني على TypeScript خلف واجهة داخلية، مع IR مملوك للإطار وعزل واجهات TS غير المستقرة، استناداً إلى نتائج تجربة الجدوى.

@@ -4,7 +4,7 @@
 
 - Scenarios and contract: `benchmarks/scenarios/dom.md`
 - Shared fixture API: `benchmarks/runner/fixtures/shared/bench-client.ts`
-- MSF fixture: `benchmarks/runner/fixtures/apps/msf/src/main.tsx` — fine-grained signals + keyed `list()` render 1,000/10,000-row table via `@mustafa-26112026/runtime/dom`.
+- MSF fixture: `benchmarks/runner/fixtures/apps/msf/src/main.tsx` — fine-grained signals + keyed `list()` render 1,000/10,000-row table via `@msf/runtime/dom`.
 - Metrics: `syncMs`, `frameMs`, startup marks, CDP heap snapshots, console/page errors
 - Latest committed MSF DOM evidence: `benchmarks/results/2026-11-16_09-50-15-877Z-jjuo.{json,md}` (2026-11-16)
 

@@ -14,41 +14,41 @@ pnpm build
 
 # Verify
 pnpm run typecheck
-pnpm --filter @mustafa-26112026/runtime run test
-pnpm --filter @mustafa-26112026/bench-runner run test
-pnpm --filter @mustafa-26112026/spike-compiler-toolchain run test
+pnpm --filter @msf/runtime run test
+pnpm --filter @msf/bench-runner run test
+pnpm --filter @msf/spike-compiler-toolchain run test
 
 # Examples
 node examples/counter-basic/src/ssr.ts
-pnpm --filter @mustafa-26112026/example-counter-browser dev
+pnpm --filter @msf/example-counter-browser dev
 
 # Full-stack SSR + hydration pilot
-pnpm --filter @mustafa-26112026/example-fullstack dev
+pnpm --filter @msf/example-fullstack dev
 
 # Ops Board (SSR snapshot + client-side filters)
-pnpm --filter @mustafa-26112026/example-dashboard dev
+pnpm --filter @msf/example-dashboard dev
 
 # Consumer-installable package verification
 pnpm verify:package
 ```
 
 **Current implemented surface (preview, subject to change):**
-- `@mustafa-26112026/runtime`: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, `getOwner`, `runWithOwner`, `flushSync`
-- `@mustafa-26112026/runtime/universal`: isomorphic view layer — `h`, `fragment`, `text`, DOM `mount`/`hydrate` (adopts SSR markup, attaches listeners/bindings, falls back to fresh mount on mismatch). **Function components** via `h(Component, props, children)`.
-- `@mustafa-26112026/runtime/dom`: `render`, `mount`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list` (multi-root keyed), `For`
-- `@mustafa-26112026/runtime/server`: `h`, `renderNode`, `renderToString`, `escapeHtml` (component nodes resolved)
+- `@msf/runtime`: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, `getOwner`, `runWithOwner`, `flushSync`
+- `@msf/runtime/universal`: isomorphic view layer — `h`, `fragment`, `text`, DOM `mount`/`hydrate` (adopts SSR markup, attaches listeners/bindings, falls back to fresh mount on mismatch). **Function components** via `h(Component, props, children)`.
+- `@msf/runtime/dom`: `render`, `mount`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list` (multi-root keyed), `For`
+- `@msf/runtime/server`: `h`, `renderNode`, `renderToString`, `escapeHtml` (component nodes resolved)
 
 **Current limitations:** compiler subset is limited (default `jsx-dom-v1` and `jsx-universal-v1`; no sourcemaps/IR pipeline/components/control-flow), SSR/hydration is a preview (no streaming/resume), dev tooling is compile-only (no dev server/HMR for library packages), no router, and packages are still marked `private: true` (no npm publish yet; MIT-licensed on GitHub).
 
-**Package builds & consumer verification:** `pnpm build` emits ESM+d.ts into `dist/`, and `pnpm verify:package` packs the four `@mustafa-26112026/*` packages and smoke-tests them in a temp consumer (install, runtime smoke, TS typecheck). Evidence: `benchmarks/evidence/package-verification.json`.
+**Package builds & consumer verification:** `pnpm build` emits ESM+d.ts into `dist/`, and `pnpm verify:package` packs the four `@msf/*` packages and smoke-tests them in a temp consumer (install, runtime smoke, TS typecheck). Evidence: `benchmarks/evidence/package-verification.json`.
 
 ## Current preview usage
 
 ### SSR snapshot
 
 ```ts
-import { createSignal } from "@mustafa-26112026/runtime";
-import { h, renderToString } from "@mustafa-26112026/runtime/server";
+import { createSignal } from "@msf/runtime";
+import { h, renderToString } from "@msf/runtime/server";
 
 const html = renderToString(() => {
   const [count] = createSignal(0);
@@ -64,8 +64,8 @@ console.log(html);
 ### Browser fine-grained DOM
 
 ```ts
-import { batch, createMemo, createSignal } from "@mustafa-26112026/runtime";
-import { insert, render, setAttribute } from "@mustafa-26112026/runtime/dom";
+import { batch, createMemo, createSignal } from "@msf/runtime";
+import { insert, render, setAttribute } from "@msf/runtime/dom";
 
 render(() => {
   const [count, setCount] = createSignal(0);
@@ -99,12 +99,12 @@ pnpm dev
 pnpm build
 ```
 
-Planned CLI (provisional): `msf dev`, `msf build`, `msf check`, `msf preview`. The preview `@mustafa-26112026/dev` ships:
+Planned CLI (provisional): `msf dev`, `msf build`, `msf check`, `msf preview`. The preview `@msf/dev` ships:
 
 ```bash
-pnpm --filter @mustafa-26112026/dev run status           # feature status
-pnpm --filter @mustafa-26112026/dev run check <path>     # diagnose JSX files, exit 1 on unsupported patterns
-pnpm --filter @mustafa-26112026/dev run compile <path>   # emit outputs
+pnpm --filter @msf/dev run status           # feature status
+pnpm --filter @msf/dev run check <path>     # diagnose JSX files, exit 1 on unsupported patterns
+pnpm --filter @msf/dev run compile <path>   # emit outputs
 ```
 
 ## Recommended reading

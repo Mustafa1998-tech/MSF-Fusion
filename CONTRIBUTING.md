@@ -13,16 +13,16 @@ Thank you for your interest in MSF Fusion. The repository has completed **Milest
 ```bash
 pnpm install --frozen-lockfile
 pnpm run typecheck
-pnpm --filter @mustafa-26112026/runtime run test
-pnpm --filter @mustafa-26112026/bench-runner run test
-pnpm --filter @mustafa-26112026/spike-compiler-toolchain run test
+pnpm --filter @msf/runtime run test
+pnpm --filter @msf/bench-runner run test
+pnpm --filter @msf/spike-compiler-toolchain run test
 ```
 
 Useful checks/examples:
 
 ```bash
 node examples/counter-basic/src/ssr.ts
-pnpm --filter @mustafa-26112026/example-counter-browser build
+pnpm --filter @msf/example-counter-browser build
 # Benchmarks must be run sequentially for comparable results:
 pnpm bench:micro && pnpm bench:ssr && pnpm bench:bundle && pnpm bench:dom && pnpm bench:report
 ```

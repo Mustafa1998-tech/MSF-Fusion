@@ -6,7 +6,7 @@ Interactive browser demo using the current **real** MSF runtime preview (`create
 
 ```bash
 pnpm install
-pnpm --filter @mustafa-26112026/example-counter-browser dev
+pnpm --filter @msf/example-counter-browser dev
 ```
 
 Then open the printed local URL (default `http://localhost:5174`).
@@ -14,8 +14,8 @@ Then open the printed local URL (default `http://localhost:5174`).
 ## Build
 
 ```bash
-pnpm --filter @mustafa-26112026/example-counter-browser build
-pnpm --filter @mustafa-26112026/example-counter-browser preview
+pnpm --filter @msf/example-counter-browser build
+pnpm --filter @msf/example-counter-browser preview
 ```
 
 ## Notes

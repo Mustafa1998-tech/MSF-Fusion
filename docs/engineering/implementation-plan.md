@@ -6,7 +6,7 @@
 
 ### M1 — Reactive kernel & compiler slice 🚧
 **Completed (tested)**
-- [x] WP1 baseline scaffolding: `@mustafa-26112026/contracts`, `@mustafa-26112026/runtime`, `@mustafa-26112026/compiler`, `@mustafa-26112026/dev`
+- [x] WP1 baseline scaffolding: `@msf/contracts`, `@msf/runtime`, `@msf/compiler`, `@msf/dev`
 - [x] WP2 reactive kernel: signals/memos/effects, ownership/disposal, batching/untracking, cleanup, tests (**21 passing**)
   - [x] Fix: dedupe repeated dependency reads within a single computation run
 - [x] WP3 DOM runtime preview: render/insert/bindings/events, keyed `list` helper, SSR `h`/`renderToString` with escaping, tests and examples
@@ -22,7 +22,7 @@
 - [ ] Additional edge-case/stress/leak/security evidence
 
 ### M2+ — partially started 🚧
-- [x] Isomorphic/hydration slice: `@mustafa-26112026/runtime/universal` (isomorphic view descriptors, DOM mount, hydration with mismatch fallback) and `examples/fullstack` pilot (dev SSR via Vite middleware + production prerender + browser-verified hydration)
+- [x] Isomorphic/hydration slice: `@msf/runtime/universal` (isomorphic view descriptors, DOM mount, hydration with mismatch fallback) and `examples/fullstack` pilot (dev SSR via Vite middleware + production prerender + browser-verified hydration)
 - [ ] Full component model/context/refs/events and robust control flow primitives
 - [ ] Compiler-side lowering to isomorphic view descriptors and hydration markers
 - [ ] Streaming/resume evaluation and serialization contracts
@@ -46,7 +46,7 @@ graph TD
 ```
 
 ## 3. Explicit approvals still required
-1. **npm publishing** — license is MIT; publishing the `@mustafa-26112026/*` packages to npm requires explicit owner approval (`private: true` for now).
+1. **npm publishing** — license is MIT; publishing the `@msf/*` packages to npm requires explicit owner approval (`private: true` for now).
 2. **Scope/claims for M2+** capabilities must remain evidence-based.
 
 ## ملخص بالعربية

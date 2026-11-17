@@ -1,6 +1,6 @@
 # Reactivity
 
-> **Status:** Core reactive primitives are **implemented in `@mustafa-26112026/runtime` (developer preview)**. Some naming/ergonomics shown in earlier design sketches may differ from the current API and future compiler-facing syntax.
+> **Status:** Core reactive primitives are **implemented in `@msf/runtime` (developer preview)**. Some naming/ergonomics shown in earlier design sketches may differ from the current API and future compiler-facing syntax.
 
 MSF Fusion uses **fine-grained reactivity**: reactive reads track precise dependencies and writes update only affected computations/effects/bindings.
 
@@ -15,7 +15,7 @@ import {
   createSignal,
   onCleanup,
   untrack,
-} from "@mustafa-26112026/runtime";
+} from "@msf/runtime";
 
 const [count, setCount] = createSignal(0);
 const doubled = createMemo(() => count() * 2);
@@ -37,12 +37,12 @@ untrack(() => count()); // read without tracking
 dispose();
 ```
 
-**Function components** are also supported by the isomorphic view layer (`@mustafa-26112026/runtime/universal`):
+**Function components** are also supported by the isomorphic view layer (`@msf/runtime/universal`):
 
 ```ts
-import { h } from "@mustafa-26112026/runtime/server";   // or @mustafa-26112026/runtime/universal
-import { renderToString } from "@mustafa-26112026/runtime/server";
-import { mount, hydrate } from "@mustafa-26112026/runtime/universal";
+import { h } from "@msf/runtime/server";   // or @msf/runtime/universal
+import { renderToString } from "@msf/runtime/server";
+import { mount, hydrate } from "@msf/runtime/universal";
 
 function Counter({ initial = 0 }: { initial?: number }) {
   const [count, setCount] = createSignal(initial);

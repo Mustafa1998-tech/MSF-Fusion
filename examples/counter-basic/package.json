@@ -1,5 +1,5 @@
 {
-  "name": "@mustafa-26112026/example-counter-basic",
+  "name": "@msf/example-counter-basic",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -10,7 +10,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@mustafa-26112026/runtime": "workspace:*"
+    "@msf/runtime": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "26.6.6",

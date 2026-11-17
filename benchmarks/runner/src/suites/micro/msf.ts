@@ -3,7 +3,7 @@ import {
   createMemo,
   createRoot,
   createSignal,
-} from "@mustafa-26112026/runtime";
+} from "@msf/runtime";
 import type { MicroCandidate, MicroScenarioId, PreparedMicroScenario } from "./scenarios.ts";
 
 const SUBSCRIBERS = 512;
@@ -11,7 +11,7 @@ const WRITES = 200;
 
 export const msfRuntimeCandidate: MicroCandidate = {
   id: "msf-runtime",
-  packageName: "@mustafa-26112026/runtime",
+  packageName: "@msf/runtime",
   notes:
     "MSF Fusion reactive kernel (developer preview). Fine-grained signals/memos/effects with ownership and synchronous batched propagation.",
   prepare(id) {

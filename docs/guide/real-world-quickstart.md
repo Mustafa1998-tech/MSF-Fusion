@@ -19,11 +19,11 @@ You are evaluating MSF Fusion by cloning the repository and trying it on a real 
 git clone https://github.com/Mustafa1998-tech/MSF-Fusion.git
 cd MSF-Fusion
 pnpm install --frozen-lockfile
-pnpm build          # emits dist/* ESM + d.ts for @mustafa-26112026/* packages
+pnpm build          # emits dist/* ESM + d.ts for @msf/* packages
 pnpm run typecheck
 ```
 
-Verification: `pnpm verify:package` packs the four `@mustafa-26112026/*` packages, installs them into a clean consumer, and runs a runtime smoke test + TypeScript typecheck. Evidence: `benchmarks/evidence/package-verification.json`.
+Verification: `pnpm verify:package` packs the four `@msf/*` packages, installs them into a clean consumer, and runs a runtime smoke test + TypeScript typecheck. Evidence: `benchmarks/evidence/package-verification.json`.
 
 ## Minimal realistic example — Ops Board
 See [`examples/ops-board`](../../examples/dashboard) for a real task-board scenario with SSR + client filtering. The counter examples (`examples/counter-browser`, `examples/counter-basic`) show the simplest shape.
@@ -32,9 +32,9 @@ See [`examples/ops-board`](../../examples/dashboard) for a real task-board scena
 
 **`src/app.ts`** — the same component tree is used by both server and client:
 ```ts
-import { createSignal } from "@mustafa-26112026/runtime";
-import { h, renderToString } from "@mustafa-26112026/runtime/server";
-import { mount, hydrate } from "@mustafa-26112026/runtime/universal";
+import { createSignal } from "@msf/runtime";
+import { h, renderToString } from "@msf/runtime/server";
+import { mount, hydrate } from "@msf/runtime/universal";
 
 export function createView(initial = 0) {
   const [count, setCount] = createSignal(initial);
@@ -64,12 +64,12 @@ hydrate(() => h(App), document.getElementById("app")!); // adopt SSR markup
 | Reactive kernel + DOM ops + SSR + hydration | Router, data actions, streaming/resume |
 | Function components, `Show`/`For`, keyed `list()` | Compiler lowering of `<Show>`/`<For>` JSX today applies only to the view layer, not JSX parse pipeline |
 | Examples and tests in the repo | Compiler diagnostics in the toolchain, sourcemaps, full TSX coverage |
-| `@mustafa-26112026/*` packages with `dist` builds, tarball-verifiable | npm publishing (owner approval, though repo is MIT) |
+| `@msf/*` packages with `dist` builds, tarball-verifiable | npm publishing (owner approval, though repo is MIT) |
 
 ## Recommended next step
 1. Read the [engineering status](../engineering/status.md) for the live checklist.
-2. Try the [Ops Board example](../../examples/dashboard): `pnpm --filter @mustafa-26112026/example-dashboard dev`.
-3. Use `@mustafa-26112026/dev` `check` to diagnose the JSX subset in your own project: `pnpm --filter @mustafa-26112026/dev run check ./src`.
+2. Try the [Ops Board example](../../examples/dashboard): `pnpm --filter @msf/example-dashboard dev`.
+3. Use `@msf/dev` `check` to diagnose the JSX subset in your own project: `pnpm --filter @msf/dev run check ./src`.
 
 ## ملخص بالعربية
 هذا دليل عملي لاختبار الإطار من clone نظيف (install → build → verify) مع أمثلة حقيقية واستخدام الحزم من داخل المستودع، بدل التعتيم على ما هو جاهز وما لم يكتمل بعد.

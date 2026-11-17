@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Publish the @mustafa-26112026/* packages in dependency order.
+ * Publish the @msf/* packages in dependency order.
  *
  * Safe by default: runs a dry-run unless `--yes` is passed.
  *

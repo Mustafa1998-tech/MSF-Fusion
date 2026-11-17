@@ -30,7 +30,7 @@ describe("compiled universal output executes correctly", () => {
     const jsx = `export const App = () => <main><span class="badge">ok</span></main>;`;
     const res = compile({ filename: "App.tsx", source: jsx, target: "universal" });
     expect(res.diagnostics).toEqual([]);
-    expect(res.code).toContain("@mustafa-26112026/runtime/universal");
+    expect(res.code).toContain("@msf/runtime/universal");
 
     const { h, fragment, evalDesc } = makeRuntime();
     const factory = new Function(`const h = ${h.toString()}; const fragment = ${fragment.toString()}; ${toEvalModule(res.code)} return { App };`);
