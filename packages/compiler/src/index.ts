@@ -123,7 +123,12 @@ function parsePropsAndEvents(ctx: Ctx): { props: string[]; events: Array<{ name:
     } else if (val.type === "string") {
       props.push([attr, JSON.stringify(val.value)].join(": "));
     } else {
-      props.push([attr, `() => (${val.value})`].join(": "));
+      // If the expression is already an arrow function (e.g. `when={() => count() > 1}`) or a plain identifier,
+      // it must remain the accessor itself — wrapping it again would produce `() => (() => ...)`
+      // and always read as truthy.
+      const touchLess = transformInner(ctx, val.value).trim();
+      const isFunctionLike = /^(\([^)]*\)|[A-Za-z_$][\w.$]*)\s*=>/.test(touchLess) || /^[A-Za-z_$][\w.$]*$/.test(touchLess);
+      props.push([attr, isFunctionLike ? touchLess : `() => (${touchLess})`].join(": "));
     }
   }
   return { props, events, selfClosing: false };
@@ -146,6 +151,7 @@ function transformJsxElement(ctx: Ctx): string | null {
     ctx.i += 2;
     const fragArgs: string[] = [];
     while (ctx.i < ctx.src.length) {
+      skipWs(ctx);
       if (ctx.src.startsWith("</>", ctx.i)) {
         ctx.i += 3;
         if (ctx.target === "universal") {
@@ -157,7 +163,10 @@ function transformJsxElement(ctx: Ctx): string | null {
       }
       const child = parseChild(ctx);
       if (child != null) fragArgs.push(child);
-      else if (ctx.src[ctx.i]) ctx.i++; else break;
+      // parseChild may consume nothing (e.g. text-only whitespace); don't spin forever, but
+      // leave a "</" at the current position for the close-tag check above to catch
+      else if (ctx.src[ctx.i] && ctx.src[ctx.i] !== "<" && ctx.src[ctx.i] !== "{") ctx.i++;
+      else break;
     }
     addDiag(ctx, ctx.i, "MSF_PARSE_ERROR", "Unterminated fragment.");
     if (ctx.target === "universal") { ctx.universalHelpers.add("fragment"); return `fragment(${fragArgs.join(", ")})`; }
@@ -175,6 +184,7 @@ function transformJsxElement(ctx: Ctx): string | null {
   const args: string[] = [];
   if (!selfClosing) {
     while (ctx.i < ctx.src.length) {
+      skipWs(ctx);
       if (ctx.src.startsWith(`</${tag}>`, ctx.i) || ctx.src.startsWith(`</${tag} `, ctx.i)) {
         ctx.i += 2 + tag.length;
         while (ctx.i < ctx.src.length && ctx.src[ctx.i] !== ">") ctx.i++;
@@ -187,7 +197,8 @@ function transformJsxElement(ctx: Ctx): string | null {
       }
       const child = parseChild(ctx);
       if (child != null) args.push(child);
-      else if (ctx.src[ctx.i]) ctx.i++; else break;
+      else if (ctx.src[ctx.i] && ctx.src[ctx.i] !== "<" && ctx.src[ctx.i] !== "{") ctx.i++;
+      else break;
     }
   }
 
@@ -195,6 +206,21 @@ function transformJsxElement(ctx: Ctx): string | null {
     ctx.universalHelpers.add("h");
     const propsExpr = universalPropsObject(props, events);
     if (isComponent) {
+      if (tag === "Show" || tag === "For") ctx.universalHelpers.add(tag);
+      if (tag === "For") {
+        // <For each={xs}>{(item) => h("li", null, item)}</For>
+        // The child expression is already wrapped by the generic child parser as `() => (expr)`;
+        // unwrap it back to the function the runtime For expects.
+        if (args.length === 1 && args[0]!.startsWith("() => (") && args[0]!.endsWith(")")) {
+          const inner = args[0]!.slice("() => (".length, -1);
+          const parts = propsExpr === "null" ? [] : [propsExpr.slice(2, -2).trim()];
+          parts.push(`children: (${inner})`);
+          return `h(For, { ${parts.join(", ")} })`;
+        }
+        addDiag(ctx, ctx.i, "MSF_INVALID_FOR_CHILDREN", "<For> requires exactly one expression child: a function (item, index) => view.");
+        return `h(For, ${propsExpr})`;
+      }
+      // <Show when={...} fallback={...}>child</Show> — h() splices children into props.children
       return `h(${tag}, ${propsExpr}${args.length ? ", " : ""}${args.join(", ")})`;
     }
     return `h(${JSON.stringify(tag)}, ${propsExpr}${args.length ? ", " : ""}${args.join(", ")})`;
@@ -248,7 +274,7 @@ function parseChild(ctx: Ctx): string | null {
     const expr = parseJsExprInBraces(ctx);
     if (expr == null) return null;
     if (expr.trim() === "") return null;
-    return `() => (${expr})`;
+    return `() => (${transformInner(ctx, expr)})`;
   }
   // text
   let text = "";
@@ -258,6 +284,11 @@ function parseChild(ctx: Ctx): string | null {
   const collapsed = text.replace(/\s+/g, " ");
   if (collapsed.trim() === "") return null;
   return JSON.stringify(collapsed);
+}
+
+function transformInner(ctx: Ctx, inner: string): string {
+  const nested: Ctx = { src: inner, file: ctx.file, i: 0, diagnostics: ctx.diagnostics, domHelpers: ctx.domHelpers, universalHelpers: ctx.universalHelpers, target: ctx.target, n: ctx.n };
+  return transformSource(nested);
 }
 
 function transformSource(ctx: Ctx): string {
@@ -294,6 +325,8 @@ export function compile(request: CompileRequest): CompileResult {
     const imports: string[] = [];
     if (ctx.universalHelpers.has("fragment")) imports.push("fragment");
     if (ctx.universalHelpers.has("h")) imports.push("h");
+    if (ctx.universalHelpers.has("Show")) imports.push("Show");
+    if (ctx.universalHelpers.has("For")) imports.push("For");
     if (imports.length > 0) {
       code = `import { ${imports.join(", ")} } from "@msf/runtime/universal";\n` + code;
     }

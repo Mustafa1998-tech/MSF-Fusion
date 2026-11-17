@@ -4,7 +4,7 @@
 - Active branch: `master`
 - License: **MIT** (`LICENSE`); distribution model: **GitHub-only — developers clone the repository and work against the workspace** (owner decision, 2026-11-17). There is no npm package and no plan to publish one; `pnpm publish:packages` remains as an **unused in-repo helper** only.
 - Last verified iteration: **GitHub-only distribution decision** (2026-11-17): npm publish was deliberately not pursued; the earlier `@mustafa-26112026/*` rename was reverted (commit `69410f2`); `v0.1.0` publish-preparation commits (READMEs, `LICENSE` in tarballs, self-contained sourcemaps, `scripts/verify-package.mjs` evidence) remain in-repo.
-- Current item / status: DTB-001..008 shipped (DTB-003 partial — Show/For runtime; no compiler lowering of control flow); DTB-009 (npm publish) **REJECTED**; DTB-010+ to be picked from backlog (router/data/streaming/dev-server remain the largest gaps).
+- Current item / status: DTB-001..008 shipped (DTB-003 partial — Show/For runtime; nested JSX-in-expressions translated and Show/For compiler lowering complete); DTB-009 (npm publish) **REJECTED**; DTB-010+ to be picked from backlog (router/data/streaming/dev-server remain the largest gaps).
 
 ## Baseline checks and results (2026-11-17, after the revert)
 

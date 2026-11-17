@@ -29,10 +29,10 @@ The same component function evaluates on the server (`renderToString`) and on th
 | Keyed DOM list with multi-root items | ✅ tested | `test/list.test.ts` |
 | SSR string renderer (escaped) | ✅ implemented | `@msf/runtime/server` |
 | SSR + hydration pilot via isomorphic view layer | ✅ implemented & browser-verified | `examples/fullstack`, `examples/dashboard` (Ops Board) |
-| Component model + Show/For | ✅ runtime layer; compiler lowering pending | `view.ts`, `test/view.test.ts` |
+| Component model + Show/For | ✅ implemented (runtime + compiler lowering) | iew.ts, 	est/view.test.ts, packages/compiler/test/universal-flow.test.ts |
 | JSX compiler (`jsx-dom-v1`, `jsx-universal-v1`) | ✅ subset only | `packages/compiler` (14 tests) |
 | Dev diagnostics CLI | ✅ preview | `packages/dev` (6 tests) |
-| Router / data actions / streaming / resume | ❌ not implemented | planned (M2+, gated) |
+| Router (minimal, in-memory, SSR-safe) | ⚠️ preview exists (matchRoute, createRouter); full router/data/streaming pending | packages/runtime/src/router.ts |
 | Dev server + HMR | ❌ not implemented | planned (M2+) |
 | Competitive performance measurements | ⚠️ informational only | `benchmarks/` (one machine, no claim) |
 

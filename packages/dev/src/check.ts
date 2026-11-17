@@ -2,6 +2,11 @@ import { readFile, readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { compile } from "@msf/compiler";
 
+export type CompileTarget = "dom" | "universal";
+export interface CompileOptions {
+  target?: CompileTarget;
+}
+
 export interface CheckDiagnostic {
   code: string;
   message: string;
@@ -16,9 +21,9 @@ export interface CheckResult {
   diagnostics: CheckDiagnostic[];
 }
 
-export async function checkFile(inputFile: string): Promise<CheckResult> {
+export async function checkFile(inputFile: string, options: CompileOptions = {}): Promise<CheckResult> {
   const source = await readFile(inputFile, "utf8");
-  const result = compile({ filename: inputFile, source });
+  const result = compile({ filename: inputFile, source, target: options.target ?? "dom" });
   return {
     file: inputFile,
     ok: result.diagnostics.length === 0,
@@ -47,11 +52,11 @@ async function collectFiles(dir: string, exts: string[]): Promise<string[]> {
   return files.sort();
 }
 
-export async function checkPath(inputPath: string): Promise<CheckResult[]> {
+export async function checkPath(inputPath: string, options: CompileOptions = {}): Promise<CheckResult[]> {
   const s = await stat(inputPath);
-  if (s.isFile()) return [await checkFile(inputPath)];
+  if (s.isFile()) return [await checkFile(inputPath, options)];
   const files = await collectFiles(inputPath, [".tsx", ".jsx"]);
   const results: CheckResult[] = [];
-  for (const f of files) results.push(await checkFile(f));
+  for (const f of files) results.push(await checkFile(f, options));
   return results;
 }

@@ -14,17 +14,20 @@ npm install --save-dev @msf/dev@0.1.0
 
 ```bash
 msf-dev status
-msf-dev check <file-or-directory>            # recursive over .tsx/.jsx, non-zero exit on diagnostics
-msf-dev compile <file-or-directory> [--out <dir>]
+msf-dev check <file-or-directory> [--target dom|universal]   # default: dom
+msf-dev compile <file-or-directory> [--out <dir>] [--target dom|universal]
 ```
+
+`--target` selects the compiler target (`jsx-dom-v1` by default, `jsx-universal-v1` for SSR/hydration paths).
 
 ## API
 
 ```ts
 import { checkFile, checkPath, compileFile, compilePath, getDevStatus } from "@msf/dev";
 
-const results = await checkPath("src"); // CheckResult[]: { file, ok, transformed, diagnostics }
-const one = await checkFile("src/app.tsx"); // CheckResult
+const results = await checkPath("src", { target: "universal" }); // CheckResult[]: { file, ok, transformed, diagnostics }
+const one = await checkFile("src/app.tsx", { target: "universal" }); // CheckResult
+const emitted = await compileFile("src/app.tsx", "out", { target: "universal" }); // CompileFileResult
 ```
 
 ## Not implemented yet

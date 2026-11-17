@@ -4,7 +4,15 @@ import process from "node:process";
 import { compilePath, getDevStatus, checkPath } from "./index.js";
 
 function usage() {
-  console.log(`msf-dev (preview)\n\nUsage:\n  node packages/dev/src/cli.ts status\n  node packages/dev/src/cli.ts check <input-file-or-dir>\n  node packages/dev/src/cli.ts compile <input-file-or-dir> [--out <dir>]\n`);
+  console.log(`msf-dev (preview)\n\nUsage:\n  msf-dev status\n  msf-dev check   <input-file-or-dir> [--target dom|universal]\n  msf-dev compile <input-file-or-dir> [--out <dir>] [--target dom|universal]\n`);
+}
+
+function parseTarget(rest: string[]): { target?: "dom" | "universal" } {
+  const idx = rest.indexOf("--target");
+  if (idx < 0) return {};
+  const value = rest[idx + 1];
+  if (value !== "dom" && value !== "universal") throw new Error("--target must be 'dom' or 'universal'");
+  return { target: value };
 }
 
 async function main() {
@@ -17,7 +25,8 @@ async function main() {
   if (cmd === "check") {
     const input = rest[0];
     if (!input) throw new Error("check requires <input-file-or-dir>");
-    const results = await checkPath(resolve(input));
+    const opts = parseTarget(rest);
+    const results = await checkPath(resolve(input), opts);
     let errors = 0;
     let transformed = 0;
     for (const r of results) {
@@ -36,7 +45,8 @@ async function main() {
     let outDir: string | undefined;
     const outIdx = rest.indexOf("--out");
     if (outIdx >= 0) outDir = rest[outIdx + 1];
-    const results = await compilePath(resolve(input), outDir ? resolve(outDir) : undefined);
+    const opts = parseTarget(rest);
+    const results = await compilePath(resolve(input), outDir ? resolve(outDir) : undefined, opts);
     let errors = 0;
     for (const r of results) {
       errors += r.diagnostics.length;

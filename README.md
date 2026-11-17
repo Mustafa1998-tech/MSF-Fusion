@@ -40,7 +40,7 @@ MSF Fusion targets three problems that mainstream React-style stacks leave infor
 |---|---|---|
 | **M0 — Architecture & Baseline** | ✅ Completed | ADRs, security/threat model, benchmark lab, final competitor baseline, compiler toolchain spike |
 | **M1 / M2 — Reactive kernel, components, hydration slices** | 🚧 In progress | Tested reactive kernel + DOM helpers + SSR; isomorphic view layer with **hydration** and **function components**; compiler subset with two targets (DOM + universal); dev-tooling preview; MSF micro-benchmark evidence; consumer-installable `dist` packages verified |
-| M2+ | 📋 Planned | Streaming/resume, full-stack boundaries, router, DX, compatibility, hardening, release approval |
+| M2+ | 📋 Planned | Streaming/resume, full-stack boundaries, full router/actions boundaries, DX, compatibility, hardening, release approval |
 
 > **Important:** A working **developer-preview framework** exists in-repo (runtime, DOM, universal/SSR/hydration, components, compiler subset). It is still preview: full compiler/IR pipeline, dev server/HMR for library packages, router/actions/boundaries, and comprehensive MSF measurements remain in progress. **Distribution is GitHub-only — there is no npm package and no plan to publish one; developers clone the repository and work against it as a workspace.** This repository makes **no superiority claims**.
 

@@ -15,7 +15,8 @@ npm install @msf/runtime@0.1.0
 | Import | Contents |
 |---|---|
 | `@msf/runtime` | `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, `getOwner`, `runWithOwner`, `flushSync`, plus the view helpers `h`/`fragment`/`text` |
-| `@msf/runtime/dom` | `render`, `mount` (DOM), `template`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list`, keyed `For` |
+| `@msf/runtime/dom` | `render`, `mount` (DOM), `template`, `insert`, `setText`, `setAttribute`, `setProperty`, `addEventListener`, `show`, `list` (multi-root keyed), `For` |
+| `@msf/runtime/router` | `matchRoute`, `createRouter` — minimal path-pattern router preview (SSR-safe, in-memory; no loaders/data actions) |
 | `@msf/runtime/server` | `h`, `fragment`, `text`, `Show`, `For`, `renderNode`, `renderToString`, `escapeHtml` |
 | `@msf/runtime/universal` | `h`, `fragment`, `text`, `Show`, `For`, `mount`, `hydrate` |
 
@@ -69,7 +70,7 @@ hydrate(() => h(App), document.getElementById("app")!);
 
 ## Known limitations (preview)
 
-- No router, data layer, server actions, streaming SSR, or resume.
+- No data layer, server actions, streaming SSR, or resume. The router preview (`@msf/runtime/router`) resolves path patterns in memory — no loaders, nested routes, guards, or transitions yet.
 - Compiler support is a JSX subset; `Show`/`For` are runtime components and are not lowered by `@msf/compiler` yet.
 - Hydration is preview-grade. Static SSR markup is adopted and listeners attach; complex reactive regions may still need `mount` while edge cases are hardened.
 - DOM-only concerns (event delegation, portals) are not implemented.
