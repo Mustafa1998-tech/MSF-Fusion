@@ -64,7 +64,7 @@ hydrate(() => h(App), document.getElementById("app")!); // adopt SSR markup
 | Reactive kernel + DOM ops + SSR + hydration | Router, data actions, streaming/resume |
 | Function components, `Show`/`For`, keyed `list()` | Compiler lowering of `<Show>`/`<For>` JSX today applies only to the view layer, not JSX parse pipeline |
 | Examples and tests in the repo | Compiler diagnostics in the toolchain, sourcemaps, full TSX coverage |
-| `@msf/*` packages with `dist` builds, tarball-verifiable | npm publishing (owner approval, though repo is MIT) |
+| `@msf/*` packages with `dist` builds, tarball-verifiable | npm publishing (rejected 2026-11-17 — GitHub-only distribution; no npm release) |
 
 ## Recommended next step
 1. Read the [engineering status](../engineering/status.md) for the live checklist.

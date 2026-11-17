@@ -1,10 +1,10 @@
 # Engineering status
 
-**Last updated:** 2026-11-17 (publish preparation, v0.1.0)
+**Last updated:** 2026-11-17 (GitHub-only distribution decision)
 **Branch:** `master`
 
 ## Summary
-MSF Fusion is **publishable (v0.1.0)** — packages are prepared for npm (`private: true` removed, `dist` ESM + d.ts, installable tarballs, consumer verification passing). It is **not npm-published yet** because the operator machine needs `npm login`; GitHub is the primary distribution channel. Functionality is a working developer preview: fine-grained reactivity, SSR/hydration, function components, benchmarks in all four suites, real examples, limited JSX compiler subset. See [production-readiness checklist](../production-readiness.md) for what is and isn't production-ready.
+MSF Fusion is a working **developer preview** with clone-based consumption: the four `@msf/*` packages build and install fine (tarball-verified), but the project has **no npm package and no plan to publish one** (owner decision, 2026-11-17 — GitHub-only distribution; developers clone and work against the workspace). Functionality is a working developer preview: fine-grained reactivity, SSR/hydration, function components, benchmarks in all four suites, real examples, limited JSX compiler subset. See [production-readiness checklist](../production-readiness.md) for what is and isn't production-ready.
 
 ## Implemented / verified
 - **`@msf/runtime`** (37 tests)
@@ -31,7 +31,7 @@ MSF Fusion is **publishable (v0.1.0)** — packages are prepared for npm (`priva
 - Dev tooling: dev server/HMR, templates, richer diagnostics/build pipeline
 - MSF benchmark coverage: SSR/bundle/DOM already committed; long-running/memory leak, streaming, async boundaries remain future work
 - Additional hardening: edge cases, leaks, security boundaries, API stabilization
-- Publishing/release: owner approval granted 2026-11-17; packages are **publish-prepared at v0.1.0** (`public` access, `LICENSE` in tarballs, self-contained sourcemaps, `scripts/publish-packages.mjs`) but **not published on npm yet** — publication awaits operator `npm login` authorization on this machine (see `docs/dtb/STATE.md`)
+- Distribution/release: **GitHub-only** (owner decision 2026-11-17); npm publishing was rejected. Local package tarballs/verification remain available (`pnpm build`, `pnpm verify:package`), but nothing is published and no publish flow is planned (`scripts/publish-packages.mjs` is an unused in-repo helper)
 
 ## Verification (2026-11-17)
 - `pnpm run typecheck` (10 workspace projects): **pass**
@@ -43,7 +43,7 @@ MSF Fusion is **publishable (v0.1.0)** — packages are prepared for npm (`priva
 - `pnpm run build`: **pass**
 - `pnpm verify:package`: **pass**
 - `pnpm pack` all four packages: `LICENSE` included; `workspace:*` rewritten to `0.1.0`; sourcemaps self-contained
-- `scripts/publish-packages.mjs` (dry-run default): aborts cleanly when unauthenticated; `--yes` required to publish
+- Consumer install verification note: `node scripts/verify-package.mjs` passes after the revert (no npm publish executed by decision)
 - `examples/*`: fullstack + dashboard SSR/hydration verified in Chromium (zero console errors)
 
 ## Known limitations / risks

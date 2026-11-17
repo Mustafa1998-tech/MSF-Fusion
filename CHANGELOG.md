@@ -4,9 +4,11 @@ All notable changes to this repository will be documented in this file.
 
 The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). MSF Fusion has not published to npm yet.
 
-## [0.1.0] — 2026-11-17 (publishable; not yet published)
+## [0.1.0] — 2026-11-17 (GitHub-only; no npm release)
 
-MSF Fusion packages are now technically ready for npm publication: `@msf/contracts|runtime|compiler|dev` are at `0.1.0`, `private: true` removed, `package.json` carries full publish metadata (`repository`, `homepage`, `bugs`, `author`, `keywords`, `description`, `license: MIT`), and `pnpm verify:package` passes (consumer install, runtime smoke, TS consumer typecheck). **npm publish requires operator `npm login` on the machine — done by the user, not CI.**
+> **Distribution decision (owner, 2026-11-17):** GitHub clone-based consumption only; no npm package is published and none is planned. The four `@msf/*` packages remain local tarball-verifiable (`pnpm build`, `pnpm verify:package`). An earlier experimental rename to `@mustafa-26112026/*` was reverted the same day.
+
+The four `@msf/*` packages are at `0.1.0` and verified consumable (consumer install, runtime smoke, TS typecheck), but by owner decision the repository is clone-based and **no npm release is planned**. Publish metadata and the helper remain in-repo for future reference only.
 
 ### Added
 - **Packaging hardened for publication:** per-package READMEs (real API surface), `publishConfig.access=public`, `LICENSE` included in every tarball, self-contained sourcemaps (`inlineSources`), and `scripts/publish-packages.mjs` (dry-run by default; `--yes` publishes in dependency order with preflight checks). Publication itself still pending operator `npm login` authorization.
@@ -21,7 +23,7 @@ MSF Fusion packages are now technically ready for npm publication: `@msf/contrac
 - **Production-readiness checklist** committed: `docs/production-readiness.md`.
 
 ### Notes
-- No npm publish executed yet; operator must authenticate with `npm login` and run publish (or trigger GitHub release) explicitly.
+- No npm publish will be executed; distribution is GitHub-only (owner decision, 2026-11-17).
 - No MSF performance superiority claim is made; benchmarks are informational preview measurements on one machine.
 - Compiler coverage remains a subset; full IR, sourcemaps, streaming/resume, router, and actions are not implemented.
 - No CI workflow pushed yet (GitHub token lacks `workflow` scope; needs operator permission to push `.github/workflows/ci.yml`).
@@ -35,5 +37,5 @@ MSF Fusion packages are now technically ready for npm publication: `@msf/contrac
 - Repository scaffolding: pnpm workspace, strict TS, editorconfig, issue/PR templates, MIT license placeholder.
 
 ### Notes
-- License finalized as **MIT** (`LICENSE`); npm publish still requires operator action.
+- License finalized as **MIT** (`LICENSE`); distribution is GitHub-only (owner decision 2026-11-17); no npm release is planned.
 - No superiority claims; baselines are machine-specific.

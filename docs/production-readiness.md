@@ -27,7 +27,7 @@
 | Actions / server boundaries | ❌ | Contracts exist, no enforcement toolchain |
 | Compiler full TSX/IR/codegen | ❌ | Only `jsx-dom-v1` / `jsx-universal-v1` subset; no sourcemaps |
 | Dev server + HMR / CLI (`dev`/`build` for apps) | ❌ | `@msf/dev` is a check/compile preview only |
-| npm publishing | ⚠️ prepared, not executed | Packages at `v0.1.0`, `public` access, verified tarballs; publication awaits operator `npm login` authorization; no registry release yet |
+| Distribution decision | ✅ GitHub-only | Owner decision, 2026-11-17: no npm package is published; developers clone and use the workspace |
 | Developer ergonomics (typechecking beyond run, diagnostics) | ⚠️ minimal | compile/dev check commands exist, not a complete HMR world |
 | Streaming SSR | ❌ | Not implemented |
 | Memory/leak analysis | ❌ | DOM CDM snapshot only; no long-run leak suite |
@@ -41,7 +41,7 @@
 2. **You can build small pages.** Yes.
 3. **You cannot yet ship a real multi-route app with data and actions.** No.
 4. **You should not use this in production yet.** It is a working developer preview (MIT, cloneable).
-5. **Short list of blockers to get to "production":** npm publish approval, full compiler (IR/sourcemaps/component lowering), router/actions boundaries, dev server/HMR, real-world apps, validated benchmarks, memory/leak analysis, CI green.
+5. **Short list of blockers to get to "production":** full compiler (IR/sourcemaps/component lowering), router/actions boundaries, dev server/HMR, real-world apps, validated benchmarks, memory/leak analysis, CI green. (Distribution is GitHub-only by owner decision — being cloneable is not a blocker here.)
 
 ## ملخص بالعربية
 هذا جدول استعداد صريح: النواة التفاعلية تعمل والـ SSR/Hydration مُختبران والأمثلة قابلة للتشغيل داخل المستودع، لكن ما زال ينقص: موجه، data/actions، مترجم كامل، بيئة تطوير، نشر npm، وتحليلات طولية — لذلك فهو developer preview وليس production-ready بعد.
