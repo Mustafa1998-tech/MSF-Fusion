@@ -22,7 +22,7 @@ diagnostic observations and are not statistically meaningful.
 ```bash
 pnpm install --frozen-lockfile
 pnpm spike:toolchain
-pnpm --filter @msf/spike-compiler-toolchain run test
+pnpm --filter @mustafa-26112026/spike-compiler-toolchain run test
 ```
 
 The probe writes `benchmarks/evidence/compiler-toolchain.json`.

@@ -1,13 +1,13 @@
 # Full-stack & SSR
 
-> **Status:** A working **SSR snapshot renderer** exists (`@msf/runtime/server`), plus an **isomorphic view layer** (`@msf/runtime/universal`: `h`, `fragment`, `text`, DOM `mount`, `hydrate` with mismatch fallback) that supports **function components**. The `examples/fullstack` pilot demonstrates dev SSR, production prerender, and Chromium-verified hydration. Streaming, resume, routing, data/actions, and compiler-enforced boundaries remain **planned**.
+> **Status:** A working **SSR snapshot renderer** exists (`@mustafa-26112026/runtime/server`), plus an **isomorphic view layer** (`@mustafa-26112026/runtime/universal`: `h`, `fragment`, `text`, DOM `mount`, `hydrate` with mismatch fallback) that supports **function components**. The `examples/fullstack` pilot demonstrates dev SSR, production prerender, and Chromium-verified hydration. Streaming, resume, routing, data/actions, and compiler-enforced boundaries remain **planned**.
 
 ## Implemented now (preview)
 
 **SSR snapshot (string):**
 ```ts
-import { createSignal } from "@msf/runtime";
-import { h, renderToString } from "@msf/runtime/server";
+import { createSignal } from "@mustafa-26112026/runtime";
+import { h, renderToString } from "@mustafa-26112026/runtime/server";
 
 const html = renderToString(() => {
   const [count] = createSignal(0);
@@ -23,9 +23,9 @@ const html = renderToString(() => {
 
 **Isomorphic view layer (mount/hydrate):**
 ```ts
-import { h } from "@msf/runtime/server";
-import { mount, hydrate } from "@msf/runtime/universal";
-import { renderToString } from "@msf/runtime/server";
+import { h } from "@mustafa-26112026/runtime/server";
+import { mount, hydrate } from "@mustafa-26112026/runtime/universal";
+import { renderToString } from "@mustafa-26112026/runtime/server";
 
 function Counter({ initial = 0 }) {
   const [count, setCount] = createSignal(initial);

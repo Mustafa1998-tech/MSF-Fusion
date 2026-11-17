@@ -1,5 +1,5 @@
 {
-  "name": "@msf/runtime",
+  "name": "@mustafa-26112026/runtime",
   "version": "0.1.0",
   "description": "MSF Fusion reactive runtime: fine-grained signals/memos/effects, DOM bindings, SSR renderer, isomorphic mount/hydrate.",
   "license": "MIT",
@@ -42,7 +42,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@msf/contracts": "workspace:*"
+    "@mustafa-26112026/contracts": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "26.6.6",

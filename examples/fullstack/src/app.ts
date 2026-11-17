@@ -1,7 +1,7 @@
-import { createSignal } from "@msf/runtime";
-import { h, mount, hydrate } from "@msf/runtime/universal";
-import { renderToString } from "@msf/runtime/server";
-import type { ViewNode } from "@msf/runtime/universal";
+import { createSignal } from "@mustafa-26112026/runtime";
+import { h, mount, hydrate } from "@mustafa-26112026/runtime/universal";
+import { renderToString } from "@mustafa-26112026/runtime/server";
+import type { ViewNode } from "@mustafa-26112026/runtime/universal";
 
 /**
  * Shared view function: used by the server for SSR and by the browser for
@@ -37,7 +37,7 @@ export function createAppView(initialCount: number) {
         },
         "Decrement",
       ),
-      h("p", { class: "hint" }, "Server-rendered. Hydrated by @msf/runtime/universal."),
+      h("p", { class: "hint" }, "Server-rendered. Hydrated by @mustafa-26112026/runtime/universal."),
     );
   return { view, count };
 }

@@ -31,10 +31,10 @@ This guide explains both the **currently runnable APIs** and the **intended** de
 ```bash
 pnpm install --frozen-lockfile
 pnpm run typecheck
-pnpm --filter @msf/runtime run test
+pnpm --filter @mustafa-26112026/runtime run test
 
 node examples/counter-basic/src/ssr.ts
-pnpm --filter @msf/example-counter-browser dev
+pnpm --filter @mustafa-26112026/example-counter-browser dev
 ```
 
 See the [root README](../../README.md), [engineering status](../engineering/status.md), and [benchmark methodology](../../benchmarks/methodology.md).

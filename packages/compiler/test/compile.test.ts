@@ -9,7 +9,7 @@ describe("compiler subset (jsx-dom-v1)", () => {
     });
     expect(res.diagnostics).toEqual([]);
     expect(res.meta?.transformed).toBe(true);
-    expect(res.code).toContain("@msf/runtime/dom");
+    expect(res.code).toContain("@mustafa-26112026/runtime/dom");
     expect(res.code).toContain("document.createElement");
     expect(res.code).toContain("insert");
   });

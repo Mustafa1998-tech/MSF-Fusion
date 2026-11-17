@@ -57,8 +57,8 @@ This laboratory establishes reproducible baselines for selected competitors so M
 ## Reproduction
 ```bash
 pnpm install --frozen-lockfile
-pnpm --filter @msf/bench-runner run typecheck
-pnpm --filter @msf/bench-runner run test
+pnpm --filter @mustafa-26112026/bench-runner run typecheck
+pnpm --filter @mustafa-26112026/bench-runner run test
 # Run sequentially:
 node --expose-gc benchmarks/runner/src/cli.ts micro --samples 12 --warmup 2
 node --expose-gc benchmarks/runner/src/cli.ts ssr --samples 12 --warmup 2

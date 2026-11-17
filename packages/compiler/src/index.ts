@@ -1,4 +1,4 @@
-import type { CompileRequest, CompileResult, Diagnostic } from "@msf/contracts";
+import type { CompileRequest, CompileResult, Diagnostic } from "@mustafa-26112026/contracts";
 
 type Target = "dom" | "universal";
 
@@ -295,7 +295,7 @@ export function compile(request: CompileRequest): CompileResult {
     if (ctx.universalHelpers.has("fragment")) imports.push("fragment");
     if (ctx.universalHelpers.has("h")) imports.push("h");
     if (imports.length > 0) {
-      code = `import { ${imports.join(", ")} } from "@msf/runtime/universal";\n` + code;
+      code = `import { ${imports.join(", ")} } from "@mustafa-26112026/runtime/universal";\n` + code;
     }
     return { code, diagnostics, meta: { transformed: ctx.universalHelpers.size > 0 || /h\(/.test(code), subset: "jsx-universal-v1" } };
   }
@@ -305,7 +305,7 @@ export function compile(request: CompileRequest): CompileResult {
     if (ctx.domHelpers.has("insert")) imports.push(`insert as __msf_insert`);
     if (ctx.domHelpers.has("setAttribute")) imports.push(`setAttribute as __msf_setAttribute`);
     if (ctx.domHelpers.has("addEventListener")) imports.push(`addEventListener as __msf_addEventListener`);
-    code = `import { ${imports.join(", ")} } from "@msf/runtime/dom";\n` + code;
+    code = `import { ${imports.join(", ")} } from "@mustafa-26112026/runtime/dom";\n` + code;
   }
   return { code, diagnostics, meta: { transformed: ctx.domHelpers.size > 0 || /__el\d+/.test(code), subset: "jsx-dom-v1" } };
 }

@@ -36,10 +36,10 @@ The project follows an evidence-driven process: architecture decisions, security
 
 ## What is in this repository today
 
-- **Runtime + DOM + universal (`@msf/runtime`):** fine-grained reactive kernel (signals/memos/effects/roots/disposal/batch/untrack), DOM bindings (`insert`/`setAttribute`/events/keyed multi-root `list`), SSR string renderer (`h`/`renderToString`/escaping), and an isomorphic view layer (`h`/`fragment`/`text`) with DOM mount + **hydration** and **function components**. Includes unit tests.
-- **Compiler subset (`@msf/compiler`):** `jsx-dom-v1` (intrinsic JSX → DOM calls) and **`jsx-universal-v1`** (JSX → isomorphic view descriptors for SSR/mount/hydrate). Golden-output tests and diagnostics.
-- **Dev tooling preview (`@msf/dev`):** `compileFile`/`compilePath`/`getDevStatus` + CLI for the supported subset.
-- **Package consumption verified:** `dist` ESM+d.ts builds for `@msf/contracts|runtime|compiler|dev`; `pnpm verify:package` packs and smoke-tests them in a temp consumer (install, runtime smoke, TS typecheck); evidence at `benchmarks/evidence/package-verification.json`.
+- **Runtime + DOM + universal (`@mustafa-26112026/runtime`):** fine-grained reactive kernel (signals/memos/effects/roots/disposal/batch/untrack), DOM bindings (`insert`/`setAttribute`/events/keyed multi-root `list`), SSR string renderer (`h`/`renderToString`/escaping), and an isomorphic view layer (`h`/`fragment`/`text`) with DOM mount + **hydration** and **function components**. Includes unit tests.
+- **Compiler subset (`@mustafa-26112026/compiler`):** `jsx-dom-v1` (intrinsic JSX → DOM calls) and **`jsx-universal-v1`** (JSX → isomorphic view descriptors for SSR/mount/hydrate). Golden-output tests and diagnostics.
+- **Dev tooling preview (`@mustafa-26112026/dev`):** `compileFile`/`compilePath`/`getDevStatus` + CLI for the supported subset.
+- **Package consumption verified:** `dist` ESM+d.ts builds for `@mustafa-26112026/contracts|runtime|compiler|dev`; `pnpm verify:package` packs and smoke-tests them in a temp consumer (install, runtime smoke, TS typecheck); evidence at `benchmarks/evidence/package-verification.json`.
 - **Examples:** `examples/counter-basic` (SSR snapshot), `examples/counter-browser` (Vite), **`examples/fullstack`** (dev SSR via Vite middleware + production prerender + hydration), and **`examples/dashboard`** (Ops Board — SSR + signal-driven filtering).
 - **Benchmark lab + MSF micro evidence:** competitor baseline preserved; MSF runtime measured in micro suite with 12 samples; raw JSON + report committed (`2026-11-16_09-03-34-486Z-li9o`).
 - **Architecture/governance:** ADR-001–ADR-005, security/threat model/requirements, quality gates, roadmap, DTB ledger (`docs/dtb/STATE.md`, `BACKLOG.md`, `CHANGELOG.md`), and review docs.
@@ -87,22 +87,22 @@ pnpm build
 
 # Quality checks
 pnpm run typecheck
-pnpm --filter @msf/runtime run test
-pnpm --filter @msf/bench-runner run test
-pnpm --filter @msf/spike-compiler-toolchain run test
+pnpm --filter @mustafa-26112026/runtime run test
+pnpm --filter @mustafa-26112026/bench-runner run test
+pnpm --filter @mustafa-26112026/spike-compiler-toolchain run test
 
 # Verify packed packages install & work in a clean consumer
 pnpm verify:package
 
 # Run preview examples
 node examples/counter-basic/src/ssr.ts
-pnpm --filter @msf/example-counter-browser dev
+pnpm --filter @mustafa-26112026/example-counter-browser dev
 
 # Full-stack SSR + hydration pilot
-pnpm --filter @msf/example-fullstack dev
+pnpm --filter @mustafa-26112026/example-fullstack dev
 
 # Ops Board — realistic SSR + fine-grained filters
-pnpm --filter @msf/example-dashboard dev
+pnpm --filter @mustafa-26112026/example-dashboard dev
 
 # Benchmarks (run sequentially for comparable results)
 pnpm bench:micro && pnpm bench:ssr && pnpm bench:bundle && pnpm bench:dom && pnpm bench:report
@@ -139,7 +139,7 @@ Results are machine- and time-specific. Read [limitations](benchmarks/methodolog
 
 ## License
 
-The repository is licensed under the **MIT License**; see [LICENSE](LICENSE). Package metadata declares `MIT`. The four `@msf/*` packages are prepared for npm at `v0.1.0` (`private` removed, `publishConfig.access=public`, `dist` ESM + d.ts, tarball-verified) and publish via `pnpm publish:packages -- --yes` once the operator runs `npm login`. Until that happens, GitHub remains the primary distribution channel.
+The repository is licensed under the **MIT License**; see [LICENSE](LICENSE). Package metadata declares `MIT`. The four `@mustafa-26112026/*` packages are prepared for npm at `v0.1.0` (`private` removed, `publishConfig.access=public`, `dist` ESM + d.ts, tarball-verified) and publish via `pnpm publish:packages -- --yes` once the operator runs `npm login`. Until that happens, GitHub remains the primary distribution channel.
 
 ---
 
@@ -147,7 +147,7 @@ The repository is licensed under the **MIT License**; see [LICENSE](LICENSE). Pa
 <summary><strong>ملخص بالعربية</strong></summary>
 
 **MSF Fusion** إطار عمل مستقل (تفاعلية دقيقة بمساعدة المترجم، TypeScript أولاً، كامل المكدس) دون اعتماد على React/Angular/Next.  
-**الحالة الحالية:** المرحلة 0 مكتملة ومرحلة M1 قيد التنفيذ بوجود **معاينة مطوّر قابلة للتشغيل** (`@msf/runtime`: نواة تفاعلية + DOM helpers + SSR نصي) مع اختبارات وأمثلة (`counter-basic`, `counter-browser`).  
+**الحالة الحالية:** المرحلة 0 مكتملة ومرحلة M1 قيد التنفيذ بوجود **معاينة مطوّر قابلة للتشغيل** (`@mustafa-26112026/runtime`: نواة تفاعلية + DOM helpers + SSR نصي) مع اختبارات وأمثلة (`counter-basic`, `counter-browser`).  
 **غير مكتمل بعد:** المترجم/JSX subset وIR/codegen، hydration والنموذج الموحّد، CLI/HMR، بناء `dist` للنشر، وقياسات أداء لـ MSF Fusion (ولا توجد ادعاءات تفوق).  
 راجع [حالة المشروع](docs/engineering/status.md)، [الخارطة](docs/engineering/roadmap.md)، و[مراجعة المعمارية والكود](docs/reviews/architecture-code-review.md).
 

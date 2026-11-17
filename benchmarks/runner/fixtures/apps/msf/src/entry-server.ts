@@ -1,4 +1,4 @@
-import { h, renderToString } from "@msf/runtime/server";
+import { h, renderToString } from "@mustafa-26112026/runtime/server";
 import { makeRows } from "../../../shared/bench-client";
 
 export function renderPage(): string {

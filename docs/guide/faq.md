@@ -1,16 +1,16 @@
 # FAQ
 
 ## Is MSF Fusion ready to use?
-**As a developer preview, partially.** You can use the in-repo runtime (`@msf/runtime` core/DOM/SSR/universal), function components, and a JSX **subset** via the compiler. It is **not** production-ready: no compiler/IR pipeline for full TSX, no dev server/HMR for library packages, no router/actions/boundaries, limited benchmark coverage, and no npm-published packages.
+**As a developer preview, partially.** You can use the in-repo runtime (`@mustafa-26112026/runtime` core/DOM/SSR/universal), function components, and a JSX **subset** via the compiler. It is **not** production-ready: no compiler/IR pipeline for full TSX, no dev server/HMR for library packages, no router/actions/boundaries, limited benchmark coverage, and no npm-published packages.
 
 ## What works right now?
 - **Show/For control-flow components** work in the isomorphic view layer (no compiler lowering needed)
 - Reactive kernel: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, owner helpers
-- DOM helpers: `@msf/runtime/dom` (`render`, `insert`, multi-root keyed `list`, `setAttribute`, ...)
-- Isomorphic view + hydration: `@msf/runtime/universal` (`h`, `fragment`, `text`, `mount`, `hydrate`, function components)
-- SSR string rendering: `@msf/runtime/server` (`h`, `renderToString`, `escapeHtml`)
-- Compiler subset with two targets: `dom` (→ `@msf/runtime/dom`) and `universal` (→ isomorphic view descriptors) — JSX **subset only**
-- Dev preview: `@msf/dev` compile APIs/CLI (`status`, `compile`)
+- DOM helpers: `@mustafa-26112026/runtime/dom` (`render`, `insert`, multi-root keyed `list`, `setAttribute`, ...)
+- Isomorphic view + hydration: `@mustafa-26112026/runtime/universal` (`h`, `fragment`, `text`, `mount`, `hydrate`, function components)
+- SSR string rendering: `@mustafa-26112026/runtime/server` (`h`, `renderToString`, `escapeHtml`)
+- Compiler subset with two targets: `dom` (→ `@mustafa-26112026/runtime/dom`) and `universal` (→ isomorphic view descriptors) — JSX **subset only**
+- Dev preview: `@mustafa-26112026/dev` compile APIs/CLI (`status`, `compile`)
 - Examples: `examples/counter-basic`, `examples/counter-browser`, **`examples/fullstack`** (dev SSR + production prerender + Chromium-verified hydration)
 
 ## Can I install it from npm today?
@@ -29,7 +29,7 @@ Yes for the current codebase and public runtime APIs (typed). Compiler diagnosti
 There are **no MSF Fusion performance numbers yet**. Competitor baselines are measured and documented; any future MSF results must be measured with the same methodology and reported without unsupported superiority claims. See [benchmarks](../../benchmarks/methodology.md).
 
 ## Does it support SSR and hydration?
-Yes in preview. SSR **string snapshot rendering** is available in preview (`@msf/runtime/server`). A **limited isomorphic/hydration preview** also exists via `@msf/runtime/universal` (view descriptors, DOM mount and hydrate with mismatch fallback), exercised end-to-end in `examples/fullstack`. **Streaming, resume, actions/router, and full component-model hydration are not implemented yet.**
+Yes in preview. SSR **string snapshot rendering** is available in preview (`@mustafa-26112026/runtime/server`). A **limited isomorphic/hydration preview** also exists via `@mustafa-26112026/runtime/universal` (view descriptors, DOM mount and hydrate with mismatch fallback), exercised end-to-end in `examples/fullstack`. **Streaming, resume, actions/router, and full component-model hydration are not implemented yet.**
 
 ## What about React/Angular/Web Components/Python interop?
 These are future, evidence-gated goals. No adapters or bridge implementations are shipped.

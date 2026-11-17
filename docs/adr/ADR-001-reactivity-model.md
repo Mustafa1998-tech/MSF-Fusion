@@ -33,7 +33,7 @@ Adopt a **compiler-assisted, fine-grained reactive** model:
 - Official models reviewed: Solid fine-grained reactivity, Svelte `$state`, Angular signals, React Compiler intent, Qwik resumability.
 
 ## Implementation note (M1)
-A real fine-grained runtime kernel and initial DOM/SSR helpers are implemented in `@msf/runtime` (developer preview). Compiler-assisted lowering, reactive IR, and JSX subset codegen remain pending per this ADR and WP4.
+A real fine-grained runtime kernel and initial DOM/SSR helpers are implemented in `@mustafa-26112026/runtime` (developer preview). Compiler-assisted lowering, reactive IR, and JSX subset codegen remain pending per this ADR and WP4.
 
 ## Mermaid — model comparison
 ```mermaid

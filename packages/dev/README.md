@@ -1,4 +1,4 @@
-# `@msf/dev`
+# `@mustafa-26112026/dev`
 
 Developer tooling for MSF Fusion: compile and check the supported JSX/TSX subset from the command line.
 
@@ -7,7 +7,7 @@ Developer tooling for MSF Fusion: compile and check the supported JSX/TSX subset
 ## Install
 
 ```bash
-npm install --save-dev @msf/dev@0.1.0
+npm install --save-dev @mustafa-26112026/dev@0.1.0
 ```
 
 ## CLI
@@ -21,7 +21,7 @@ msf-dev compile <file-or-directory> [--out <dir>]
 ## API
 
 ```ts
-import { checkFile, checkPath, compileFile, compilePath, getDevStatus } from "@msf/dev";
+import { checkFile, checkPath, compileFile, compilePath, getDevStatus } from "@mustafa-26112026/dev";
 
 const results = await checkPath("src"); // CheckResult[]: { file, ok, transformed, diagnostics }
 const one = await checkFile("src/app.tsx"); // CheckResult

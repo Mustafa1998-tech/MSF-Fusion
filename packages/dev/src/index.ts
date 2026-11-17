@@ -1,6 +1,6 @@
 import { mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve } from "node:path";
-import { compile } from "@msf/compiler";
+import { compile } from "@mustafa-26112026/compiler";
 
 export { checkFile, checkPath, type CheckResult, type CheckDiagnostic } from "./check.js";
 

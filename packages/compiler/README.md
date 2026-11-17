@@ -1,4 +1,4 @@
-# `@msf/compiler`
+# `@mustafa-26112026/compiler`
 
 Compiler for the MSF Fusion JSX/TSX subset. Lowers supported JSX to either DOM runtime calls (`jsx-dom-v1`) or isomorphic view descriptors (`jsx-universal-v1`). The compiler itself is runtime-free.
 
@@ -7,13 +7,13 @@ Compiler for the MSF Fusion JSX/TSX subset. Lowers supported JSX to either DOM r
 ## Install
 
 ```bash
-npm install @msf/compiler@0.1.0
+npm install @mustafa-26112026/compiler@0.1.0
 ```
 
 ## Usage
 
 ```ts
-import { compile } from "@msf/compiler";
+import { compile } from "@mustafa-26112026/compiler";
 
 const result = compile({
   filename: "app.tsx",
@@ -30,7 +30,7 @@ result.meta;        // { transformed, subset }
 
 | Target | Output | Notes |
 |---|---|---|
-| `jsx-dom-v1` | `document.createElement` / `@msf/runtime/dom` calls | Intrinsic elements only; component tags produce `MSF_UNSUPPORTED_COMPONENT` |
+| `jsx-dom-v1` | `document.createElement` / `@mustafa-26112026/runtime/dom` calls | Intrinsic elements only; component tags produce `MSF_UNSUPPORTED_COMPONENT` |
 | `jsx-universal-v1` | `h` / `fragment` view descriptors | Supports intrinsic elements, fragments, and component tags |
 
 ## Supported subset (v1)

@@ -11,7 +11,7 @@ describe("compiler subset (jsx-universal-v1)", () => {
     expect(res.diagnostics).toEqual([]);
     expect(res.meta?.transformed).toBe(true);
     expect(res.code).toContain("h(\"section\"");
-    expect(res.code).toContain("@msf/runtime/universal");
+    expect(res.code).toContain("@mustafa-26112026/runtime/universal");
     expect(res.code).not.toContain("document.createElement");
     expect(res.code).not.toContain("setAttribute");
   });

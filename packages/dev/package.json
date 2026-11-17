@@ -1,5 +1,5 @@
 {
-  "name": "@msf/dev",
+  "name": "@mustafa-26112026/dev",
   "version": "0.1.0",
   "description": "MSF Fusion dev tooling: compile/check CLI for the supported JSX subset and framework diagnostics.",
   "license": "MIT",
@@ -36,9 +36,9 @@
     "compile": "node dist/cli.js compile"
   },
   "dependencies": {
-    "@msf/compiler": "workspace:*",
-    "@msf/contracts": "workspace:*",
-    "@msf/runtime": "workspace:*"
+    "@mustafa-26112026/compiler": "workspace:*",
+    "@mustafa-26112026/contracts": "workspace:*",
+    "@mustafa-26112026/runtime": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "26.6.6",

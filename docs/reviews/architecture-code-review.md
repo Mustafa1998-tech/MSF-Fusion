@@ -36,7 +36,7 @@
 - **Limitations:** not integrated with component/runtime DOM model, no hydration markers/serialization, limited attribute semantics.
 
 ### Scaffolds and packaging
-- `@msf/contracts`, `@msf/compiler`, `@msf/dev` are honest scaffolds.
+- `@mustafa-26112026/contracts`, `@mustafa-26112026/compiler`, `@mustafa-26112026/dev` are honest scaffolds.
 - Runtime exports point to source `.ts` files and packages are private; suitable for monorepo preview, not yet npm-ready.
 
 ## Recommendations (prioritized)

@@ -2,8 +2,8 @@
 
 Demonstrates the **current runnable** MSF runtime APIs:
 - reactive kernel (`createSignal`)
-- DOM bindings (`@msf/runtime/dom`)
-- SSR string snapshot (`@msf/runtime/server`)
+- DOM bindings (`@mustafa-26112026/runtime/dom`)
+- SSR string snapshot (`@mustafa-26112026/runtime/server`)
 
 ## Run SSR example
 

@@ -1,5 +1,5 @@
-import { createSignal } from "@msf/runtime";
-import { h, renderToString } from "@msf/runtime/server";
+import { createSignal } from "@mustafa-26112026/runtime";
+import { h, renderToString } from "@mustafa-26112026/runtime/server";
 
 function CounterCard() {
   const [count] = createSignal(3);

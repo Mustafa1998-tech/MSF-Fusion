@@ -1,5 +1,5 @@
 {
-  "name": "@msf/compiler",
+  "name": "@mustafa-26112026/compiler",
   "version": "0.1.0",
   "description": "MSF Fusion compiler: JSX/TSX subset compiler targeting isomorphic view descriptors or DOM runtime calls.",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@msf/contracts": "workspace:*"
+    "@mustafa-26112026/contracts": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "26.6.6",

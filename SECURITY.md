@@ -1,13 +1,13 @@
 # Security Policy
 
-MSF Fusion treats security as an architectural requirement. The repository contains security/design documentation, benchmark and spike tooling, and a **developer-preview runtime** (`@msf/runtime`) with initial DOM/SSR helpers. The framework is not production-hardened or released.
+MSF Fusion treats security as an architectural requirement. The repository contains security/design documentation, benchmark and spike tooling, and a **developer-preview runtime** (`@mustafa-26112026/runtime`) with initial DOM/SSR helpers. The framework is not production-hardened or released.
 
 ## Supported status
 
 | Component | Status | Security fixes |
 |---|---|---|
-| `@msf/runtime` (kernel/DOM/SSR preview) | Developer preview (M1 in progress) | Best-effort; issues reviewed case-by-case |
-| `@msf/compiler`, `@msf/dev`, `@msf/contracts` | Scaffold / early contracts | Best-effort; issues reviewed case-by-case |
+| `@mustafa-26112026/runtime` (kernel/DOM/SSR preview) | Developer preview (M1 in progress) | Best-effort; issues reviewed case-by-case |
+| `@mustafa-26112026/compiler`, `@mustafa-26112026/dev`, `@mustafa-26112026/contracts` | Scaffold / early contracts | Best-effort; issues reviewed case-by-case |
 | Benchmark lab & spikes | Tooling | Best-effort; issues reviewed case-by-case |
 | Documentation/design | Active | Corrections welcome via private report or PR as appropriate |
 

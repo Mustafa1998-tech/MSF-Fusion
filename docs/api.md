@@ -12,7 +12,7 @@
 
 All MSF Fusion packages are still `private: true` (not published). The policy below applies to in-repo consumers and will become the contract for the first pre-release tag.
 
-## `@msf/runtime` — exports
+## `@mustafa-26112026/runtime` — exports
 | Export | Level | Notes |
 |---|---|---|
 | `createSignal` | Stable (preview-track) | `[get, set] = createSignal(initial, options?)`; setter accepts value or updater function |
@@ -30,19 +30,19 @@ All MSF Fusion packages are still `private: true` (not published). The policy be
 | `./universal` — `mount`, `hydrate` | Stable (preview-track) | Same view tree mountable/hydratable; no JSX yet |
 | `./universal` — `h`, `fragment`, `text`, `ViewNode`, `ComponentProps` | Stable (preview-track) | Isomorphic descriptor for SSR + client |
 
-## `@msf/compiler` — exports
+## `@mustafa-26112026/compiler` — exports
 | Export | Level | Notes |
 |---|---|---|
 | `compile` | Preview | Two targets: `dom` (default), `universal`; subset only |
-| `CompileRequest.target`, `CompileResult`, `Diagnostic`, `MSF_CONTRACTS_VERSION` (from `@msf/contracts`) | Preview | Diagnostics contract can grow codes/severity levels |
+| `CompileRequest.target`, `CompileResult`, `Diagnostic`, `MSF_CONTRACTS_VERSION` (from `@mustafa-26112026/contracts`) | Preview | Diagnostics contract can grow codes/severity levels |
 
-## `@msf/dev` — exports
+## `@mustafa-26112026/dev` — exports
 | Export | Level | Notes |
 |---|---|---|
 | `getDevStatus`, `compileFile`, `compilePath`, `checkFile`, `checkPath` | Preview | Reports ready flag + `compile-file`/`compile-path`/`check-file`/`check-path`/`diagnostics` |
 | `msf-dev status`, `msf-dev check`, `msf-dev compile` (CLI) | Preview | `dist/cli.js` after `pnpm build` |
 
-## `@msf/contracts` — exports
+## `@mustafa-26112026/contracts` — exports
 | Export | Level | Notes |
 |---|---|---|
 | `Diagnostic`, `CompileRequest`, `CompileResult`, `Disposable` | Preview | Will grow spans/sourcemaps/severity |
@@ -57,5 +57,5 @@ All MSF Fusion packages are still `private: true` (not published). The policy be
 
 ## What is intentionally NOT in the public API
 - Deep runtime internals (`ReactiveNode`, `Owner`, `Listener` internals, array-slot disposal details)
-- Private APIs may be referenced by `@msf/*` packages internally and are not covered by this policy
+- Private APIs may be referenced by `@mustafa-26112026/*` packages internally and are not covered by this policy
 - Compiler IR and diagnostics `code` set is preview-only and may grow

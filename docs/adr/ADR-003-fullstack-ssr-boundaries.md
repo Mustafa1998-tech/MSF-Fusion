@@ -35,7 +35,7 @@ sequenceDiagram
 - Streaming/resume deferred until correctness/security baselines exist.
 
 ## Implementation note (M1)
-`@msf/runtime/server` provides `h`, `renderToString`, and HTML escaping for a restricted snapshot model. Isomorphic component rendering, hydration, streaming/resume, serialization contracts, and compiler-enforced boundaries are not implemented yet.
+`@mustafa-26112026/runtime/server` provides `h`, `renderToString`, and HTML escaping for a restricted snapshot model. Isomorphic component rendering, hydration, streaming/resume, serialization contracts, and compiler-enforced boundaries are not implemented yet.
 
 ## ملخص بالعربية
 يحدد القرار حدود تنفيذ واضحة (خادم/عميل/مشترك)، تعاقد تسلسل آمن، ومسار SSR تدريجي مع تأجيل البث والاستئناف إلى ما بعد استقرار النواة.

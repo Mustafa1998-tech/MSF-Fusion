@@ -3,7 +3,7 @@
  *
  * Renders a deterministic HTML snapshot of a `ViewNode` tree with escaping by
  * default. The same tree can be mounted or hydrated on the client via
- * `@msf/runtime/universal`.
+ * `@mustafa-26112026/runtime/universal`.
  */
 import { untrack } from "./core.js";
 import {
@@ -114,7 +114,7 @@ export function renderToString(view: () => unknown): string {
   return untrack(() => renderNode(view()));
 }
 
-/** @deprecated use `@msf/runtime/universal` for isomorphic rendering */
+/** @deprecated use `@mustafa-26112026/runtime/universal` for isomorphic rendering */
 export type ServerNode = ViewNode;
-/** @deprecated use `@msf/runtime/universal` for isomorphic rendering */
+/** @deprecated use `@mustafa-26112026/runtime/universal` for isomorphic rendering */
 export type ServerElement = ViewElement;

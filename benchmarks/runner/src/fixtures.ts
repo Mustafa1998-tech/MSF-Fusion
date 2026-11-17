@@ -59,7 +59,7 @@ export const APP_FIXTURES: readonly AppFixture[] = [
     id: "msf",
     label: "MSF Fusion",
     directory: join(FIXTURES_DIR, "apps", "msf"),
-    frameworkPackages: ["@msf/runtime"],
+    frameworkPackages: ["@mustafa-26112026/runtime"],
     serverEntry: "src/entry-server.ts",
     notes:
       "MSF Fusion runtime-preview mount of an equivalent 1,000/10,000-row table using fine-grained signals + keyed list(). Informational preview measurement; not a production claim.",

@@ -2,8 +2,8 @@ import {
   batch,
   createMemo,
   createSignal,
-} from "@msf/runtime";
-import { insert, render, setAttribute } from "@msf/runtime/dom";
+} from "@mustafa-26112026/runtime";
+import { insert, render, setAttribute } from "@mustafa-26112026/runtime/dom";
 
 function CounterApp() {
   const [count, setCount] = createSignal(0);

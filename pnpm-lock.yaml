@@ -181,7 +181,7 @@ importers:
 
   benchmarks/runner:
     dependencies:
-      '@msf/runtime':
+      '@mustafa-26112026/runtime':
         specifier: workspace:*
         version: link:../../packages/runtime
       '@preact/signals-core':
@@ -236,7 +236,7 @@ importers:
 
   examples/counter-basic:
     dependencies:
-      '@msf/runtime':
+      '@mustafa-26112026/runtime':
         specifier: workspace:*
         version: link:../../packages/runtime
     devDependencies:
@@ -249,7 +249,7 @@ importers:
 
   examples/counter-browser:
     dependencies:
-      '@msf/runtime':
+      '@mustafa-26112026/runtime':
         specifier: workspace:*
         version: link:../../packages/runtime
     devDependencies:
@@ -265,7 +265,7 @@ importers:
 
   examples/dashboard:
     dependencies:
-      '@msf/runtime':
+      '@mustafa-26112026/runtime':
         specifier: workspace:*
         version: link:../../packages/runtime
     devDependencies:
@@ -284,7 +284,7 @@ importers:
 
   examples/fullstack:
     dependencies:
-      '@msf/runtime':
+      '@mustafa-26112026/runtime':
         specifier: workspace:*
         version: link:../../packages/runtime
     devDependencies:
@@ -303,7 +303,7 @@ importers:
 
   packages/compiler:
     dependencies:
-      '@msf/contracts':
+      '@mustafa-26112026/contracts':
         specifier: workspace:*
         version: link:../contracts
     devDependencies:
@@ -331,13 +331,13 @@ importers:
 
   packages/dev:
     dependencies:
-      '@msf/compiler':
+      '@mustafa-26112026/compiler':
         specifier: workspace:*
         version: link:../compiler
-      '@msf/contracts':
+      '@mustafa-26112026/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@msf/runtime':
+      '@mustafa-26112026/runtime':
         specifier: workspace:*
         version: link:../runtime
     devDependencies:
@@ -353,7 +353,7 @@ importers:
 
   packages/runtime:
     dependencies:
-      '@msf/contracts':
+      '@mustafa-26112026/contracts':
         specifier: workspace:*
         version: link:../contracts
     devDependencies:

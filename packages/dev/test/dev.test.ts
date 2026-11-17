@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getDevStatus } from "../src/index.js";
-import { compile } from "@msf/compiler";
+import { compile } from "@mustafa-26112026/compiler";
 
 describe("dev scaffold/preview", () => {
   it("reports ready preview status", () => {

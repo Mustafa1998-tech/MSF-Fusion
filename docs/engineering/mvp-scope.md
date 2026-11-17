@@ -6,7 +6,7 @@ A minimal, correct, evidence-backed vertical slice that proves MSF Fusion's core
 ## Progress snapshot
 | Area | MVP target | Current state |
 |---|---|---|
-| Runtime kernel | signals, computed, effects, ownership/disposal, batch | **Implemented (preview)** in `@msf/runtime` with tests |
+| Runtime kernel | signals, computed, effects, ownership/disposal, batch | **Implemented (preview)** in `@mustafa-26112026/runtime` with tests |
 | DOM renderer | text/attributes/events + keyed updates for supported patterns | **Implemented (preview)**: render/insert/props/events, keyed multi-root `list`, isomorphic view layer with components + hydration |
 | Compiler subset | parse/analyze/IR/lower/codegen + sourcemaps | **Not implemented** (scaffold only) |
 | TypeScript-first authoring | typed APIs and component props in subset | **Partial**: runtime APIs typed; compiler diagnostics pending |

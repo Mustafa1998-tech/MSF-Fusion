@@ -44,7 +44,7 @@ flowchart LR
 | ReDoS / algorithmic complexity | Validators/parsers/user patterns | Safe regex practices, input limits, fuzzing for parsers |
 
 ## Current status / out of scope
-- **Implemented in preview:** limited SSR string escaping in `@msf/runtime/server` for supported node/attribute rendering.
+- **Implemented in preview:** limited SSR string escaping in `@mustafa-26112026/runtime/server` for supported node/attribute rendering.
 - **Not yet implemented:** compiler-enforced boundaries, hydration serialization contracts, action/CSRF protections, SSRF-safe fetch helpers, input/size limits, and executable security benchmark suite.
 - Production WAF/infra hardening, deployment-specific IAM, and runtime monitoring remain consumer/deployment responsibilities (framework must provide hooks and safe defaults).
 
