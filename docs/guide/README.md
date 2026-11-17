@@ -14,6 +14,7 @@ This guide explains both the **currently runnable APIs** and the **intended** de
 | Topic | Description |
 |---|---|
 | [Getting started](getting-started.md) | Current runnable preview, examples, and planned install/dev workflow |
+| [Real-world quickstart](real-world-quickstart.md) | Practical steps to clone, build, verify, and try building your own app on MSF today |
 | [Reactivity](reactivity.md) | Implemented kernel primitives, semantics notes, and proposed authoring ergonomics |
 | [Syntax & components](syntax-and-components.md) | Current manual DOM/SSR authoring and proposed component/compiler syntax |
 | [Full-stack & SSR](fullstack.md) | Current SSR snapshot capabilities and planned boundaries/hydration/actions |
