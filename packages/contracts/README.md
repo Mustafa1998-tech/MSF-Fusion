@@ -1,15 +1,28 @@
-# `@msf/contracts` (scaffold)
+# `@msf/contracts`
 
-Shared contracts and interfaces for MSF Fusion packages.
+Shared, dependency-light contracts for MSF Fusion packages: diagnostics, compile requests/results, and version marker.
 
-> **Status:** Milestone 1 scaffold. Intended to hold stable boundaries (diagnostics, compile requests/results, IR/contracts as they emerge) so runtime/compiler/dev do not depend on each other's internals.
+> **Status: v0.1.0 — developer preview.**
 
-## Current exports
+## Install
+
+```bash
+npm install @msf/contracts@0.1.0
+```
+
+## Exports
+
 - `Disposable`
 - `Diagnostic`
-- `CompileRequest`, `CompileResult`
+- `CompileRequest`, `CompileResult` (`CompileRequest.target` accepts `jsx-dom-v1` | `jsx-universal-v1`)
 - `MSF_CONTRACTS_VERSION`
 
-## Notes
-- APIs will expand as compiler/IR and tooling are implemented.
-- Keep this package dependency-light and boundary-focused.
+## Purpose
+
+`@msf/contracts` exists so `@msf/runtime`, `@msf/compiler`, and `@msf/dev` share boundaries without importing each other's internals. It has no runtime dependencies of its own.
+
+Repository and issue tracker: <https://github.com/Mustafa1998-tech/MSF-Fusion>
+
+## License
+
+MIT

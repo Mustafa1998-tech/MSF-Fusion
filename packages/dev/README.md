@@ -1,17 +1,40 @@
-# `@msf/dev` (developer preview)
+# `@msf/dev`
 
-Developer tooling package for MSF Fusion.
+Developer tooling for MSF Fusion: compile and check the supported JSX/TSX subset from the command line.
 
-> **Status:** Milestone 1 preview. Provides compile APIs/CLI for the current compiler subset; dev server/HMR and full build workflows are pending.
+> **Status: v0.1.0 — developer preview.** Diagnostics and per-file compilation only; no dev server, HMR, or watch mode yet.
 
-## Current capabilities
-- `compileFile(inputFile, outDir?)`, `compilePath(inputPath, outDir?)`
-- `getDevStatus()`
-- CLI: `node packages/dev/src/cli.ts status|compile <input> [--out <dir>]`
+## Install
+
+```bash
+npm install --save-dev @msf/dev@0.1.0
+```
+
+## CLI
+
+```bash
+msf-dev status
+msf-dev check <file-or-directory>            # recursive over .tsx/.jsx, non-zero exit on diagnostics
+msf-dev compile <file-or-directory> [--out <dir>]
+```
+
+## API
+
+```ts
+import { checkFile, checkPath, compileFile, compilePath, getDevStatus } from "@msf/dev";
+
+const results = await checkPath("src"); // CheckResult[]: { file, ok, transformed, diagnostics }
+const one = await checkFile("src/app.tsx"); // CheckResult
+```
 
 ## Not implemented yet
+
 - Dev server, HMR, watch mode
 - Project scaffolding/templates
-- Integrated build/check/preview pipeline and rich diagnostics UX
+- Integrated build/preview pipeline and richer diagnostics UX
 
-See `docs/engineering/implementation-plan.md` and `docs/engineering/status.md`.
+Repository and issue tracker: <https://github.com/Mustafa1998-tech/MSF-Fusion>
+
+## License
+
+MIT

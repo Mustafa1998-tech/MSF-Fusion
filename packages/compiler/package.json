@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "MSF Fusion compiler: JSX/TSX subset compiler targeting isomorphic view descriptors or DOM runtime calls.",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "repository": {
     "type": "git",
