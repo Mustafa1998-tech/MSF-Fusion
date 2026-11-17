@@ -27,7 +27,7 @@
 | Actions / server boundaries | ❌ | Contracts exist, no enforcement toolchain |
 | Compiler full TSX/IR/codegen | ❌ | Only `jsx-dom-v1` / `jsx-universal-v1` subset; no sourcemaps |
 | Dev server + HMR / CLI (`dev`/`build` for apps) | ❌ | `@msf/dev` is a check/compile preview only |
-| npm publishing | ❌ blocked | License MIT, but packages remain `private: true`; no registry release |
+| npm publishing | ⚠️ prepared, not executed | Packages at `v0.1.0`, `public` access, verified tarballs; publication awaits operator `npm login` authorization; no registry release yet |
 | Developer ergonomics (typechecking beyond run, diagnostics) | ⚠️ minimal | compile/dev check commands exist, not a complete HMR world |
 | Streaming SSR | ❌ | Not implemented |
 | Memory/leak analysis | ❌ | DOM CDM snapshot only; no long-run leak suite |

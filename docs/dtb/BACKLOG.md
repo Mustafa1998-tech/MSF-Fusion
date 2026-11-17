@@ -12,7 +12,7 @@
 | DTB-006 | Cycle detection/dev diagnostics in runtime kernel (debug mode) | Medium | ADR-002 mentions cycle detection; not implemented | Medium | Low | P2 | **VERIFIED** | Depth guard (`MSF_REACTIVE_CYCLE` >1000 nested `updateIfNecessary` steps) implemented and tested (`test/cycle.test.ts`); full read/write-after-dispose tracing still open |
 | DTB-007 | Dev tooling: `msf check` compile diagnostics CLI across a project | Medium | `compilePath` already exists | Low | Low | P3 | **VERIFIED** | `node packages/dev/dist/cli.js check <path>` emits diagnostics; `pnpm --filter @msf/dev run check <path>` alias; tests pass |
 | DTB-008 | API docs frozen list + breaking-change policy for preview exports | Medium | Repeated "preview may change" notes; need a single reliable reference | Low | Low | P3 | **VERIFIED** | `docs/api.md` lists stability levels, all exports, and breaking-change rules; linked from README |
-| DTB-009 | npm publishing readiness & release approvals | High | License is MIT; packages still private and unpublished; publishing requires owner approval | Medium | High | - | BLOCKED | Owner must approve any npm publish/release; GitHub distribution is allowed today |
+| DTB-009 | npm publishing readiness & release approvals | High | Owner approved publication 2026-11-17; packages at v0.1.0 with full publish metadata, LICENSE in tarballs, self-contained sourcemaps, `scripts/publish-packages.mjs` | Medium | High | - | **READY** | Owner approves and `npm login` authorize succeeds on this machine; packages published in order contracts → runtime → compiler → dev; dist-tags `latest` + `preview` verified |
 
 ## Ranking notes
 

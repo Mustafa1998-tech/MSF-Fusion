@@ -1,6 +1,6 @@
 # Engineering status
 
-**Last updated:** 2026-11-16 (all benchmark suites integrated)
+**Last updated:** 2026-11-17 (publish preparation, v0.1.0)
 **Branch:** `master`
 
 ## Summary
@@ -31,16 +31,19 @@ MSF Fusion is **publishable (v0.1.0)** — packages are prepared for npm (`priva
 - Dev tooling: dev server/HMR, templates, richer diagnostics/build pipeline
 - MSF benchmark coverage: SSR/bundle/DOM already committed; long-running/memory leak, streaming, async boundaries remain future work
 - Additional hardening: edge cases, leaks, security boundaries, API stabilization
-- Publishing/release requires explicit owner approval (license: MIT; GitHub distribution is allowed; npm not published yet)
+- Publishing/release: owner approval granted 2026-11-17; packages are **publish-prepared at v0.1.0** (`public` access, `LICENSE` in tarballs, self-contained sourcemaps, `scripts/publish-packages.mjs`) but **not published on npm yet** — publication awaits operator `npm login` authorization on this machine (see `docs/dtb/STATE.md`)
 
-## Verification (this update)
-- `pnpm run typecheck` (workspace): **pass**
-- `@msf/runtime` tests: **37/37 pass**
+## Verification (2026-11-17)
+- `pnpm run typecheck` (10 workspace projects): **pass**
+- `@msf/runtime` tests: **38/38 pass**
 - `@msf/compiler` tests: **14/14 pass**
 - `@msf/dev` tests: **6/6 pass**
 - `@msf/bench-runner` tests: **31/31 pass**
+- `@msf/spike-compiler-toolchain` tests: **4/4 pass**
 - `pnpm run build`: **pass**
 - `pnpm verify:package`: **pass**
+- `pnpm pack` all four packages: `LICENSE` included; `workspace:*` rewritten to `0.1.0`; sourcemaps self-contained
+- `scripts/publish-packages.mjs` (dry-run default): aborts cleanly when unauthenticated; `--yes` required to publish
 - `examples/*`: fullstack + dashboard SSR/hydration verified in Chromium (zero console errors)
 
 ## Known limitations / risks

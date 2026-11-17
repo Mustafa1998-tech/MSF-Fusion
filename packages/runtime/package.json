@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "@msf/runtime",
   "version": "0.1.0",
   "description": "MSF Fusion reactive runtime: fine-grained signals/memos/effects, DOM bindings, SSR renderer, isomorphic mount/hydrate.",

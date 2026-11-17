@@ -2,36 +2,43 @@
 
 - Product / repository: **MSF Fusion** (https://github.com/Mustafa1998-tech/MSF-Fusion) — compiler-assisted, fine-grained reactive, TypeScript-first full-stack framework
 - Active branch: `master`
-- License: **MIT** (`LICENSE`); packages remain `private: true` and are **not published to npm** — distribution is via the public GitHub repository and source clones only.
-- Last verified iteration: **DTB-004/006 (list() fix, depth guard) + benchmarks coverage (micro/SSR/DOM) + DTB-008/003/007**
-- Current item / status: DTB-001..008 shipped (DTB-003 partial — Show/For runtime, no compiler lowering for control flow yet); next: stabilize benchmark harnesses and docs, or DTB-009 (npm publish under MIT — still requires owner approval)
-- Relevant files: `benchmarks/{micro,ssr,dom}/`, `benchmarks/results/2026-11-16_{09-03-34-486Z-li9o,09-37-02-734Z-arcv,09-50-15-877Z-jjuo}.json`
-- Baseline checks and results (2026-11-16, after list() fix):
-  - `pnpm run typecheck` (workspace): **pass**
-  - `@msf/runtime` tests: **37/37 pass**
-  - `@msf/compiler` tests: **14/14 pass**
-  - `@msf/dev` tests: **6/6 pass**
-  - `@msf/bench-runner` tests: **31/31 pass**
-  - `pnpm run build`: **pass**
-  - `pnpm verify:package`: **pass** (consumer install + runtime smoke + TS consumer typecheck)
-  - `examples/fullstack` dev SSR / production prerender + Chromium hydration: **pass**
-  - MSF benchmarks: micro `2026-11-16_09-03-34-486Z-li9o`, SSR `2026-11-16_09-37-02-734Z-arcv`, DOM `2026-11-16_09-50-15-877Z-jjuo` (informational preview measurements)
-- Most recent checks and results: see latest iteration notes below
-- Notes / limitations:
-  - No CI workflow pushed yet (workflow scope needed; validate locally)
-  - No npm release (owner approval required even though repo is MIT)
-  - No compiler support for `<Show>`/`<For>` lowering yet (runtime supports them)
-- Known risks / blockers:
-  - Hydration/component model still preview (not compiler-emitted)
-  - Compiler subset constrained; bundle/dom MSF fixtures verified working
-- Next safe action: pick next DTB backlog item; highest value = stabilize & close the preview, or approve and execute npm publish under MIT
-- Approval required: npm publish/releases; any production-facing or destructive change; major scope expansion
+- License: **MIT** (`LICENSE`); the four `@msf/*` packages are **publishable at v0.1.0** (`private` removed, `publishConfig.access=public`) but are **not published to npm yet** — publication is approval-gated and requires operator `npm login` on the machine
+- Last verified iteration: **v0.1.0 publish preparation** (2026-11-17): package READMEs made accurate, `LICENSE` shipped in every tarball, self-contained sourcemaps, `scripts/publish-packages.mjs` (dry-run by default), root `publish:packages` scripts
+- Current item / status: DTB-001..008 shipped (DTB-003 partial — Show/For runtime; no compiler lowering of control flow); **DTB-009 release** — owner approval granted 2026-11-17, publication blocked only on npm authentication
 
-## Iteration notes
-- 2026-11-16 — benchmarks expanded: MSF micro/SSR/DOM evidence committed; SSR fixture added; DOM fixture used fine-grained `list(keyFn)` (real app wiring fixed); Windows `.cmd` shim detection fixed in `env.ts`.
-- 2026-11-16 — License decision: **MIT** (`LICENSE` modified); package metadata set to `MIT`; DTB-009 still blocked on owner npm-publish approval.
-- 2026-11-16 — list() item ownership fixed: per-item `createRoot` now runs under detached owner (`runWithOwner(null, ...)`) so reconciliation no longer disposes sibling effects; added test.
-- 2026-11-16 `d67853e` — depth guard (`MSF_REACTIVE_CYCLE`) added for nested updateIfNecessary; test added.
-- 2026-11-16 `fca2179` — `@msf/dev` ships `check` command (recursive `.tsx/.jsx` scan, exit non-zero on unsupported patterns); tests added.
-- 2026-11-16 `73a8be7` — dist builds + conditional exports + consumer install/smoke/typecheck verification; evidence written; CI workflow outstanding.
-- 2026-11-16 `e568729` — isomorphic view layer + SSR hydration; `examples/fullstack` verified end-to-end in Chromium.
+## Baseline checks and results (2026-11-17, after publish preparation)
+
+- `pnpm run typecheck` (workspace, 10 projects): **pass**
+- `@msf/runtime` tests: **38/38 pass**
+- `@msf/compiler` tests: **14/14 pass**
+- `@msf/dev` tests: **6/6 pass**
+- `@msf/bench-runner` tests: **31/31 pass**
+- `@msf/spike-compiler-toolchain` tests: **4/4 pass**
+- `pnpm run build` (dist ESM + d.ts, 4 packages): **pass**
+- `pnpm verify:package` (temp consumer install + runtime smoke + TS typecheck): **PASS** — evidence `benchmarks/evidence/package-verification.json`
+- `pnpm pack` (all four): tarball contains `LICENSE`, `dist/**.js`, `dist/**.js.map`, `dist/**.d.ts`, `README.md`; `workspace:*` rewritten to `0.1.0`
+- Root package description mojibake fixed; `package.json` BOM removed in all four packages
+- Script `scripts/publish-packages.mjs`: aborts cleanly with instructions when not authenticated; requires `--yes` to publish for real
+
+## Open / partial
+
+- npm publication **not executed yet** — awaits `npm login`/authorize on this machine; scope `@msf` ownership unverified (registry search shows 0 existing `@msf` packages)
+- No superiority claims are made; benchmarks are informational
+- Read [production-readiness.md](../production-readiness.md) before any release
+
+## Next safe action
+
+1. Verify npm auth, dry-run the publish (`pnpm publish:packages`), then publish with `--yes` (tag `latest`, plus `preview` dist-tag) in order contracts → runtime → compiler → dev
+2. Then continue DTB-009 follow-ups: push CI workflow (blocked on `workflow` scope), npm dist-tags verification, docs/release notes
+3. If auth fails or `@msf` scope is not owned by the user's account: **stop** and resolve scope ownership before publishing
+
+## Approval required
+
+npm publish/release; any production-facing or destructive change; major scope expansion. (Owner approval for npm publish was granted 2026-11-17; the action itself remains gated on successful operator authentication.)
+
+## History
+
+- 2026-11-17 — v0.1.0 publish preparation complete (README/LICENSE/sourcemaps/publish script); awaiting npm authorize; fresh-clone clone-and-build verified earlier
+- 2026-11-17 — MIT license decision recorded; fresh-clone verification; `production-readiness.md` committed
+- 2026-11-16 — DTB-004/006/008/003/007 (list fix, depth guard, API docs, Show/For, msf check)
+- 2026-11-16 — Benchmark micro/SSR/DOM/bundle evidence integrated

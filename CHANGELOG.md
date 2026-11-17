@@ -9,6 +9,7 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 MSF Fusion packages are now technically ready for npm publication: `@msf/contracts|runtime|compiler|dev` are at `0.1.0`, `private: true` removed, `package.json` carries full publish metadata (`repository`, `homepage`, `bugs`, `author`, `keywords`, `description`, `license: MIT`), and `pnpm verify:package` passes (consumer install, runtime smoke, TS consumer typecheck). **npm publish requires operator `npm login` on the machine — done by the user, not CI.**
 
 ### Added
+- **Packaging hardened for publication:** per-package READMEs (real API surface), `publishConfig.access=public`, `LICENSE` included in every tarball, self-contained sourcemaps (`inlineSources`), and `scripts/publish-packages.mjs` (dry-run by default; `--yes` publishes in dependency order with preflight checks). Publication itself still pending operator `npm login` authorization.
 - **Packaging & consumption verification**: `dist` ESM builds with declarations via `tsconfig.build.json`; conditional exports; `scripts/verify-package.mjs`.
 - **Reactive kernel**: `createSignal`, `createMemo`, `createEffect`, `createRoot`, `batch`, `untrack`, `onCleanup`, owner utilities; in-run dependency dedupe; O(1) owner dispose via `ownedSlot`.
 - **Isomorphic view layer** (`@msf/runtime/universal`): isomorphic view descriptors, DOM `mount`, `hydrate`, plus `Show`/`For` control-flow components and `h(Component, props, children)` function components.

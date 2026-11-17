@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "@msf/dev",
   "version": "0.1.0",
   "description": "MSF Fusion dev tooling: compile/check CLI for the supported JSX subset and framework diagnostics.",

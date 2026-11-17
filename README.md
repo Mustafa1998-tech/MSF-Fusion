@@ -32,7 +32,7 @@ The project follows an evidence-driven process: architecture decisions, security
 | **M1 / M2 — Reactive kernel, components, hydration slices** | 🚧 In progress | Tested reactive kernel + DOM helpers + SSR; isomorphic view layer with **hydration** and **function components**; compiler subset with two targets (DOM + universal); dev-tooling preview; MSF micro-benchmark evidence; consumer-installable `dist` packages verified |
 | M2+ | 📋 Planned | Streaming/resume, full-stack boundaries, router, DX, compatibility, hardening, release approval |
 
-> **Important:** A working **developer-preview framework** exists in-repo (runtime, DOM, universal/SSR/hydration, components, compiler subset). It is still preview: full compiler/IR pipeline, dev server/HMR for library packages, router/actions/boundaries, comprehensive MSF measurements, and npm-publish readiness remain in progress. This repository makes **no superiority claims**.
+> **Important:** A working **developer-preview framework** exists in-repo (runtime, DOM, universal/SSR/hydration, components, compiler subset). It is still preview: full compiler/IR pipeline, dev server/HMR for library packages, router/actions/boundaries, and comprehensive MSF measurements remain in progress. Packages are prepared for npm at `v0.1.0` (public access, dist ESM + d.ts, verified consumer install); publication itself awaits operator authentication. This repository makes **no superiority claims**.
 
 ## What is in this repository today
 
@@ -139,7 +139,7 @@ Results are machine- and time-specific. Read [limitations](benchmarks/methodolog
 
 ## License
 
-The repository is licensed under the **MIT License**; see [LICENSE](LICENSE). Package metadata declares `MIT`. The packages are still marked `private: true` and are **not published to npm**; GitHub is the primary distribution channel.
+The repository is licensed under the **MIT License**; see [LICENSE](LICENSE). Package metadata declares `MIT`. The four `@msf/*` packages are prepared for npm at `v0.1.0` (`private` removed, `publishConfig.access=public`, `dist` ESM + d.ts, tarball-verified) and publish via `pnpm publish:packages -- --yes` once the operator runs `npm login`. Until that happens, GitHub remains the primary distribution channel.
 
 ---
 

@@ -2,7 +2,7 @@
   "name": "msf-fusion",
   "version": "0.0.0",
   "private": true,
-  "description": "MSF Fusion â€” Mustafa AI Software Factory Fusion Framework",
+  "description": "MSF Fusion — Mustafa AI Software Factory Fusion Framework",
   "license": "MIT",
   "packageManager": "pnpm@12.21.0",
   "engines": {
@@ -12,6 +12,8 @@
   "scripts": {
     "build": "pnpm --filter @msf/contracts --filter @msf/runtime --filter @msf/compiler --filter @msf/dev run build",
     "verify:package": "node scripts/verify-package.mjs",
+    "publish:packages": "node scripts/publish-packages.mjs",
+    "publish:packages:dry": "node scripts/publish-packages.mjs",
     "bench": "pnpm --filter @msf/bench-runner run bench",
     "bench:bundle": "pnpm --filter @msf/bench-runner run bench:bundle",
     "bench:dom": "pnpm --filter @msf/bench-runner run bench:dom",
@@ -26,4 +28,3 @@
     "typescript": "7.0.2"
   }
 }
-
