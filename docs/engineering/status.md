@@ -4,7 +4,7 @@
 **Branch:** `master`
 
 ## Summary
-M0 architecture/baseline/toolchain-spike deliverables are complete. M1 is in progress with a **tested reactive runtime preview**, a **real compiler (two targets)**, initial **dev tooling preview**, and **MSF runtime integration in all four benchmark suites** (micro/SSR/DOM/bundle committed as evidence). An **M2 isomorphic slice** is in place: isomorphic view descriptors, DOM mounting, **SSR hydration**, **function components**, and two example slices (fullstack counter + **Ops Board dashboard**) verified in a Chromium browser. Full compiler/IR pipeline, dev server/HMR for library packages, and npm-publish approval remain pending.
+MSF Fusion is **publishable (v0.1.0)** — packages are prepared for npm (`private: true` removed, `dist` ESM + d.ts, installable tarballs, consumer verification passing). It is **not npm-published yet** because the operator machine needs `npm login`; GitHub is the primary distribution channel. Functionality is a working developer preview: fine-grained reactivity, SSR/hydration, function components, benchmarks in all four suites, real examples, limited JSX compiler subset. See [production-readiness checklist](../production-readiness.md) for what is and isn't production-ready.
 
 ## Implemented / verified
 - **`@msf/runtime`** (37 tests)

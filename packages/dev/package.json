@@ -1,20 +1,28 @@
-{
+﻿{
   "name": "@msf/dev",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
+  "description": "MSF Fusion dev tooling: compile/check CLI for the supported JSX subset and framework diagnostics.",
   "license": "MIT",
   "type": "module",
-  "description": "MSF Fusion dev tooling preview (compile APIs/CLI).",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mustafa1998-tech/MSF-Fusion.git",
+    "directory": "packages/dev"
+  },
+  "homepage": "https://github.com/Mustafa1998-tech/MSF-Fusion",
+  "bugs": "https://github.com/Mustafa1998-tech/MSF-Fusion/issues",
+  "author": "MSF Fusion (Mustafa AI Software Factory)",
+  "keywords": ["msf", "msf-fusion", "cli", "devtools", "diagnostics"],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist", "README.md"],
   "bin": {
     "msf-dev": "./dist/cli.js"
   },
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "prepack": "pnpm run build",
@@ -35,4 +43,3 @@
     "vitest": "5.1.0"
   }
 }
-

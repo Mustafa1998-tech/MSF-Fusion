@@ -1,10 +1,18 @@
-{
+﻿{
   "name": "@msf/compiler",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
+  "description": "MSF Fusion compiler: JSX/TSX subset compiler targeting isomorphic view descriptors or DOM runtime calls.",
   "license": "MIT",
   "type": "module",
-  "description": "MSF Fusion compiler (Milestone 1 subset).",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mustafa1998-tech/MSF-Fusion.git",
+    "directory": "packages/compiler"
+  },
+  "homepage": "https://github.com/Mustafa1998-tech/MSF-Fusion",
+  "bugs": "https://github.com/Mustafa1998-tech/MSF-Fusion/issues",
+  "author": "MSF Fusion (Mustafa AI Software Factory)",
+  "keywords": ["msf", "msf-fusion", "compiler", "jsx", "tsx", "codegen"],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -27,4 +35,3 @@
     "vitest": "5.1.0"
   }
 }
-
